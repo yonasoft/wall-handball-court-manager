@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/matchesFragment">
+
+    <fragment
+        android:id="@+id/matchesFragment"
+        android:name="com.example.handballcourtmanager.fragments.MatchesFragment"
+        android:label="Current Matches"
+        tools:layout="@layout/fragment_current_matches" >
+    </fragment>
+
+
+    <fragment
+        android:id="@+id/rosterFragment"
+        android:name="com.example.handballcourtmanager.fragments.RosterFragment"
+        android:label="Roster"
+        tools:layout="@layout/fragment_roster" >
+        <action
+            android:id="@+id/action_rosterFragment_to_addPlayerDialogFragment"
+            app:destination="@id/addPlayerDialogFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/resultsFragment"
+        android:name="com.example.handballcourtmanager.fragments.ResultsFragment"
+        android:label="Results"
+        tools:layout="@layout/fragment_results" />
+    <dialog
+        android:id="@+id/addPlayerDialogFragment"
+        android:name="com.example.handballcourtmanager.fragments.AddPlayerDialogFragment"
+        android:label="AddPlayerDialogFragment" />
+</navigation>
