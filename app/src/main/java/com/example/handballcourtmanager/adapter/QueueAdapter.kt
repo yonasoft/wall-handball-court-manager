@@ -4,6 +4,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.core.view.isGone
+import androidx.core.view.isVisible
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.example.handballcourtmanager.R
@@ -15,7 +17,11 @@ RecyclerView.Adapter<QueueAdapter.ViewHolder>(){
 
     class ViewHolder(val binding:PlayerQueueItemBinding):RecyclerView.ViewHolder(binding.root) {
         fun bind(player: Player){
-            binding.playerName.text = player.name
+            if(player.isDeleted){
+                binding.playerQueueItem.isGone
+            } else {
+                binding.playerName.text = player.name
+            }
         }
     }
 

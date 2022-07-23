@@ -34,7 +34,7 @@ class AddPlayerDialogFragment:DialogFragment() {
 
         binding.addPlayerButton.setOnClickListener {
             //val name = binding.editTextAddPlayer.text.toString()
-            viewModel.addRegularQueue()
+            viewModel.addPlayer()
             dismiss()
         }
 

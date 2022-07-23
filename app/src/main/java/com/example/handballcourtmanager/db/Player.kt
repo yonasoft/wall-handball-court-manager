@@ -11,5 +11,7 @@ data class Player(
     @ColumnInfo(name = "player_name")
     var name:String,
     @ColumnInfo(name = "is_winner")
-    var isWinner:Boolean = false
+    var isWinner:Boolean = false,
+    @ColumnInfo(name = "is_deleted")
+    var isDeleted:Boolean = false
 )

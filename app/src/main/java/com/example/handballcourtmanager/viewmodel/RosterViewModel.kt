@@ -1,7 +1,9 @@
 package com.example.handballcourtmanager.viewmodel
 
-import android.app.Application
-import androidx.lifecycle.*
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.example.handballcourtmanager.Repository
 import com.example.handballcourtmanager.db.Player
 import kotlinx.coroutines.Dispatchers
@@ -16,13 +18,39 @@ class RosterViewModel(): ViewModel() {
 
     var regularQueue:LiveData<List<Player>> = Repository.get().getRegularRoster()
 
-    fun addRegularQueue(name:String=this.nameToAdd.value!!){
+    fun addPlayer(name:String=this.nameToAdd.value!!){
         viewModelScope.launch{
             withContext(Dispatchers.IO) {
                 Repository.get().addPlayer(Player(id = 0, name = name ))
             }
         }
 
+    }
+
+    fun addPlayer(player:Player){
+        viewModelScope.launch{
+            withContext(Dispatchers.IO) {
+                Repository.get().addPlayer(player)
+            }
+        }
+
+    }
+
+    fun updatePlayer(player:Player){
+        viewModelScope.launch{
+            withContext(Dispatchers.IO) {
+                Repository.get().updatePlayer(player)
+            }
+        }
+
+    }
+
+    fun deletePlayer(player: Player){
+        viewModelScope.launch {
+            withContext(Dispatchers.IO){
+                Repository.get().deletePlayer(player)
+            }
+        }
     }
 
 

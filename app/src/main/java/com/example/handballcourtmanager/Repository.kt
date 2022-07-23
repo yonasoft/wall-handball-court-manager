@@ -32,8 +32,18 @@ class Repository(context: Context) {
         playerDao!!.addPlayer(player)
     }
 
+    //Removes player from queue
+    suspend fun deletePlayer(player:Player){
+        playerDao!!.delete(player)
+    }
+
+    //Update the player in the database
+    suspend fun updatePlayer(player: Player){
+        playerDao!!.update(player)
+    }
+
     //Get the normal queue list from the database
-        fun getRegularRoster():LiveData<List<Player>>{
+    fun getRegularRoster():LiveData<List<Player>>{
         return playerDao!!.getRegularPlayers()
     }
 
@@ -41,5 +51,7 @@ class Repository(context: Context) {
     fun getWinnersRoster(): LiveData<List<Player>>{
         return playerDao!!.getWinnerPlayers()
     }
+
+
 
 }

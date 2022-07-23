@@ -14,10 +14,13 @@ interface PlayerDao {
     @Delete
     suspend fun delete(player: Player)
 
-    @Query("SELECT * FROM players_in_queue WHERE is_winner=0")
+    @Update
+    suspend fun update(player: Player)
+
+    @Query("SELECT * FROM players_in_queue WHERE is_winner=0 ORDER BY id ASC")
     fun getRegularPlayers(): LiveData<List<Player>>
 
-    @Query("SELECT * FROM players_in_queue WHERE is_winner=1")
+    @Query("SELECT * FROM players_in_queue WHERE is_winner=1 ORDER BY id ASC")
     fun getWinnerPlayers():LiveData<List<Player>>
 
 }
