@@ -1,9 +1,9 @@
 package com.example.handballcourtmanager.fragments
 
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.os.Handler
+import android.view.*
+import android.widget.Toolbar
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -22,14 +22,20 @@ import com.google.android.material.snackbar.Snackbar
 
 class RosterFragment : Fragment() {
 
-    lateinit var binding:FragmentRosterBinding
+    lateinit var binding: FragmentRosterBinding
     private val viewModel: RosterViewModel by viewModels()
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
-                              savedInstanceState: Bundle?): View {
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
 
-        binding = DataBindingUtil.inflate(layoutInflater,
-            R.layout.fragment_roster,container,false)
-        val view=binding.root
+        binding = DataBindingUtil.inflate(
+            layoutInflater,
+            R.layout.fragment_roster, container, false
+        )
+        val view = binding.root
+
+        setHasOptionsMenu(true)
 
         binding.viewModel = viewModel
         setupRecyclerView(binding.queueRcv, viewModel.regularQueue)
@@ -44,6 +50,15 @@ class RosterFragment : Fragment() {
         return view
     }
 
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.roster_list_toolbar, menu)
+        super.onCreateOptionsMenu(menu, inflater)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        onDeleteQueue(item.itemId)
+        return super.onOptionsItemSelected(item)
+    }
 
 
     private fun setupRecyclerView(rcv:RecyclerView, queue: LiveData<List<Player>>) {
@@ -89,6 +104,40 @@ class RosterFragment : Fragment() {
                     .show()
             }
         }).attachToRecyclerView(rcv)
+
+    }
+
+    private fun onDeleteQueue(idOfQueueDeletion:Int){
+        var removedQueueText=""
+        val removedList = mutableListOf<Player>()
+
+        when (idOfQueueDeletion) {
+            R.id.clear_regular -> {
+                removedQueueText = "Regular queue is cleared!"
+                viewModel.regularQueue.value?.let { removedList.addAll(it) }
+                viewModel.deleteRegularPlayers()
+            }
+            R.id.clear_winners -> {
+                removedQueueText = "Winner queue is cleared"
+                viewModel.winnerQueue.value?.let { removedList.addAll(it) }
+                viewModel.deleteWinnerPlayers()
+            }
+            else -> {
+                removedQueueText = "The entire queue is clear!"
+                viewModel.regularQueue.value?.let { removedList.addAll(it) }
+                viewModel.winnerQueue.value?.let { removedList.addAll(it) }
+                viewModel.deleteAllPlayers()
+            }
+        }
+
+        val snackBar = Snackbar.make(binding.root, removedQueueText, Snackbar.LENGTH_LONG).
+        setAction(
+            "Undo"
+        ) {
+            viewModel.addAllPlayers(removedList)
+        }
+        snackBar.show()
+
 
     }
 

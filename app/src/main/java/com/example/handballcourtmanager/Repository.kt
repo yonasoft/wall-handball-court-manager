@@ -52,6 +52,21 @@ class Repository(context: Context) {
         return playerDao!!.getWinnerPlayers()
     }
 
+    suspend fun deleteAllPlayers(){
+        playerDao!!.deleteAll()
+    }
+
+    suspend fun deleteRegularPlayers(){
+        playerDao!!.deleteRegularPlayers()
+    }
+
+    suspend fun deleteWinnerPlayers(){
+        playerDao!!.deleteWinnerPlayers()
+    }
+
+    suspend fun addAllPlayers(players:List<Player>){
+        playerDao!!.addAllPlayers(players)
+    }
 
 
 }

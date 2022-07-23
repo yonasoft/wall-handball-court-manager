@@ -2,6 +2,7 @@ package com.example.handballcourtmanager
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.Menu
 import androidx.appcompat.widget.Toolbar
 import androidx.databinding.DataBindingUtil
 import androidx.navigation.NavController
@@ -25,9 +26,13 @@ class MainActivity : AppCompatActivity() {
 
         binding!!.toolbar.setupWithNavController(navController)
         binding!!.bottomNav.setupWithNavController(navController)
+        setSupportActionBar(binding!!.toolbar)
 
     }
 
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        return super.onCreateOptionsMenu(menu)
+    }
 
 
 }

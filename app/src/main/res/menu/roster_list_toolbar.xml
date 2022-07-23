@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/helpFragment"
+        android:icon="@drawable/baseline_help_black_36"
+        android:title="@string/help"
+        app:showAsAction="always"
+        />
+    <group>
+        <item
+            android:id="@+id/clear_regular"
+            android:title="@string/clear_regular_queue"
+            />
+        <item
+            android:id="@+id/clear_winners"
+            android:title="@string/clear_winner_queue"
+            />
+        <item
+            android:id="@+id/clear_all_queues"
+            android:title="@string/clear_all"
+            />
+    </group>
+
+</menu>
