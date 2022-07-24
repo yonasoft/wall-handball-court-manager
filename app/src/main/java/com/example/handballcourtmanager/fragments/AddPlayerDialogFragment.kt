@@ -6,12 +6,9 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.DialogFragment
-import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.ViewModelProvider
 import com.example.handballcourtmanager.R
 import com.example.handballcourtmanager.databinding.FragmentAddPlayerDialogBinding
-import com.example.handballcourtmanager.db.Player
 import com.example.handballcourtmanager.viewmodel.RosterViewModel
 
 

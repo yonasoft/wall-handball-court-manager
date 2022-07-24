@@ -10,6 +10,9 @@
         android:name="com.example.handballcourtmanager.fragments.MatchesFragment"
         android:label="Current Matches"
         tools:layout="@layout/fragment_current_matches" >
+        <action
+            android:id="@+id/action_matchesFragment_to_helpFragment"
+            app:destination="@id/helpFragment" />
     </fragment>
 
 
@@ -21,14 +24,25 @@
         <action
             android:id="@+id/action_rosterFragment_to_addPlayerDialogFragment"
             app:destination="@id/addPlayerDialogFragment" />
+        <action
+            android:id="@+id/action_rosterFragment_to_helpFragment"
+            app:destination="@id/helpFragment" />
     </fragment>
     <fragment
         android:id="@+id/resultsFragment"
         android:name="com.example.handballcourtmanager.fragments.ResultsFragment"
         android:label="Results"
-        tools:layout="@layout/fragment_results" />
+        tools:layout="@layout/fragment_results" >
+        <action
+            android:id="@+id/action_resultsFragment_to_helpFragment"
+            app:destination="@id/helpFragment" />
+    </fragment>
     <dialog
         android:id="@+id/addPlayerDialogFragment"
         android:name="com.example.handballcourtmanager.fragments.AddPlayerDialogFragment"
         android:label="AddPlayerDialogFragment" />
+    <fragment
+        android:id="@+id/helpFragment"
+        android:name="com.example.handballcourtmanager.fragments.HelpFragment"
+        android:label="HelpFragment" />
 </navigation>

@@ -1,15 +1,15 @@
-package com.example.handballcourtmanager.db
+package com.example.handballcourtmanager.db.playersdb
 
 
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.room.*
+import com.example.handballcourtmanager.db.playersdb.Player
 
 @Dao
 interface PlayerDao {
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
-    suspend fun addPlayer(player:Player)
+    suspend fun addPlayer(player: Player)
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun addAllPlayers(players:List<Player>)

@@ -1,16 +1,13 @@
 package com.example.handballcourtmanager.adapter
 
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import androidx.core.view.isGone
-import androidx.core.view.isVisible
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.example.handballcourtmanager.R
 import com.example.handballcourtmanager.databinding.PlayerQueueItemBinding
-import com.example.handballcourtmanager.db.Player
+import com.example.handballcourtmanager.db.playersdb.Player
 
 class QueueAdapter(private val queue: List<Player>):
 RecyclerView.Adapter<QueueAdapter.ViewHolder>(){

@@ -1,12 +1,11 @@
 package com.example.handballcourtmanager.fragments
 
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.handballcourtmanager.R
@@ -30,12 +29,12 @@ class MatchesFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         binding = DataBindingUtil.inflate(layoutInflater,
             R.layout.fragment_current_matches,container,false)
         val view=binding.root
 
-
+        setHasOptionsMenu(true)
         setupRecyclerView()
 
         return view
@@ -50,11 +49,27 @@ class MatchesFragment : Fragment() {
 
     private fun setupRecyclerView() {
 
-        val adapter = ActiveMatchesAdapter(matchesList!!)
+        val adapter = ActiveMatchesAdapter(matchesList)
         val layoutManager = LinearLayoutManager(this.context)
         layoutManager.orientation = RecyclerView.VERTICAL
         binding.rcvActiveMatches.layoutManager = layoutManager
         binding.rcvActiveMatches.adapter = adapter
     }
+
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.matches_toolbar, menu)
+        super.onCreateOptionsMenu(menu, inflater)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when(item.itemId) {
+            R.id.help_item -> findNavController().navigate(
+                R.id.action_matchesFragment_to_helpFragment
+            )
+        }
+            return super.onOptionsItemSelected(item)
+    }
+
 
 }

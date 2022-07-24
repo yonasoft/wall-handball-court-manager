@@ -1,9 +1,7 @@
 package com.example.handballcourtmanager.fragments
 
 import android.os.Bundle
-import android.os.Handler
 import android.view.*
-import android.widget.Toolbar
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -15,7 +13,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.handballcourtmanager.R
 import com.example.handballcourtmanager.adapter.QueueAdapter
 import com.example.handballcourtmanager.databinding.FragmentRosterBinding
-import com.example.handballcourtmanager.db.Player
+import com.example.handballcourtmanager.db.playersdb.Player
 import com.example.handballcourtmanager.viewmodel.RosterViewModel
 import com.google.android.material.snackbar.Snackbar
 
@@ -56,7 +54,12 @@ class RosterFragment : Fragment() {
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        onDeleteQueue(item.itemId)
+        when(item.itemId) {
+            R.id.help_item-> findNavController().navigate(
+                R.id.action_rosterFragment_to_helpFragment
+            )
+            else->onDeleteQueue(item.itemId)
+        }
         return super.onOptionsItemSelected(item)
     }
 
@@ -80,7 +83,7 @@ class RosterFragment : Fragment() {
             }
 
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
-                val removedPlayer:Player = queue.value!![viewHolder.adapterPosition]
+                val removedPlayer: Player = queue.value!![viewHolder.adapterPosition]
                 removedPlayer.isDeleted=true
                 viewModel.updatePlayer(removedPlayer)
 
@@ -108,7 +111,7 @@ class RosterFragment : Fragment() {
     }
 
     private fun onDeleteQueue(idOfQueueDeletion:Int){
-        var removedQueueText=""
+        val removedQueueText: String
         val removedList = mutableListOf<Player>()
 
         when (idOfQueueDeletion) {

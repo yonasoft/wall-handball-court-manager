@@ -1,4 +1,4 @@
-package com.example.handballcourtmanager.db
+package com.example.handballcourtmanager.db.playersdb
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity

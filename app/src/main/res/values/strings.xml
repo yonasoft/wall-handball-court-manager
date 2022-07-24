@@ -8,4 +8,7 @@
     <string name="clear_all">clear all</string>
     <string name="winners">Winners</string>
     <string name="regular">Regular</string>
+    <string name="clear_matches">clear matches</string>
+    <string name="clear_match_results">clear match results</string>
+    <string name="this_is_the_help_fragment">This is the help fragment</string>
 </resources>

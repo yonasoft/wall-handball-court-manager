@@ -1,6 +1,6 @@
 package com.example.handballcourtmanager.model
 
-import com.example.handballcourtmanager.constants.MatchType
+
 
 data class Match(
     var courtNum: Int = 0,
@@ -12,7 +12,7 @@ data class Match(
     var t2Aces: Int = 0,
     var t1Kills: Int = 0,
     var t2Kills: Int = 0,
-    var matchType: String = MatchType.SINGLES,
+    var matchType: String = "Singles",
     var currentServer: String = team1Name,
     var winner: String = "",
     var isCompleted:Boolean=false,

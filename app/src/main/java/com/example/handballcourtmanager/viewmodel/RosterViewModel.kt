@@ -4,8 +4,8 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.handballcourtmanager.Repository
-import com.example.handballcourtmanager.db.Player
+import com.example.handballcourtmanager.PlayersRepository
+import com.example.handballcourtmanager.db.playersdb.Player
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -16,13 +16,13 @@ class RosterViewModel : ViewModel() {
 
     val nameToAdd = MutableLiveData<String>()
 
-    var regularQueue: LiveData<List<Player>> = Repository.get().getRegularRoster()
-    var winnerQueue: LiveData<List<Player>> = Repository.get().getWinnersRoster()
+    var regularQueue: LiveData<List<Player>> = PlayersRepository.get().getRegularRoster()
+    var winnerQueue: LiveData<List<Player>> = PlayersRepository.get().getWinnersRoster()
 
     fun addPlayer(name: String = this.nameToAdd.value!!) {
         viewModelScope.launch {
             withContext(Dispatchers.IO) {
-                Repository.get().addPlayer(Player(id = 0, name = name))
+                PlayersRepository.get().addPlayer(Player(id = 0, name = name))
             }
         }
 
@@ -31,7 +31,7 @@ class RosterViewModel : ViewModel() {
     fun addPlayer(player: Player) {
         viewModelScope.launch {
             withContext(Dispatchers.IO) {
-                Repository.get().addPlayer(player)
+                PlayersRepository.get().addPlayer(player)
             }
         }
 
@@ -40,7 +40,7 @@ class RosterViewModel : ViewModel() {
     fun addAllPlayers(players: List<Player>) {
         viewModelScope.launch {
             withContext(Dispatchers.IO) {
-                Repository.get().addAllPlayers(players)
+                PlayersRepository.get().addAllPlayers(players)
             }
         }
 
@@ -49,7 +49,7 @@ class RosterViewModel : ViewModel() {
     fun updatePlayer(player: Player) {
         viewModelScope.launch {
             withContext(Dispatchers.IO) {
-                Repository.get().updatePlayer(player)
+                PlayersRepository.get().updatePlayer(player)
             }
         }
 
@@ -58,7 +58,7 @@ class RosterViewModel : ViewModel() {
     fun deletePlayer(player: Player) {
         viewModelScope.launch {
             withContext(Dispatchers.IO) {
-                Repository.get().deletePlayer(player)
+                PlayersRepository.get().deletePlayer(player)
             }
         }
     }
@@ -66,7 +66,7 @@ class RosterViewModel : ViewModel() {
     fun deleteAllPlayers() {
         viewModelScope.launch {
             withContext(Dispatchers.IO) {
-                Repository.get().deleteAllPlayers()
+                PlayersRepository.get().deleteAllPlayers()
             }
         }
     }
@@ -74,7 +74,7 @@ class RosterViewModel : ViewModel() {
     fun deleteRegularPlayers() {
         viewModelScope.launch {
             withContext(Dispatchers.IO) {
-                Repository.get().deleteRegularPlayers()
+                PlayersRepository.get().deleteRegularPlayers()
             }
         }
     }
@@ -82,7 +82,7 @@ class RosterViewModel : ViewModel() {
     fun deleteWinnerPlayers() {
         viewModelScope.launch {
             withContext(Dispatchers.IO) {
-                Repository.get().deleteWinnerPlayers()
+                PlayersRepository.get().deleteWinnerPlayers()
             }
         }
     }

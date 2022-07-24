@@ -2,38 +2,38 @@ package com.example.handballcourtmanager
 
 import android.content.Context
 import androidx.lifecycle.LiveData
-import com.example.handballcourtmanager.db.Player
-import com.example.handballcourtmanager.db.PlayerDao
-import com.example.handballcourtmanager.db.PlayerDatabase
+import com.example.handballcourtmanager.db.playersdb.Player
+import com.example.handballcourtmanager.db.playersdb.PlayerDao
+import com.example.handballcourtmanager.db.playersdb.PlayerDatabase
 
 //Repository to retrieve data database
-class Repository(context: Context) {
-    private var playerDao:PlayerDao?=PlayerDatabase.getInstance(context).playerDao
+class PlayersRepository(context: Context) {
+    private var playerDao: PlayerDao?= PlayerDatabase.getInstance(context).playerDao
 
 
     companion object{
         //Create instance of repository when application starts
-        private var INSTANCE: Repository? =null
+        private var INSTANCE: PlayersRepository? =null
 
         fun initialize(context: Context){
             if(INSTANCE==null){
-                INSTANCE = Repository(context)
+                INSTANCE = PlayersRepository(context)
             }
         }
 
-        fun get():Repository{
+        fun get():PlayersRepository{
             return INSTANCE?:
             throw IllegalStateException("Repository must be initialized")
         }
     }
 
     //Add player to database
-    suspend fun addPlayer(player:Player){
+    suspend fun addPlayer(player: Player){
         playerDao!!.addPlayer(player)
     }
 
     //Removes player from queue
-    suspend fun deletePlayer(player:Player){
+    suspend fun deletePlayer(player: Player){
         playerDao!!.delete(player)
     }
 

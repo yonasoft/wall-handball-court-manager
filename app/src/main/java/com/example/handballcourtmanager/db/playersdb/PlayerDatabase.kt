@@ -1,4 +1,4 @@
-package com.example.handballcourtmanager.db
+package com.example.handballcourtmanager.db.playersdb
 
 import android.content.Context
 import androidx.room.Database

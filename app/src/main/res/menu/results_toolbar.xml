@@ -9,16 +9,8 @@
         />
     <group>
         <item
-            android:id="@+id/clear_regular"
-            android:title="@string/clear_regular_queue"
-            />
-        <item
-            android:id="@+id/clear_winners"
-            android:title="@string/clear_winner_queue"
-            />
-        <item
-            android:id="@+id/clear_all_queues"
-            android:title="@string/clear_all"
+            android:id="@+id/clear_matches"
+            android:title="@string/clear_match_results"
             />
     </group>
 
