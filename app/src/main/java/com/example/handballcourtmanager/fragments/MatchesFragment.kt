@@ -4,25 +4,25 @@ import android.os.Bundle
 import android.view.*
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.handballcourtmanager.R
 import com.example.handballcourtmanager.adapter.ActiveMatchesAdapter
 import com.example.handballcourtmanager.databinding.FragmentCurrentMatchesBinding
-import com.example.handballcourtmanager.model.Match
-
-
+import com.example.handballcourtmanager.db.matchesdb.Doubles
+import com.example.handballcourtmanager.db.matchesdb.Singles
+import com.example.handballcourtmanager.db.matchesdb.Triangle
+import com.example.handballcourtmanager.db.playersdb.Player
 
 
 class MatchesFragment : Fragment() {
 
-    private var param1: String? = null
-    private var param2: String? = null
-    private var matchesList =ArrayList<Match>(arrayListOf(Match(courtNum = 1, team1Name = "Kevin", team2Name = "Win", t1Score = 20, t2Score = 0 ),
-    Match(courtNum = 2, team1Name = "David", team2Name = "Winston", t1Score = 20, t2Score = 0 )))
-    private lateinit var binding:FragmentCurrentMatchesBinding
+    private var matchesList = arrayListOf(Singles(Player(0,"Kevin",false),Player(0,"Kevin",false)),
+        Doubles(arrayOf(Player(0,"Kevin",false),Player(0,"Win",false)),arrayOf(Player(0,"Kevin",false),Player(0,"Win",false))),
+        Triangle(Player(0, "Kevin", false), Player(0, "Kevin", false), Player(0, "Kevin", false))
+    )
+    private var binding: FragmentCurrentMatchesBinding?=null
 
 
 
@@ -32,7 +32,7 @@ class MatchesFragment : Fragment() {
     ): View {
         binding = DataBindingUtil.inflate(layoutInflater,
             R.layout.fragment_current_matches,container,false)
-        val view=binding.root
+        val view=binding!!.root
 
         setHasOptionsMenu(true)
         setupRecyclerView()
@@ -42,18 +42,17 @@ class MatchesFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding.fabAddMatches.setOnClickListener {
+        binding!!.fabAddMatches.setOnClickListener {
 
         }
     }
 
     private fun setupRecyclerView() {
-
         val adapter = ActiveMatchesAdapter(matchesList)
         val layoutManager = LinearLayoutManager(this.context)
         layoutManager.orientation = RecyclerView.VERTICAL
-        binding.rcvActiveMatches.layoutManager = layoutManager
-        binding.rcvActiveMatches.adapter = adapter
+        binding!!.rcvActiveMatches.layoutManager = layoutManager
+        binding!!.rcvActiveMatches.adapter = adapter
     }
 
 

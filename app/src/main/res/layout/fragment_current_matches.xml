@@ -6,11 +6,6 @@
     tools:context=".fragments.MatchesFragment"
     android:background="@color/blue_3"
     >
-    <data>
-        <variable
-            name="viewModel"
-            type="com.example.handballcourtmanager.viewmodel.RosterViewModel" />
-    </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -22,9 +17,8 @@
             android:layout_height="0dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tv_title_team_one"
+            app:layout_constraintTop_toBottomOf="@+id/tv_title_team"
             app:layout_constraintVertical_bias="0.0" />
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -42,8 +36,8 @@
             android:id="@+id/tv_title_court_num"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
+            android:layout_marginStart="8dp"
             android:text="Crt#"
             style="@style/TextAppearance.AppCompat.Medium"
             android:textStyle="bold"
@@ -51,32 +45,19 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <com.google.android.material.textview.MaterialTextView
-            android:id="@+id/tv_title_team_one"
+            android:id="@+id/tv_title_team"
             style="@style/TextAppearance.AppCompat.Medium"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:gravity="center_horizontal"
-            android:text="Team 1"
+            android:text="@string/teams"
             android:textStyle="bold"
-            app:layout_constraintStart_toStartOf="@id/tv_title_court_num"
-            app:layout_constraintEnd_toStartOf="@+id/tv_title_team_two"
+            app:layout_constraintStart_toEndOf="@id/tv_title_court_num"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <com.google.android.material.textview.MaterialTextView
-            android:id="@+id/tv_title_team_two"
-            style="@style/TextAppearance.AppCompat.Medium"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:layout_marginEnd="8dp"
-            android:gravity="center_horizontal"
-            android:text="Team 2"
-            android:textStyle="bold"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toEndOf="@+id/tv_title_team_one"
-            app:layout_constraintTop_toTopOf="parent" />
+
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
