@@ -1,12 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
-    <item
-        android:id="@+id/help_item"
-        android:icon="@drawable/baseline_help_black_36"
-        android:title="@string/help"
-        app:showAsAction="always"
-        />
+    >
+
     <group>
         <item
             android:id="@+id/clear_regular"

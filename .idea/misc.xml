@@ -17,12 +17,20 @@
         <entry key="..\:/Users/notmy/Documents/coding/Android/Practice projects/HandballCourtManager/app/src/main/res/layout/player_queue_item.xml" value="0.25" />
         <entry key="..\:/Users/notmy/Documents/coding/Android/Practice projects/HandballCourtManager/app/src/main/res/menu/bottom_nav.xml" value="0.3625" />
         <entry key="..\:/Users/notmy/Documents/coding/Android/Practice projects/HandballCourtManager/app/src/main/res/menu/tool_bar.xml" value="0.20625" />
+        <entry key="..\:/Users/notmy/Documents/personal projects/Handball-Court-Manager/app/src/main/res/drawable/spinner_match_dialog.xml" value="0.2095" />
+        <entry key="..\:/Users/notmy/Documents/personal projects/Handball-Court-Manager/app/src/main/res/drawable/tv_match_type_dialog.xml" value="0.2095" />
         <entry key="..\:/Users/notmy/Documents/personal projects/Handball-Court-Manager/app/src/main/res/layout/activity_main.xml" value="0.3625" />
         <entry key="..\:/Users/notmy/Documents/personal projects/Handball-Court-Manager/app/src/main/res/layout/doubles_match_item.xml" value="0.22" />
+        <entry key="..\:/Users/notmy/Documents/personal projects/Handball-Court-Manager/app/src/main/res/layout/fragment_add_player_dialog.xml" value="0.25" />
+        <entry key="..\:/Users/notmy/Documents/personal projects/Handball-Court-Manager/app/src/main/res/layout/fragment_create_match_dialog.xml" value="0.25" />
         <entry key="..\:/Users/notmy/Documents/personal projects/Handball-Court-Manager/app/src/main/res/layout/fragment_current_matches.xml" value="0.33" />
+        <entry key="..\:/Users/notmy/Documents/personal projects/Handball-Court-Manager/app/src/main/res/layout/fragment_doubles_detail.xml" value="0.25" />
         <entry key="..\:/Users/notmy/Documents/personal projects/Handball-Court-Manager/app/src/main/res/layout/fragment_help.xml" value="0.18541666666666667" />
+        <entry key="..\:/Users/notmy/Documents/personal projects/Handball-Court-Manager/app/src/main/res/layout/fragment_match_detail.xml" value="0.19635416666666666" />
         <entry key="..\:/Users/notmy/Documents/personal projects/Handball-Court-Manager/app/src/main/res/layout/fragment_results.xml" value="0.1762917933130699" />
-        <entry key="..\:/Users/notmy/Documents/personal projects/Handball-Court-Manager/app/src/main/res/layout/fragment_roster.xml" value="0.1762917933130699" />
+        <entry key="..\:/Users/notmy/Documents/personal projects/Handball-Court-Manager/app/src/main/res/layout/fragment_roster.xml" value="0.25" />
+        <entry key="..\:/Users/notmy/Documents/personal projects/Handball-Court-Manager/app/src/main/res/layout/fragment_singles_detail.xml" value="0.25" />
+        <entry key="..\:/Users/notmy/Documents/personal projects/Handball-Court-Manager/app/src/main/res/layout/fragment_triangle_detail.xml" value="0.33" />
         <entry key="..\:/Users/notmy/Documents/personal projects/Handball-Court-Manager/app/src/main/res/layout/singles_match_item.xml" value="0.25" />
         <entry key="..\:/Users/notmy/Documents/personal projects/Handball-Court-Manager/app/src/main/res/layout/triangle_match_item.xml" value="0.25" />
         <entry key="..\:/Users/notmy/Documents/personal projects/Handball-Court-Manager/app/src/main/res/menu/bottom_nav.xml" value="0.3569230769230769" />

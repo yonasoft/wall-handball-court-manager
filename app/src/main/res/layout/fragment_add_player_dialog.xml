@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<layout xmlns:tools="http://schemas.android.com/tools"
+<layout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
 
@@ -11,20 +11,25 @@
             type="com.example.handballcourtmanager.viewmodel.RosterViewModel"/>
     </data>
 
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="16dp"
+        android:paddingTop="32dp"
+        android:paddingStart="8dp"
+        android:paddingEnd="8dp"
+        android:paddingBottom="16dp"
         >
+
 
         <com.google.android.material.textview.MaterialTextView
             android:id="@+id/materialTextView"
             style="@style/TextAppearance.AppCompat.Large"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
             android:gravity="center_horizontal"
-            android:text="Add Player to Roster"
+            android:text="@string/add_player_to_roster"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
@@ -34,9 +39,11 @@
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/text_input_add_player"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-            android:layout_width="284dp"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:hint="Name"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp"
+            android:hint="@string/name"
             app:layout_constraintEnd_toEndOf="@id/materialTextView"
             app:layout_constraintStart_toStartOf="@id/materialTextView"
             app:layout_constraintTop_toBottomOf="@+id/materialTextView"
@@ -54,15 +61,19 @@
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/add_player_button"
-            android:layout_width="0dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
-            android:text="Add"
+            android:layout_marginBottom="16dp"
+            android:text="@string/add"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="@+id/text_input_add_player"
             app:layout_constraintStart_toStartOf="@id/text_input_add_player"
-            app:layout_constraintTop_toBottomOf="@+id/text_input_add_player"
-            />
+            app:layout_constraintTop_toBottomOf="@+id/text_input_add_player" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
+
 </layout>
+
+

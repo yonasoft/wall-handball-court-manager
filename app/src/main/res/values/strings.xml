@@ -13,4 +13,15 @@
     <string name="this_is_the_help_fragment">This is the help fragment</string>
     <string name="vs">VS</string>
     <string name="teams">Teams</string>
+    <string name="triangle">Triangle</string>
+    <string name="doubles">Doubles</string>
+    <string name="singles">Singles</string>
+    <string name="add_player_to_roster">Add Player to Roster</string>
+    <string name="name">Name</string>
+    <string name="add">Add</string>
+    <string name="court">Court:</string>
+    <string name="end_match">end match</string>
+    <string name="ok">OK</string>
+
+
 </resources>

@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.LinearLayout
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.viewModels
@@ -18,6 +19,11 @@ class AddPlayerDialogFragment:DialogFragment() {
     private val viewModel: RosterViewModel by viewModels()
     var name:String ?= null
 
+    override fun onStart() {
+        super.onStart()
+        dialog?.window?.setLayout(LinearLayout.LayoutParams.MATCH_PARENT,LinearLayout.LayoutParams.WRAP_CONTENT)
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -30,7 +36,6 @@ class AddPlayerDialogFragment:DialogFragment() {
         binding.viewModel = viewModel
 
         binding.addPlayerButton.setOnClickListener {
-            //val name = binding.editTextAddPlayer.text.toString()
             viewModel.addPlayer()
             dismiss()
         }

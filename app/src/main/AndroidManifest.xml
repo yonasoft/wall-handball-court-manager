@@ -12,7 +12,9 @@
         android:theme="@style/Theme.HandballCourtManager">
         <activity
             android:name=".MainActivity"
-            android:exported="true">
+            android:exported="true"
+            >
+            
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

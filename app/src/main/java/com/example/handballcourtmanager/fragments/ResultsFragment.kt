@@ -10,16 +10,16 @@ import com.example.handballcourtmanager.databinding.FragmentResultsBinding
 
 class ResultsFragment : Fragment() {
 
-    private var binding:FragmentResultsBinding?=null
+    private var binding: FragmentResultsBinding? = null
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding = DataBindingUtil.inflate(inflater,R.layout.fragment_results,container,false)
+        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_results, container, false)
         val view = binding!!.root
-        setHasOptionsMenu(true)
+
         return view
     }
 
@@ -29,12 +29,9 @@ class ResultsFragment : Fragment() {
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        when(item.itemId) {
-            R.id.help_item-> findNavController().navigate(
-                R.id.action_resultsFragment_to_helpFragment
-            )
 
-        }
+        R.id.action_resultsFragment_to_helpFragment
+
         return super.onOptionsItemSelected(item)
     }
 

@@ -4,27 +4,23 @@ import android.os.Bundle
 import android.view.*
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.handballcourtmanager.R
 import com.example.handballcourtmanager.adapter.ActiveMatchesAdapter
 import com.example.handballcourtmanager.databinding.FragmentCurrentMatchesBinding
-import com.example.handballcourtmanager.db.matchesdb.Doubles
-import com.example.handballcourtmanager.db.matchesdb.Singles
-import com.example.handballcourtmanager.db.matchesdb.Triangle
-import com.example.handballcourtmanager.db.playersdb.Player
+import com.example.handballcourtmanager.db.matchesdb.Match
+import com.example.handballcourtmanager.viewmodel.MatchesViewModel
+import com.google.android.material.snackbar.Snackbar
 
 
 class MatchesFragment : Fragment() {
 
-    private var matchesList = arrayListOf(Singles(Player(0,"Kevin",false),Player(0,"Kevin",false)),
-        Doubles(arrayOf(Player(0,"Kevin",false),Player(0,"Win",false)),arrayOf(Player(0,"Kevin",false),Player(0,"Win",false))),
-        Triangle(Player(0, "Kevin", false), Player(0, "Kevin", false), Player(0, "Kevin", false))
-    )
     private var binding: FragmentCurrentMatchesBinding?=null
-
-
+    private val viewModel:MatchesViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -43,17 +39,57 @@ class MatchesFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding!!.fabAddMatches.setOnClickListener {
-
+            findNavController().navigate(
+                R.id.action_matchesFragment_to_createMatchDialogFragment
+            )
         }
     }
 
     private fun setupRecyclerView() {
-        val adapter = ActiveMatchesAdapter(matchesList)
         val layoutManager = LinearLayoutManager(this.context)
         layoutManager.orientation = RecyclerView.VERTICAL
         binding!!.rcvActiveMatches.layoutManager = layoutManager
-        binding!!.rcvActiveMatches.adapter = adapter
+        viewModel.matchesList.observe(viewLifecycleOwner) {
+            binding!!.rcvActiveMatches.adapter = ActiveMatchesAdapter(it)
+        }
+
+        ItemTouchHelper(object : ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.RIGHT) {
+            override fun onMove(
+                recyclerView: RecyclerView,
+                viewHolder: RecyclerView.ViewHolder,
+                target: RecyclerView.ViewHolder
+            ): Boolean {
+                return false
+            }
+
+
+            override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
+                val removedMatch: Match = viewModel.matchesList.value!![viewHolder.adapterPosition]
+
+                class PlayerDeletionCallback: Snackbar.Callback(){
+                    override fun onDismissed(transientBottomBar: Snackbar?, event: Int) {
+                        super.onDismissed(transientBottomBar, event)
+                        viewModel.removeMatch(removedMatch)
+                    }
+
+                }
+
+                Snackbar.make(
+                    binding!!.root,  "Match is being removed. press 'Undo' to stop!",
+                    Snackbar.LENGTH_LONG).
+                setAction(
+                    "Undo"
+                ) {
+
+                }.addCallback(PlayerDeletionCallback())
+                    .show()
+            }
+        }).attachToRecyclerView(binding!!.rcvActiveMatches)
+
+
     }
+
+    //private fun addTestPlayer()
 
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
@@ -62,11 +98,7 @@ class MatchesFragment : Fragment() {
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        when(item.itemId) {
-            R.id.help_item -> findNavController().navigate(
-                R.id.action_matchesFragment_to_helpFragment
-            )
-        }
+
             return super.onOptionsItemSelected(item)
     }
 

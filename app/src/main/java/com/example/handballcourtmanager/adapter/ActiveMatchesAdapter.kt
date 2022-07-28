@@ -2,25 +2,27 @@ package com.example.handballcourtmanager.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.example.handballcourtmanager.R
 import com.example.handballcourtmanager.databinding.DoublesMatchItemBinding
 import com.example.handballcourtmanager.databinding.SinglesMatchItemBinding
 import com.example.handballcourtmanager.databinding.TriangleMatchItemBinding
-import com.example.handballcourtmanager.db.matchesdb.Doubles
 import com.example.handballcourtmanager.db.matchesdb.Match
-import com.example.handballcourtmanager.db.matchesdb.Singles
-import com.example.handballcourtmanager.db.matchesdb.Triangle
+import com.example.handballcourtmanager.db.matchesdb.MatchTypes
 
 class SinglesMatchesHolder(
     val binding:SinglesMatchItemBinding
 ):RecyclerView.ViewHolder(binding.root){
-    fun bind(match:Singles){
+    fun bind(match:Match){
         binding.tvCourtNumber.text = match.courtNumber
-        binding.teamOne.text = match.teamOne.name
-        binding.teamTwo.text = match.teamTwo.name
+        binding.teamOne.text = match.teamOnePlayer1
+        binding.teamTwo.text = match.teamOnePlayer2
         binding.t1Score.text = match.teamOneScore.toString()
-        binding.t2Score.text = match.teamTwoSCore.toString()
+        binding.t2Score.text = match.teamTwoScore.toString()
+        binding.root.setOnClickListener{
+            binding.root.findNavController().navigate(R.id.action_matchesFragment_to_fragmentSinglesDetailFragment)
+        }
 
     }
 }
@@ -29,14 +31,17 @@ class SinglesMatchesHolder(
 class DoublesMatchesHolder(
     val binding:DoublesMatchItemBinding
 ):RecyclerView.ViewHolder(binding.root){
-    fun bind(match:Doubles){
+    fun bind(match:Match){
         binding.tvCourtNumber.text = match.courtNumber
-        binding.teamOneP1.text= match.teamOne[0]!!.name
-        binding.teamOneP2.text= match.teamOne[1]!!.name
-        binding.teamTwoP1.text= match.teamOne[0]!!.name
-        binding.teamTwoP2.text= match.teamOne[1]!!.name
+        binding.teamOneP1.text= match.teamOnePlayer1
+        binding.teamOneP2.text= match.teamOnePlayer2
+        binding.teamTwoP1.text= match.teamOnePlayer1
+        binding.teamTwoP2.text= match.teamOnePlayer2
         binding.t1Score.text = match.teamOneScore.toString()
-        binding.t2Score.text = match.teamTwoSCore.toString()
+        binding.t2Score.text = match.teamTwoScore.toString()
+        binding.root.setOnClickListener{
+            binding.root.findNavController().navigate(R.id.action_matchesFragment_to_fragmentDoublesDetail)
+        }
 
     }
 }
@@ -44,19 +49,22 @@ class DoublesMatchesHolder(
 class TriangleMatchesHolder(
     val binding:TriangleMatchItemBinding
 ):RecyclerView.ViewHolder(binding.root){
-    fun bind(match:Triangle){
+    fun bind(match:Match){
         binding.tvCourtNumber.text = match.courtNumber
-        binding.teamOne.text = match.teamOne.name
-        binding.teamTwo.text = match.teamTwo.name
-        binding.teamThree.text = match.teamThree.name
+        binding.teamOne.text = match.teamOnePlayer1
+        binding.teamTwo.text = match.teamTwoPlayer1
+        binding.teamThree.text = match.teamThreePlayer
         binding.t1Score.text = match.teamOneScore.toString()
-        binding.t2Score.text = match.teamTwoSCore.toString()
+        binding.t2Score.text = match.teamTwoScore.toString()
         binding.t3Score.text = match.teamThreeScore.toString()
+        binding.root.setOnClickListener{
+            binding.root.findNavController().navigate(R.id.action_matchesFragment_to_fragmentTriangleDetail)
+        }
 
     }
 }
 
-class ActiveMatchesAdapter(private val matches:List<Match>):RecyclerView.Adapter<RecyclerView.ViewHolder>(){
+class ActiveMatchesAdapter(private val matches: List<Match>):RecyclerView.Adapter<RecyclerView.ViewHolder>(){
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
@@ -75,10 +83,11 @@ class ActiveMatchesAdapter(private val matches:List<Match>):RecyclerView.Adapter
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         val match  = matches[position]
         when(holder.itemViewType){
-            R.layout.singles_match_item  -> (holder as SinglesMatchesHolder).bind(match as Singles)
-            R.layout.doubles_match_item -> (holder as DoublesMatchesHolder).bind(match as Doubles)
-            R.layout.triangle_match_item -> (holder as TriangleMatchesHolder).bind(match as Triangle)
+            R.layout.singles_match_item  -> (holder as SinglesMatchesHolder).bind(match)
+            R.layout.doubles_match_item -> (holder as DoublesMatchesHolder).bind(match)
+            R.layout.triangle_match_item -> (holder as TriangleMatchesHolder).bind(match)
         }
+
     }
 
     override fun getItemCount(): Int {
@@ -86,10 +95,10 @@ class ActiveMatchesAdapter(private val matches:List<Match>):RecyclerView.Adapter
     }
 
     override fun getItemViewType(position: Int): Int {
-        return when(matches[position]){
-            is Singles -> R.layout.singles_match_item
-            is Doubles -> R.layout.doubles_match_item
-            is Triangle -> R.layout.triangle_match_item
+        return when(matches[position].matchType){
+            MatchTypes.SINGLES -> R.layout.singles_match_item
+            MatchTypes.DOUBLES -> R.layout.doubles_match_item
+            MatchTypes.TRIANGLE -> R.layout.triangle_match_item
             else -> throw RuntimeException("Not an excepted type")
         }
     }

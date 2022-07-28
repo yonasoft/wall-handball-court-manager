@@ -13,7 +13,6 @@ import kotlinx.coroutines.withContext
 //ViewModel for the Roster List Fragment
 class RosterViewModel : ViewModel() {
 
-
     val nameToAdd = MutableLiveData<String>()
 
     var regularQueue: LiveData<List<Player>> = PlayersRepository.get().getRegularRoster()

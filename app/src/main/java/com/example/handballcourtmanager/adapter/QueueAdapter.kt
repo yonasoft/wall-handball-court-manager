@@ -14,11 +14,7 @@ RecyclerView.Adapter<QueueAdapter.ViewHolder>(){
 
     class ViewHolder(val binding:PlayerQueueItemBinding):RecyclerView.ViewHolder(binding.root) {
         fun bind(player: Player){
-            if(player.isDeleted){
-                binding.playerQueueItem.isGone
-            } else {
                 binding.playerName.text = player.name
-            }
         }
     }
 

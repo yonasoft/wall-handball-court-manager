@@ -32,9 +32,26 @@ class PlayersRepository(context: Context) {
         playerDao!!.addPlayer(player)
     }
 
+    //Add a list of players to database
+    suspend fun addAllPlayers(players:List<Player>){
+        playerDao!!.addAllPlayers(players)
+    }
+
     //Removes player from queue
     suspend fun deletePlayer(player: Player){
         playerDao!!.delete(player)
+    }
+
+    suspend fun deleteRegularPlayers(){
+        playerDao!!.deleteRegularPlayers()
+    }
+
+    suspend fun deleteWinnerPlayers(){
+        playerDao!!.deleteWinnerPlayers()
+    }
+
+    suspend fun deleteAllPlayers(){
+        playerDao!!.deleteAll()
     }
 
     //Update the player in the database
@@ -52,21 +69,10 @@ class PlayersRepository(context: Context) {
         return playerDao!!.getWinnerPlayers()
     }
 
-    suspend fun deleteAllPlayers(){
-        playerDao!!.deleteAll()
-    }
 
-    suspend fun deleteRegularPlayers(){
-        playerDao!!.deleteRegularPlayers()
-    }
 
-    suspend fun deleteWinnerPlayers(){
-        playerDao!!.deleteWinnerPlayers()
-    }
 
-    suspend fun addAllPlayers(players:List<Player>){
-        playerDao!!.addAllPlayers(players)
-    }
+
 
 
 }

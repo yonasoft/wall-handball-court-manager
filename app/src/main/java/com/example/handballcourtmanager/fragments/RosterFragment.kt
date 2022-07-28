@@ -54,17 +54,14 @@ class RosterFragment : Fragment() {
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        when(item.itemId) {
-            R.id.help_item-> findNavController().navigate(
-                R.id.action_rosterFragment_to_helpFragment
-            )
-            else->onDeleteQueue(item.itemId)
-        }
+
+        onDeleteQueue(item.itemId)
+
         return super.onOptionsItemSelected(item)
     }
 
 
-    private fun setupRecyclerView(rcv:RecyclerView, queue: LiveData<List<Player>>) {
+    private fun setupRecyclerView(rcv: RecyclerView, queue: LiveData<List<Player>>) {
 
         val layoutManager = LinearLayoutManager(this.context)
         layoutManager.orientation = RecyclerView.VERTICAL
@@ -84,25 +81,24 @@ class RosterFragment : Fragment() {
 
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
                 val removedPlayer: Player = queue.value!![viewHolder.adapterPosition]
-                removedPlayer.isDeleted=true
-                viewModel.updatePlayer(removedPlayer)
 
-                class PlayerDeletionCallback:Snackbar.Callback(){
+                class PlayerDeletionCallback : Snackbar.Callback() {
                     override fun onDismissed(transientBottomBar: Snackbar?, event: Int) {
                         super.onDismissed(transientBottomBar, event)
-                        if(removedPlayer.isDeleted) {
-                            viewModel.deletePlayer(removedPlayer)
-                        }
+                        viewModel.deletePlayer(removedPlayer)
+
                     }
 
                 }
 
-                Snackbar.make(binding.root, removedPlayer.name + " is being removed. press 'Undo' to stop!",Snackbar.LENGTH_LONG).
-                setAction(
+                Snackbar.make(
+                    binding.root,
+                    removedPlayer.name + " is being removed. press 'Undo' to stop!",
+                    Snackbar.LENGTH_LONG
+                ).setAction(
                     "Undo"
                 ) {
-                    removedPlayer.isDeleted = false
-                    viewModel.updatePlayer(removedPlayer)
+
                 }.addCallback(PlayerDeletionCallback())
                     .show()
             }
@@ -110,7 +106,7 @@ class RosterFragment : Fragment() {
 
     }
 
-    private fun onDeleteQueue(idOfQueueDeletion:Int){
+    private fun onDeleteQueue(idOfQueueDeletion: Int) {
         val removedQueueText: String
         val removedList = mutableListOf<Player>()
 
@@ -133,12 +129,12 @@ class RosterFragment : Fragment() {
             }
         }
 
-        val snackBar = Snackbar.make(binding.root, removedQueueText, Snackbar.LENGTH_LONG).
-        setAction(
-            "Undo"
-        ) {
-            viewModel.addAllPlayers(removedList)
-        }
+        val snackBar =
+            Snackbar.make(binding.root, removedQueueText, Snackbar.LENGTH_LONG).setAction(
+                "Undo"
+            ) {
+                viewModel.addAllPlayers(removedList)
+            }
         snackBar.show()
 
 

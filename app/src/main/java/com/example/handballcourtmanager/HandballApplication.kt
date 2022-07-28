@@ -7,5 +7,6 @@ class HandballApplication:Application() {
     override fun onCreate() {
         super.onCreate()
         PlayersRepository.initialize(this)
+        MatchesRepository.initialize(this)
     }
 }
