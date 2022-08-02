@@ -4,7 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.handballcourtmanager.PlayersRepository
+import com.example.handballcourtmanager.repositories.PlayersRepository
 import com.example.handballcourtmanager.db.playersdb.Player
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch

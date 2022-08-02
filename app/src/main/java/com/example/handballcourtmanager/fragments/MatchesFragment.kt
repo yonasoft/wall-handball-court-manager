@@ -19,16 +19,18 @@ import com.google.android.material.snackbar.Snackbar
 
 class MatchesFragment : Fragment() {
 
-    private var binding: FragmentCurrentMatchesBinding?=null
-    private val viewModel:MatchesViewModel by viewModels()
+    private var binding: FragmentCurrentMatchesBinding? = null
+    private val viewModel: MatchesViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding = DataBindingUtil.inflate(layoutInflater,
-            R.layout.fragment_current_matches,container,false)
-        val view=binding!!.root
+        binding = DataBindingUtil.inflate(
+            layoutInflater,
+            R.layout.fragment_current_matches, container, false
+        )
+        val view = binding!!.root
 
         setHasOptionsMenu(true)
         setupRecyclerView()
@@ -38,11 +40,13 @@ class MatchesFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
         binding!!.fabAddMatches.setOnClickListener {
             findNavController().navigate(
-                R.id.action_matchesFragment_to_createMatchDialogFragment
+                MatchesFragmentDirections.actionMatchesFragmentToCreateMatchDialogFragment()
             )
         }
+
     }
 
     private fun setupRecyclerView() {
@@ -51,6 +55,7 @@ class MatchesFragment : Fragment() {
         binding!!.rcvActiveMatches.layoutManager = layoutManager
         viewModel.matchesList.observe(viewLifecycleOwner) {
             binding!!.rcvActiveMatches.adapter = ActiveMatchesAdapter(it)
+
         }
 
         ItemTouchHelper(object : ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.RIGHT) {
@@ -65,32 +70,21 @@ class MatchesFragment : Fragment() {
 
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
                 val removedMatch: Match = viewModel.matchesList.value!![viewHolder.adapterPosition]
-
-                class PlayerDeletionCallback: Snackbar.Callback(){
-                    override fun onDismissed(transientBottomBar: Snackbar?, event: Int) {
-                        super.onDismissed(transientBottomBar, event)
-                        viewModel.removeMatch(removedMatch)
-                    }
-
-                }
+                viewModel.removeMatch(removedMatch)
 
                 Snackbar.make(
-                    binding!!.root,  "Match is being removed. press 'Undo' to stop!",
-                    Snackbar.LENGTH_LONG).
-                setAction(
+                    binding!!.root, "Match is being removed. press 'Undo' to stop!",
+                    Snackbar.LENGTH_LONG
+                ).setAction(
                     "Undo"
                 ) {
-
-                }.addCallback(PlayerDeletionCallback())
-                    .show()
+                    viewModel.addMatch(removedMatch)
+                }.show()
             }
         }).attachToRecyclerView(binding!!.rcvActiveMatches)
 
 
     }
-
-    //private fun addTestPlayer()
-
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         inflater.inflate(R.menu.matches_toolbar, menu)
@@ -98,8 +92,33 @@ class MatchesFragment : Fragment() {
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        onDeleteMatches(item.itemId)
+        return super.onOptionsItemSelected(item)
+    }
 
-            return super.onOptionsItemSelected(item)
+    private fun onDeleteMatches(idOfQueueDeletion: Int) {
+        val removedQueueText: String
+        val removedList = mutableListOf<Match>()
+
+        when (idOfQueueDeletion) {
+            R.id.clear_matches -> {
+                removedList.addAll(viewModel.matchesList.value!!)
+                removedQueueText = "Matches are being cleared!"
+                viewModel.removeAllCurrentMatches()
+            }
+            else-> return
+
+        }
+
+        val snackBar =
+            Snackbar.make(binding!!.root, removedQueueText, Snackbar.LENGTH_LONG).setAction(
+                "Undo"
+            ) {
+                viewModel.addMatches(removedList)
+            }
+        snackBar.show()
+
+
     }
 
 

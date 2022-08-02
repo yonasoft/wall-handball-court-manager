@@ -1,4 +1,4 @@
-package com.example.handballcourtmanager
+package com.example.handballcourtmanager.repositories
 
 import android.content.Context
 import androidx.lifecycle.LiveData
@@ -16,13 +16,13 @@ class PlayersRepository(context: Context) {
         private var INSTANCE: PlayersRepository? =null
 
         fun initialize(context: Context){
-            if(INSTANCE==null){
+            if(INSTANCE ==null){
                 INSTANCE = PlayersRepository(context)
             }
         }
 
-        fun get():PlayersRepository{
-            return INSTANCE?:
+        fun get(): PlayersRepository {
+            return INSTANCE ?:
             throw IllegalStateException("Repository must be initialized")
         }
     }

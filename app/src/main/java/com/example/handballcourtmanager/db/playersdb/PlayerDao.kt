@@ -3,7 +3,6 @@ package com.example.handballcourtmanager.db.playersdb
 
 import androidx.lifecycle.LiveData
 import androidx.room.*
-import com.example.handballcourtmanager.db.playersdb.Player
 
 @Dao
 interface PlayerDao {

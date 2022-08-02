@@ -37,7 +37,7 @@ class RosterFragment : Fragment() {
 
         binding.viewModel = viewModel
         setupRecyclerView(binding.queueRcv, viewModel.regularQueue)
-        //setupRecyclerView(binding.winnersRcv,viewModel!!.ge)
+        setupRecyclerView(binding.winnersRcv,viewModel.winnerQueue)
 
         binding.fabAddPlayers.setOnClickListener {
             findNavController().navigate(
@@ -81,15 +81,7 @@ class RosterFragment : Fragment() {
 
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
                 val removedPlayer: Player = queue.value!![viewHolder.adapterPosition]
-
-                class PlayerDeletionCallback : Snackbar.Callback() {
-                    override fun onDismissed(transientBottomBar: Snackbar?, event: Int) {
-                        super.onDismissed(transientBottomBar, event)
-                        viewModel.deletePlayer(removedPlayer)
-
-                    }
-
-                }
+                viewModel.deletePlayer(removedPlayer)
 
                 Snackbar.make(
                     binding.root,
@@ -98,8 +90,8 @@ class RosterFragment : Fragment() {
                 ).setAction(
                     "Undo"
                 ) {
-
-                }.addCallback(PlayerDeletionCallback())
+                    viewModel.addPlayer(removedPlayer)
+                }
                     .show()
             }
         }).attachToRecyclerView(rcv)

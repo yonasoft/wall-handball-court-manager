@@ -1,3 +1,4 @@
+
 package com.example.handballcourtmanager.adapter
 
 import android.view.LayoutInflater
@@ -10,6 +11,7 @@ import com.example.handballcourtmanager.databinding.SinglesMatchItemBinding
 import com.example.handballcourtmanager.databinding.TriangleMatchItemBinding
 import com.example.handballcourtmanager.db.matchesdb.Match
 import com.example.handballcourtmanager.db.matchesdb.MatchTypes
+import com.example.handballcourtmanager.fragments.MatchesFragmentDirections
 
 class SinglesMatchesHolder(
     val binding:SinglesMatchItemBinding
@@ -17,12 +19,14 @@ class SinglesMatchesHolder(
     fun bind(match:Match){
         binding.tvCourtNumber.text = match.courtNumber
         binding.teamOne.text = match.teamOnePlayer1
-        binding.teamTwo.text = match.teamOnePlayer2
+        binding.teamTwo.text = match.teamTwoPlayer1
         binding.t1Score.text = match.teamOneScore.toString()
         binding.t2Score.text = match.teamTwoScore.toString()
         binding.root.setOnClickListener{
-            binding.root.findNavController().navigate(R.id.action_matchesFragment_to_fragmentSinglesDetailFragment)
+            binding.root.findNavController().navigate(MatchesFragmentDirections.
+            actionMatchesFragmentToSinglesDetailFragment(match.id))
         }
+
 
     }
 }
@@ -35,12 +39,13 @@ class DoublesMatchesHolder(
         binding.tvCourtNumber.text = match.courtNumber
         binding.teamOneP1.text= match.teamOnePlayer1
         binding.teamOneP2.text= match.teamOnePlayer2
-        binding.teamTwoP1.text= match.teamOnePlayer1
-        binding.teamTwoP2.text= match.teamOnePlayer2
+        binding.teamTwoP1.text= match.teamTwoPlayer1
+        binding.teamTwoP2.text= match.teamTwoPlayer2
         binding.t1Score.text = match.teamOneScore.toString()
         binding.t2Score.text = match.teamTwoScore.toString()
         binding.root.setOnClickListener{
-            binding.root.findNavController().navigate(R.id.action_matchesFragment_to_fragmentDoublesDetail)
+            binding.root.findNavController().navigate(MatchesFragmentDirections.
+            actionMatchesFragmentToFragmentDoublesDetail(match.id))
         }
 
     }
@@ -58,7 +63,8 @@ class TriangleMatchesHolder(
         binding.t2Score.text = match.teamTwoScore.toString()
         binding.t3Score.text = match.teamThreeScore.toString()
         binding.root.setOnClickListener{
-            binding.root.findNavController().navigate(R.id.action_matchesFragment_to_fragmentTriangleDetail)
+            binding.root.findNavController().navigate(MatchesFragmentDirections.
+            actionMatchesFragmentToFragmentTriangleDetail(match.id))
         }
 
     }
@@ -104,4 +110,3 @@ class ActiveMatchesAdapter(private val matches: List<Match>):RecyclerView.Adapte
     }
 
 }
-

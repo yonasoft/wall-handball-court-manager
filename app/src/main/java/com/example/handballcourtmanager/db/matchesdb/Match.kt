@@ -3,13 +3,12 @@ package com.example.handballcourtmanager.db.matchesdb
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import com.example.handballcourtmanager.db.playersdb.Player
 import java.util.*
 
 @Entity(tableName = "matches")
 data class Match(
-    @PrimaryKey(autoGenerate = true)
-    val id: Int,
+    @PrimaryKey
+    val id: UUID,
     @ColumnInfo(name="match_type")
     val matchType:String,
     @ColumnInfo(name="court_number")
