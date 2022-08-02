@@ -2,32 +2,51 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
+    <data>
+        <variable
+            name="viewModel"
+            type="com.example.handballcourtmanager.viewmodel.MatchDetailViewModel" />
+    </data>
+
 <androidx.constraintlayout.widget.ConstraintLayout
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/blue_3"
     >
 
-
     <com.google.android.material.textview.MaterialTextView
+        android:layout_marginTop="16dp"
         android:id="@+id/tv_court"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:text="@string/court"
         android:textAlignment="viewEnd"
-        android:textSize="28dp"
+        android:textSize="28sp"
+
         app:layout_constraintEnd_toStartOf="@+id/guideline2"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <androidx.appcompat.widget.AppCompatSpinner
-        android:id="@+id/spinner_court_num"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/edit_layout"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:layout_width="64dp"
+        android:layout_height="64dp"
+        android:hint="#"
+        android:layout_marginStart="8dp"
         app:layout_constraintBottom_toTopOf="@+id/tv_t2_p1"
         app:layout_constraintStart_toStartOf="@+id/guideline2"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/edit_text_num"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:inputType="number"
+            android:text="@={viewModel.match.courtNumber}"
+            />
+
+    </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textview.MaterialTextView
         android:id="@+id/tv_t1_p1"
@@ -85,7 +104,7 @@
         app:layout_constraintTop_toBottomOf="@id/tv_t1_p2" />
 
     <com.google.android.material.textview.MaterialTextView
-        android:id="@+id/t1_score"
+        android:id="@+id/tv_t1_score"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:text="21"
@@ -96,7 +115,7 @@
         app:layout_constraintTop_toBottomOf="@+id/tv_t1_p2" />
 
     <com.google.android.material.textview.MaterialTextView
-        android:id="@+id/t2_score"
+        android:id="@+id/tv_t2_score"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:text="21"
@@ -137,7 +156,7 @@
         android:text="—"
         app:layout_constraintEnd_toStartOf="@+id/guideline3"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/t1_score" />
+        app:layout_constraintTop_toBottomOf="@+id/tv_t1_score" />
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/btn_t1_add"
@@ -147,7 +166,7 @@
         android:text="+"
         app:layout_constraintEnd_toStartOf="@+id/guideline2"
         app:layout_constraintStart_toStartOf="@+id/guideline3"
-        app:layout_constraintTop_toBottomOf="@+id/t1_score" />
+        app:layout_constraintTop_toBottomOf="@+id/tv_t1_score" />
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/btn_t2_sub"
@@ -157,7 +176,7 @@
         android:text="—"
         app:layout_constraintEnd_toStartOf="@+id/guideline4"
         app:layout_constraintStart_toStartOf="@+id/guideline2"
-        app:layout_constraintTop_toBottomOf="@+id/t2_score" />
+        app:layout_constraintTop_toBottomOf="@+id/tv_t2_score" />
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/btn_t2_add"
@@ -167,7 +186,7 @@
         android:text="+"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@+id/guideline4"
-        app:layout_constraintTop_toBottomOf="@+id/t2_score" />
+        app:layout_constraintTop_toBottomOf="@+id/tv_t2_score" />
 
 
     <com.google.android.material.button.MaterialButton
@@ -178,7 +197,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         android:text="@string/end_match"
-        android:layout_marginBottom="32dp"
+        android:layout_marginBottom="16dp"
         />
 </androidx.constraintlayout.widget.ConstraintLayout>
 

@@ -10,11 +10,13 @@
             type="com.example.handballcourtmanager.viewmodel.MatchesViewModel" />
     </data>
 
+
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:paddingTop="32dp"
-
+        android:background="@color/blue_3"
         >
 
         <com.google.android.material.textview.MaterialTextView

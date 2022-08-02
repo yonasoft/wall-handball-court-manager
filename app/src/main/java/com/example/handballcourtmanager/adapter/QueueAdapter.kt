@@ -2,7 +2,6 @@ package com.example.handballcourtmanager.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.core.view.isGone
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.example.handballcourtmanager.R

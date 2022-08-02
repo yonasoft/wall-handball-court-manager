@@ -1,10 +1,11 @@
-package com.example.handballcourtmanager
+package com.example.handballcourtmanager.repositories
 
 import android.content.Context
 import androidx.lifecycle.LiveData
 import com.example.handballcourtmanager.db.matchesdb.Match
 import com.example.handballcourtmanager.db.matchesdb.MatchesDao
-import com.example.handballcourtmanager.db.playersdb.MatchesDatabase
+import com.example.handballcourtmanager.db.matchesdb.MatchesDatabase
+import java.util.*
 
 
 //Repository to retrieve data database
@@ -16,13 +17,13 @@ class MatchesRepository(context: Context) {
         private var INSTANCE: MatchesRepository? =null
 
         fun initialize(context: Context){
-            if(INSTANCE==null){
+            if(INSTANCE ==null){
                 INSTANCE = MatchesRepository(context)
             }
         }
 
-        fun get():MatchesRepository{
-            return INSTANCE?:
+        fun get(): MatchesRepository {
+            return INSTANCE ?:
             throw IllegalStateException("Repository must be initialized")
         }
     }
@@ -32,7 +33,7 @@ class MatchesRepository(context: Context) {
     }
 
     suspend fun addAllMatch(matches: List<Match>){
-        matchesDao!!.addAllPlayers(matches)
+        matchesDao!!.addAllMatches(matches)
     }
 
     suspend fun removeMatch(match: Match){
@@ -52,8 +53,8 @@ class MatchesRepository(context: Context) {
         matchesDao!!.deleteCompletedMatches()
     }
 
-    fun getMatch(id:Int){
-        matchesDao!!.getMatch(id)
+    fun getMatch(id: UUID):LiveData<Match>{
+        return matchesDao!!.getMatch(id)
     }
 
     fun getAllCurrentMatches():LiveData<List<Match>>{

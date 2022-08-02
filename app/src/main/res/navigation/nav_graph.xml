@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/rosterFragment">
+    app:startDestination="@id/matchesFragment">
 
     <fragment
         android:id="@+id/matchesFragment"
@@ -18,13 +18,17 @@
             app:destination="@id/createMatchDialogFragment" />
         <action
             android:id="@+id/action_matchesFragment_to_fragmentTriangleDetail"
-            app:destination="@id/fragmentTriangleDetail" />
+            app:destination="@id/fragmentTriangleDetail"
+            app:popUpTo="@id/matchesFragment" />
         <action
             android:id="@+id/action_matchesFragment_to_fragmentDoublesDetail"
-            app:destination="@id/fragmentDoublesDetail" />
+            app:destination="@id/fragmentDoublesDetail"
+            app:popUpTo="@id/matchesFragment" />
         <action
-            android:id="@+id/action_matchesFragment_to_fragmentSinglesDetailFragment"
-            app:destination="@id/fragmentSinglesDetailFragment" />
+            android:id="@+id/action_matchesFragment_to_singlesDetailFragment"
+            app:destination="@id/singlesDetailFragment"
+            app:popUpToInclusive="false" />
+
     </fragment>
 
 
@@ -49,6 +53,7 @@
             android:id="@+id/action_resultsFragment_to_helpFragment"
             app:destination="@id/helpFragment" />
     </fragment>
+
     <dialog
         android:id="@+id/addPlayerDialogFragment"
         android:name="com.example.handballcourtmanager.fragments.AddPlayerDialogFragment"
@@ -63,14 +68,59 @@
         android:label="Create Matches" />
     <fragment
         android:id="@+id/fragmentDoublesDetail"
-        android:name="com.example.handballcourtmanager.fragments.FragmentDoublesDetail"
-        android:label="Doubles Detail" />
+        android:name="com.example.handballcourtmanager.fragments.DoublesDetailFragment"
+        android:label="Doubles Detail" >
+        <action
+            android:id="@+id/action_fragmentDoublesDetail_to_selectFromRosterFragment"
+            app:destination="@id/selectFromRosterFragment" />
+        <argument
+            android:name="matchId"
+            app:argType="java.util.UUID" />
+        <action
+            android:id="@+id/action_fragmentDoublesDetail_to_endMatchDialogFragment"
+            app:destination="@id/endMatchDialogFragment" />
+
+    </fragment>
+
+
     <fragment
         android:id="@+id/fragmentTriangleDetail"
-        android:name="com.example.handballcourtmanager.fragments.FragmentTriangleDetail"
-        android:label="Triangle Detail" />
+        android:name="com.example.handballcourtmanager.fragments.TriangleDetailFragment"
+        android:label="Triangle Detail" >
+        <action
+            android:id="@+id/action_fragmentTriangleDetail_to_selectFromRosterFragment"
+            app:destination="@id/selectFromRosterFragment" />
+        <argument
+            android:name="matchId"
+            app:argType="java.util.UUID" />
+        <action
+            android:id="@+id/action_fragmentTriangleDetail_to_endMatchDialogFragment"
+            app:destination="@id/endMatchDialogFragment" />
+
+    </fragment>
+
     <fragment
-        android:id="@+id/fragmentSinglesDetailFragment"
-        android:name="com.example.handballcourtmanager.fragments.FragmentSinglesDetailFragment"
-        android:label="Singles Detail" />
+        android:id="@+id/selectFromRosterFragment"
+        android:name="com.example.handballcourtmanager.fragments.SelectFromRosterFragment"
+        android:label="Select Player" />
+    <fragment
+        android:id="@+id/singlesDetailFragment"
+        android:name="com.example.handballcourtmanager.fragments.SinglesDetailFragment"
+        android:label="Singles Detail">
+        <action
+            android:id="@+id/action_singlesDetailFragment_to_selectFromRosterFragment"
+            app:destination="@id/selectFromRosterFragment"
+            app:launchSingleTop="false" />
+        <argument
+            android:name="matchId"
+            app:argType="java.util.UUID" />
+        <action
+            android:id="@+id/action_singlesDetailFragment_to_endMatchDialogFragment"
+            app:destination="@id/endMatchDialogFragment" />
+
+    </fragment>
+    <dialog
+        android:id="@+id/endMatchDialogFragment"
+        android:name="com.example.handballcourtmanager.fragments.EndMatchDialogFragment"
+        android:label="End Match?" />
 </navigation>

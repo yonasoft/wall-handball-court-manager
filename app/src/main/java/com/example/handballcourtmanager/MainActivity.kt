@@ -14,22 +14,26 @@ import com.example.handballcourtmanager.databinding.ActivityMainBinding
 class MainActivity : AppCompatActivity() {
 
     private var binding:ActivityMainBinding?=null
+    private lateinit var appBarConfiguration: AppBarConfiguration
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         binding = DataBindingUtil.setContentView(this,R.layout.activity_main)
 
+        setupNavigation()
 
+    }
+
+    private fun setupNavigation() {
+
+        setSupportActionBar(binding!!.toolbar)
         val navHostFragment =
-            supportFragmentManager.findFragmentById(binding!!.navHostFragment.id) as NavHostFragment
+            supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
         val navController = navHostFragment.navController
-
-        binding!!.toolbar.setupWithNavController(navController)
+        appBarConfiguration = AppBarConfiguration.Builder(navController.graph).build()
+        binding!!.toolbar.setupWithNavController(navController,appBarConfiguration)
         binding!!.bottomNav.setupWithNavController(navController)
-        setSupportActionBar(binding!!.toolbar)
-
-        setSupportActionBar(binding!!.toolbar)
 
     }
 
@@ -43,7 +47,9 @@ class MainActivity : AppCompatActivity() {
     }
 
     override fun onSupportNavigateUp(): Boolean {
-        return super.onSupportNavigateUp()
+        val navController = findNavController(R.id.nav_host_fragment)
+        return navController.navigateUp(appBarConfiguration)
+                || super.onSupportNavigateUp()
     }
 
 }

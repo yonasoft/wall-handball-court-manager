@@ -34,6 +34,7 @@ class AddPlayerDialogFragment:DialogFragment() {
             R.layout.fragment_add_player_dialog,container,false)
         val view=binding.root
         binding.viewModel = viewModel
+        binding.lifecycleOwner = this
 
         binding.addPlayerButton.setOnClickListener {
             viewModel.addPlayer()

@@ -2,15 +2,16 @@ package com.example.handballcourtmanager.db.matchesdb
 
 import androidx.lifecycle.LiveData
 import androidx.room.*
+import java.util.*
 
 @Dao
 interface MatchesDao{
 
-    @Insert(onConflict = OnConflictStrategy.IGNORE)
+    @Insert
     suspend fun addMatch(match: Match)
 
-    @Insert(onConflict = OnConflictStrategy.IGNORE)
-    suspend fun addAllPlayers(players:List<Match>)
+    @Insert
+    suspend fun addAllMatches(matches:List<Match>)
 
     @Delete
     suspend fun delete(match: Match)
@@ -19,7 +20,7 @@ interface MatchesDao{
     suspend fun update(match: Match)
 
     @Query("SELECT * FROM matches WHERE id=:id")
-    fun getMatch(id:Int):LiveData<Match>
+    fun getMatch(id: UUID):LiveData<Match>
 
     @Query("SELECT * FROM matches WHERE is_completed=0 ORDER BY match_type")
     fun getCurrentMatches(): LiveData<List<Match>>

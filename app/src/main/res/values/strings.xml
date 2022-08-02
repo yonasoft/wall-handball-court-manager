@@ -22,6 +22,9 @@
     <string name="court">Court:</string>
     <string name="end_match">end match</string>
     <string name="ok">OK</string>
+    <string name="tv_end_match_confirmation">Are you sure you want to end the match?</string>
+    <string name="yes">yes</string>
+    <string name="no">no</string>
 
 
 </resources>
