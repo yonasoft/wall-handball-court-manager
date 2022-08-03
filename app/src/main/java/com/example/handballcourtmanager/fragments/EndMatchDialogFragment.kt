@@ -13,6 +13,7 @@ import com.example.handballcourtmanager.R
 import com.example.handballcourtmanager.databinding.FragmentEndMatchDialogBinding
 
 
+//Confirmation dialog when end match is pressed in a detail dialog
 class EndMatchDialogFragment: DialogFragment() {
 
     private var binding:FragmentEndMatchDialogBinding?=null
@@ -35,16 +36,28 @@ class EndMatchDialogFragment: DialogFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding!!.btnYes.setOnClickListener{
-            setFragmentResult(REQUEST_KEY_END,
-            bundleOf(BUNDLE_KEY_END to true)
-                )
+        //Setup listeners
+        setupListeners()
+    }
+
+    private fun setupListeners() {
+        //Function of the yes buttons
+        binding!!.btnYes.setOnClickListener {
+            //Send result of true to end the match to the detail fragment that opened this dialog
+            setFragmentResult(
+                REQUEST_KEY_END,
+                bundleOf(BUNDLE_KEY_END to true)
+            )
+            //End dialog
             dismiss()
         }
-        binding!!.btnNo.setOnClickListener{
-            setFragmentResult(REQUEST_KEY_END,
+        binding!!.btnNo.setOnClickListener {
+            //Send result of false to end the match to the detail fragment that opened this dialog
+            setFragmentResult(
+                REQUEST_KEY_END,
                 bundleOf(BUNDLE_KEY_END to false)
             )
+            //End dialog
             dismiss()
         }
     }

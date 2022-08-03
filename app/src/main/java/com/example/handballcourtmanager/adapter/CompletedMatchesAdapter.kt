@@ -14,9 +14,8 @@ import com.example.handballcourtmanager.db.matchesdb.MatchTypes
 import com.example.handballcourtmanager.fragments.MatchesFragmentDirections
 
 
-
+//Adapter for results. same as the active matches adapter EXCEPT there is no click listener
 class CompletedMatchesAdapter(private val matches: List<Match>):RecyclerView.Adapter<RecyclerView.ViewHolder>(){
-
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         val inflater = LayoutInflater.from(parent.context)
@@ -63,9 +62,6 @@ class CompletedMatchesAdapter(private val matches: List<Match>):RecyclerView.Ada
             binding.teamTwo.text = match.teamTwoPlayer1
             binding.t1Score.text = match.teamOneScore.toString()
             binding.t2Score.text = match.teamTwoScore.toString()
-
-
-
         }
     }
 
@@ -81,7 +77,6 @@ class CompletedMatchesAdapter(private val matches: List<Match>):RecyclerView.Ada
             binding.teamTwoP2.text= match.teamTwoPlayer2
             binding.t1Score.text = match.teamOneScore.toString()
             binding.t2Score.text = match.teamTwoScore.toString()
-
 
         }
     }

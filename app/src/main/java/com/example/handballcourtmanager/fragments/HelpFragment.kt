@@ -9,6 +9,7 @@ import androidx.fragment.app.Fragment
 import com.example.handballcourtmanager.R
 import com.example.handballcourtmanager.databinding.FragmentHelpBinding
 
+//Help fragment for help and faq related to this app
 class HelpFragment:Fragment() {
 
     private var binding:FragmentHelpBinding?=null

@@ -9,6 +9,7 @@ import java.util.*
 data class Match(
     @PrimaryKey
     val id: UUID,
+    //Type of match (See the enum "Match_Types").
     @ColumnInfo(name="match_type")
     val matchType:String,
     @ColumnInfo(name="court_number")
@@ -31,6 +32,7 @@ data class Match(
     var teamThreePlayer:String="TBA",
     @ColumnInfo(name="is_completed")
     var isCompleted:Boolean=false,
+    //Below is not used; ignore.
     @ColumnInfo(name="winner")
     var winner1: String=" ",
     @ColumnInfo(name="winner2")

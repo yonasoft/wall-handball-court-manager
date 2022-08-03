@@ -25,8 +25,8 @@
     <string name="tv_end_match_confirmation">Are you sure you want to end the match?</string>
     <string name="yes">yes</string>
     <string name="no">no</string>
-    <string name="tv_return_winner">Select these players back to winner\'s queue?</string>
-    <string name="tv_return_regular">Select these players back to regular queue?</string>
+    <string name="tv_return_winner">Select these players to send back to winner\'s queue?</string>
+    <string name="tv_return_regular">Select these players to send back to regular queue?</string>
 
 
 </resources>

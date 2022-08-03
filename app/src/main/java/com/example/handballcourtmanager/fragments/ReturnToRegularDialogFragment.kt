@@ -27,7 +27,7 @@ class ReturnToRegularQueueFragmentDialogFragment:DialogFragment() {
         savedInstanceState: Bundle?
     ): View {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_return_to_queue_dialog,container,false)
-        dialog?.window?.setLayout(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT)
+        dialog?.window?.setLayout(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT)
         binding!!.apply {
             tvReturnToQueueMessage.text = "Select these players back to regular queue?"
 
@@ -36,7 +36,6 @@ class ReturnToRegularQueueFragmentDialogFragment:DialogFragment() {
             if(args.players[2]!="TBA") checkboxT2p1.text=args.players[2] else binding!!.checkboxT2p1.visibility=View.GONE
             if(args.players[3]!="TBA") checkboxT2p2.text=args.players[3] else binding!!.checkboxT2p2.visibility=View.GONE
             if(args.players[4]!="TBA") checkboxT3.text=args.players[4] else binding!!.checkboxT3.visibility=View.GONE
-
 
         }
 

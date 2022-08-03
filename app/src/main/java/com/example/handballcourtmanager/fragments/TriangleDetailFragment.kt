@@ -5,6 +5,7 @@ import android.view.KeyEvent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.setFragmentResultListener
@@ -81,26 +82,38 @@ class TriangleDetailFragment : Fragment() {
 
             btnEndMatch.setOnClickListener {
                 val match = matchDetailViewModel.match!!.value!!
-                findNavController().navigate(
-                    TriangleDetailFragmentDirections.actionFragmentTriangleDetailToEndMatchDialogFragment())
+                if (match.teamOnePlayer1 != "TBA" && match.teamTwoPlayer1 != "TBA" && match.teamThreePlayer != "TBA") {
+                    findNavController().navigate(
+                        TriangleDetailFragmentDirections.actionFragmentTriangleDetailToEndMatchDialogFragment()
+                    )
 
-                setFragmentResultListener(EndMatchDialogFragment.REQUEST_KEY_END){ _, bundle ->
-                    val result = bundle.getBoolean(EndMatchDialogFragment.BUNDLE_KEY_END)
+                    setFragmentResultListener(EndMatchDialogFragment.REQUEST_KEY_END) { _, bundle ->
+                        val result = bundle.getBoolean(EndMatchDialogFragment.BUNDLE_KEY_END)
 
-                    if(result) {
+                        if (result) {
 
-                        findNavController().popBackStack()
+                            findNavController().popBackStack()
 
-                        findNavController().navigate(TriangleDetailFragmentDirections.actionFragmentTriangleDetailToReturnToWinnersDialogFragment(
-                            arrayOf(
-                                match.teamOnePlayer1,match.teamOnePlayer2,match.teamTwoPlayer1,match.teamTwoPlayer2,match.teamThreePlayer
-                            ),
-                            MatchTypes.TRIANGLE
-                        ))
-                        matchDetailViewModel.completeMatch()
+                            findNavController().navigate(
+                                TriangleDetailFragmentDirections.actionFragmentTriangleDetailToReturnToWinnersDialogFragment(
+                                    arrayOf(
+                                        match.teamOnePlayer1,
+                                        match.teamOnePlayer2,
+                                        match.teamTwoPlayer1,
+                                        match.teamTwoPlayer2,
+                                        match.teamThreePlayer
+                                    ),
+                                    MatchTypes.TRIANGLE
+                                )
+                            )
+                            matchDetailViewModel.completeMatch()
+
+                        }
 
                     }
-
+                } else {
+                    Toast.makeText(context, "Press the \"TBA\" to add a player!", Toast.LENGTH_LONG)
+                        .show()
                 }
             }
 
@@ -137,7 +150,7 @@ class TriangleDetailFragment : Fragment() {
     private fun changeOrAddPlayer(playerAndTeam: String) {
         findNavController().navigate(
             TriangleDetailFragmentDirections.actionFragmentTriangleDetailToSelectFromRosterFragment()
-            )
+        )
 
         setFragmentResultListener(SelectFromRosterFragment.REQUEST_KEY_PLAYER) { _, bundle ->
             val result = bundle.getString(SelectFromRosterFragment.BUNDLE_KEY_PLAYER)

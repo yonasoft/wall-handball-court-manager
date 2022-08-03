@@ -8,6 +8,7 @@ import com.example.handballcourtmanager.R
 import com.example.handballcourtmanager.databinding.PlayerQueueItemBinding
 import com.example.handballcourtmanager.db.playersdb.Player
 
+//Adapter for players in queue
 class QueueAdapter(private val queue: List<Player>):
 RecyclerView.Adapter<QueueAdapter.ViewHolder>(){
 

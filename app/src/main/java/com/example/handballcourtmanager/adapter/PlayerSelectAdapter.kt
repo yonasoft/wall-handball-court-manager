@@ -8,6 +8,9 @@ import com.example.handballcourtmanager.R
 import com.example.handballcourtmanager.databinding.PlayerQueueItemBinding
 import com.example.handballcourtmanager.db.playersdb.Player
 
+//Recycler view adapter for players in the player selection when selecting player for the that match
+//Separate from the queue adapter because an onclick listener is needed
+//The clicked item will be passed to the name of the player of that match
 class PlayerSelectAdapter(private val queue: List<Player>) :
     RecyclerView.Adapter<PlayerSelectAdapter.ViewHolder>() {
 

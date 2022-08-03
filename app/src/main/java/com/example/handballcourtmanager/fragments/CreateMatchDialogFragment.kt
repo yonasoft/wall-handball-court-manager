@@ -32,15 +32,20 @@ class CreateMatchDialogFragment:DialogFragment(){
         binding = DataBindingUtil.inflate(layoutInflater,
             R.layout.fragment_create_match_dialog,container,false)
         val view=binding.root
+
         binding.viewModel = viewModel
+        //Creates spinner items aka the numbers that will show in the spinner
         val spinnerItems = List(33){ i ->i }
         val arrayAdapter:ArrayAdapter<Int> = ArrayAdapter(this.context!!,android.R.layout.simple_spinner_dropdown_item,spinnerItems)
+
+        //Adapter that applies spinner for each individual spinner for each match type
         binding.spinnerSingles.adapter = arrayAdapter
         binding.spinnerDoubles.adapter = arrayAdapter
         binding.spinnerTriangles.adapter = arrayAdapter
 
-
-
+        //Creates x number of matches based on the what is selected in the spinner for each.
+        // Each match type has it's own spinner so number of matches can be different for each type
+        //Dismisses dialog when done
         binding.btnOk.setOnClickListener{
             viewModel.numOfSinglesToAdd.value = binding.spinnerSingles.selectedItem as Int
             viewModel.numOfDoublesToAdd.value = binding.spinnerDoubles.selectedItem as Int

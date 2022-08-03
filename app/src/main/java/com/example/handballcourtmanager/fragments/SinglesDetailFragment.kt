@@ -5,6 +5,7 @@ import android.view.KeyEvent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.setFragmentResultListener
@@ -69,30 +70,42 @@ class SinglesDetailFragment : Fragment() {
                 matchDetailViewModel.deductPoints("t2")
             }
 
-            btnEndMatch.setOnClickListener{
+            btnEndMatch.setOnClickListener {
                 val match = matchDetailViewModel.match!!.value!!
-                findNavController().navigate(SinglesDetailFragmentDirections.actionSinglesDetailFragmentToEndMatchDialogFragment())
+                if (match.teamOnePlayer1 != "TBA" && match.teamTwoPlayer1 != "TBA") {
+                    findNavController().navigate(SinglesDetailFragmentDirections.actionSinglesDetailFragmentToEndMatchDialogFragment())
 
-                setFragmentResultListener(EndMatchDialogFragment.REQUEST_KEY_END){ _, bundle ->
-                    val result = bundle.getBoolean(EndMatchDialogFragment.BUNDLE_KEY_END)
+                    setFragmentResultListener(EndMatchDialogFragment.REQUEST_KEY_END) { _, bundle ->
+                        val result = bundle.getBoolean(EndMatchDialogFragment.BUNDLE_KEY_END)
 
-                    if(result) {
+                        if (result) {
 
-                        findNavController().popBackStack()
+                            findNavController().popBackStack()
 
-                        findNavController().navigate(SinglesDetailFragmentDirections.actionSinglesDetailFragmentToReturnToWinnersDialogFragment(
-                            arrayOf(
-                                match.teamOnePlayer1,match.teamOnePlayer2,match.teamTwoPlayer1,match.teamTwoPlayer2,match.teamThreePlayer
-                            ),
-                            MatchTypes.SINGLES
-                        ))
-                        matchDetailViewModel.completeMatch()
+                            findNavController().navigate(
+                                SinglesDetailFragmentDirections.actionSinglesDetailFragmentToReturnToWinnersDialogFragment(
+                                    arrayOf(
+                                        match.teamOnePlayer1,
+                                        match.teamOnePlayer2,
+                                        match.teamTwoPlayer1,
+                                        match.teamTwoPlayer2,
+                                        match.teamThreePlayer
+                                    ),
+                                    MatchTypes.SINGLES
+                                )
+                            )
+                            matchDetailViewModel.completeMatch()
+
+                        }
 
                     }
 
                 }
-
+                else{
+                    Toast.makeText(context,"Press the \"TBA\" to add a player!",Toast.LENGTH_LONG).show()
+                }
             }
+
 
             editTextNum.apply {
 

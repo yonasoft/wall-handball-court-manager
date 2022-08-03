@@ -36,7 +36,7 @@ class ReturnToWinnersDialogFragment : DialogFragment() {
         )
         dialog?.window?.setLayout(
             LinearLayout.LayoutParams.MATCH_PARENT,
-            LinearLayout.LayoutParams.WRAP_CONTENT
+            LinearLayout.LayoutParams.MATCH_PARENT
         )
         binding!!.apply {
             tvReturnToQueueMessage.text = "Select these players back to Winners queue?"

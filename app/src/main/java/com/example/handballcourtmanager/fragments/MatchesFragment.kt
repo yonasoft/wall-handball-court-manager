@@ -16,7 +16,7 @@ import com.example.handballcourtmanager.db.matchesdb.Match
 import com.example.handballcourtmanager.viewmodel.MatchesViewModel
 import com.google.android.material.snackbar.Snackbar
 
-
+//Matches fragment which list all current matches
 class MatchesFragment : Fragment() {
 
     private var binding: FragmentCurrentMatchesBinding? = null
@@ -33,6 +33,7 @@ class MatchesFragment : Fragment() {
         val view = binding!!.root
 
         setHasOptionsMenu(true)
+        //Recycler view for all the matches
         setupRecyclerView()
 
         return view

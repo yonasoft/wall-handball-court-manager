@@ -21,6 +21,7 @@ class AddPlayerDialogFragment:DialogFragment() {
 
     override fun onStart() {
         super.onStart()
+        //Sets the size of the dialog
         dialog?.window?.setLayout(LinearLayout.LayoutParams.MATCH_PARENT,LinearLayout.LayoutParams.WRAP_CONTENT)
     }
 
@@ -33,9 +34,11 @@ class AddPlayerDialogFragment:DialogFragment() {
         binding = DataBindingUtil.inflate(layoutInflater,
             R.layout.fragment_add_player_dialog,container,false)
         val view=binding.root
+
         binding.viewModel = viewModel
         binding.lifecycleOwner = this
 
+        //Adds the player entered into queue
         binding.addPlayerButton.setOnClickListener {
             viewModel.addPlayer()
             dismiss()

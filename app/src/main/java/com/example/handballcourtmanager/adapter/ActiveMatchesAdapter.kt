@@ -13,25 +13,27 @@ import com.example.handballcourtmanager.db.matchesdb.Match
 import com.example.handballcourtmanager.db.matchesdb.MatchTypes
 import com.example.handballcourtmanager.fragments.MatchesFragmentDirections
 
+
+//Match view holder for singles
 class SinglesMatchesHolder(
     val binding:SinglesMatchItemBinding
 ):RecyclerView.ViewHolder(binding.root){
+
     fun bind(match:Match){
         binding.tvCourtNumber.text = match.courtNumber
         binding.teamOne.text = match.teamOnePlayer1
         binding.teamTwo.text = match.teamTwoPlayer1
         binding.t1Score.text = match.teamOneScore.toString()
         binding.t2Score.text = match.teamTwoScore.toString()
+        //Will send to the detail screen of the match when clicked
         binding.root.setOnClickListener{
             binding.root.findNavController().navigate(MatchesFragmentDirections.
             actionMatchesFragmentToSinglesDetailFragment(match.id))
         }
-
-
     }
 }
 
-
+//Match view holder for doubles
 class DoublesMatchesHolder(
     val binding:DoublesMatchItemBinding
 ):RecyclerView.ViewHolder(binding.root){
@@ -43,6 +45,7 @@ class DoublesMatchesHolder(
         binding.teamTwoP2.text= match.teamTwoPlayer2
         binding.t1Score.text = match.teamOneScore.toString()
         binding.t2Score.text = match.teamTwoScore.toString()
+        //Will send to the detail screen of the match when clicked
         binding.root.setOnClickListener{
             binding.root.findNavController().navigate(MatchesFragmentDirections.
             actionMatchesFragmentToFragmentDoublesDetail(match.id))
@@ -51,6 +54,7 @@ class DoublesMatchesHolder(
     }
 }
 
+//Match view holder for triangle
 class TriangleMatchesHolder(
     val binding:TriangleMatchItemBinding
 ):RecyclerView.ViewHolder(binding.root){
@@ -62,6 +66,7 @@ class TriangleMatchesHolder(
         binding.t1Score.text = match.teamOneScore.toString()
         binding.t2Score.text = match.teamTwoScore.toString()
         binding.t3Score.text = match.teamThreeScore.toString()
+        //Will send to the detail screen of the match when clicked
         binding.root.setOnClickListener{
             binding.root.findNavController().navigate(MatchesFragmentDirections.
             actionMatchesFragmentToFragmentTriangleDetail(match.id))
@@ -72,7 +77,7 @@ class TriangleMatchesHolder(
 
 class ActiveMatchesAdapter(private val matches: List<Match>):RecyclerView.Adapter<RecyclerView.ViewHolder>(){
 
-
+    //Create view holder based the layout returned from getItemViewType()
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         val inflater = LayoutInflater.from(parent.context)
         val bindingSingles =  SinglesMatchItemBinding.inflate(inflater,parent,false)
@@ -85,7 +90,7 @@ class ActiveMatchesAdapter(private val matches: List<Match>):RecyclerView.Adapte
             else -> throw RuntimeException("View holder type exception")
         }
     }
-
+    //bind view holder based on layout
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         val match  = matches[position]
         when(holder.itemViewType){
@@ -100,6 +105,7 @@ class ActiveMatchesAdapter(private val matches: List<Match>):RecyclerView.Adapte
         return matches.size
     }
 
+    //Check the match type and return a layout
     override fun getItemViewType(position: Int): Int {
         return when(matches[position].matchType){
             MatchTypes.SINGLES -> R.layout.singles_match_item
