@@ -13,6 +13,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.example.handballcourtmanager.R
 import com.example.handballcourtmanager.databinding.FragmentTriangleDetailBinding
+import com.example.handballcourtmanager.db.matchesdb.MatchTypes
 import com.example.handballcourtmanager.viewmodel.MatchDetailViewModel
 import com.example.handballcourtmanager.viewmodel.MatchDetailViewModelFactory
 
@@ -79,18 +80,27 @@ class TriangleDetailFragment : Fragment() {
             }
 
             btnEndMatch.setOnClickListener {
-                val match = matchDetailViewModel.match!!.value
+                val match = matchDetailViewModel.match!!.value!!
                 findNavController().navigate(
-                    TriangleDetailFragmentDirections.actionFragmentTriangleDetailToEndMatchDialogFragment(
+                    TriangleDetailFragmentDirections.actionFragmentTriangleDetailToEndMatchDialogFragment())
 
-                    ))
-                setFragmentResultListener(EndMatchDialogFragment.REQUEST_KEY_END){requestKey, bundle ->
+                setFragmentResultListener(EndMatchDialogFragment.REQUEST_KEY_END){ _, bundle ->
                     val result = bundle.getBoolean(EndMatchDialogFragment.BUNDLE_KEY_END)
+
                     if(result) {
-                        matchDetailViewModel.completeMatch()
+
                         findNavController().popBackStack()
-                        findNavController().navigateUp()
+
+                        findNavController().navigate(TriangleDetailFragmentDirections.actionFragmentTriangleDetailToReturnToWinnersDialogFragment(
+                            arrayOf(
+                                match.teamOnePlayer1,match.teamOnePlayer2,match.teamTwoPlayer1,match.teamTwoPlayer2,match.teamThreePlayer
+                            ),
+                            MatchTypes.TRIANGLE
+                        ))
+                        matchDetailViewModel.completeMatch()
+
                     }
+
                 }
             }
 

@@ -8,6 +8,7 @@ import androidx.core.os.bundleOf
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.setFragmentResult
+import androidx.navigation.fragment.findNavController
 import com.example.handballcourtmanager.R
 import com.example.handballcourtmanager.databinding.FragmentEndMatchDialogBinding
 
@@ -15,6 +16,7 @@ import com.example.handballcourtmanager.databinding.FragmentEndMatchDialogBindin
 class EndMatchDialogFragment: DialogFragment() {
 
     private var binding:FragmentEndMatchDialogBinding?=null
+
 
     companion object{
         const val REQUEST_KEY_END = "request_key"
@@ -37,12 +39,13 @@ class EndMatchDialogFragment: DialogFragment() {
             setFragmentResult(REQUEST_KEY_END,
             bundleOf(BUNDLE_KEY_END to true)
                 )
+            dismiss()
         }
         binding!!.btnNo.setOnClickListener{
             setFragmentResult(REQUEST_KEY_END,
                 bundleOf(BUNDLE_KEY_END to false)
             )
-
+            dismiss()
         }
     }
 

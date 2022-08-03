@@ -129,8 +129,6 @@ class RosterFragment : Fragment() {
             }
         snackBar.show()
 
-
     }
-
 
 }

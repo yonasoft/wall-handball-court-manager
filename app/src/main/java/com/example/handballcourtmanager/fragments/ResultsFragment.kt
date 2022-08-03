@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.handballcourtmanager.R
 import com.example.handballcourtmanager.adapter.ActiveMatchesAdapter
+import com.example.handballcourtmanager.adapter.CompletedMatchesAdapter
 import com.example.handballcourtmanager.databinding.FragmentResultsBinding
 import com.example.handballcourtmanager.db.matchesdb.Match
 import com.example.handballcourtmanager.viewmodel.MatchesViewModel
@@ -61,7 +62,6 @@ class ResultsFragment : Fragment() {
                 viewModel.removeAllResults()
             }
             else-> return
-
         }
 
         val snackBar =
@@ -79,7 +79,7 @@ class ResultsFragment : Fragment() {
         layoutManager.orientation = RecyclerView.VERTICAL
         binding!!.rcvResults.layoutManager = layoutManager
         viewModel.resultsList.observe(viewLifecycleOwner) {
-            binding!!.rcvResults.adapter = ActiveMatchesAdapter(it)
+            binding!!.rcvResults.adapter = CompletedMatchesAdapter(it)
         }
 
         ItemTouchHelper(object : ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.RIGHT) {

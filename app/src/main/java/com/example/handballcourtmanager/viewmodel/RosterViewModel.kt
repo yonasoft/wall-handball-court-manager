@@ -4,8 +4,8 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.handballcourtmanager.repositories.PlayersRepository
 import com.example.handballcourtmanager.db.playersdb.Player
+import com.example.handballcourtmanager.repositories.PlayersRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -40,6 +40,19 @@ class RosterViewModel : ViewModel() {
         viewModelScope.launch {
             withContext(Dispatchers.IO) {
                 PlayersRepository.get().addAllPlayers(players)
+            }
+        }
+
+    }
+
+    fun addAllPlayers(players: List<String>, areWinners:Boolean) {
+        viewModelScope.launch {
+            withContext(Dispatchers.IO) {
+                val playersAsClass:MutableList<Player> = mutableListOf()
+                for (player in players){
+                    playersAsClass.add(Player(0,player,areWinners))
+                }
+                addAllPlayers(playersAsClass)
             }
         }
 

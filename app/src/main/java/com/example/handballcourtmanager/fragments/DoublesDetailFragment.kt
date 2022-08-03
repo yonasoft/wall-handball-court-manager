@@ -13,13 +13,14 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.example.handballcourtmanager.R
 import com.example.handballcourtmanager.databinding.FragmentDoublesDetailBinding
+import com.example.handballcourtmanager.db.matchesdb.MatchTypes
 
 import com.example.handballcourtmanager.viewmodel.MatchDetailViewModel
 import com.example.handballcourtmanager.viewmodel.MatchDetailViewModelFactory
 
-class DoublesDetailFragment: Fragment() {
+class DoublesDetailFragment : Fragment() {
 
-    private var binding:FragmentDoublesDetailBinding?=null
+    private var binding: FragmentDoublesDetailBinding? = null
     private val args: DoublesDetailFragmentArgs by navArgs()
     private val matchDetailViewModel: MatchDetailViewModel by viewModels {
         MatchDetailViewModelFactory(args.matchId)
@@ -31,7 +32,8 @@ class DoublesDetailFragment: Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_doubles_detail,container,false)
+        binding =
+            DataBindingUtil.inflate(inflater, R.layout.fragment_doubles_detail, container, false)
         val view = binding!!.root
         setHasOptionsMenu(true)
         binding!!.viewModel = matchDetailViewModel
@@ -78,18 +80,26 @@ class DoublesDetailFragment: Fragment() {
             }
 
             btnEndMatch.setOnClickListener {
-                val match = matchDetailViewModel.match!!.value
+                val match = matchDetailViewModel.match!!.value!!
                 findNavController().navigate(
-                    DoublesDetailFragmentDirections.actionFragmentDoublesDetailToEndMatchDialogFragment(
-        )
-                    )
+                    DoublesDetailFragmentDirections.actionFragmentDoublesDetailToEndMatchDialogFragment())
                 setFragmentResultListener(EndMatchDialogFragment.REQUEST_KEY_END){ _, bundle ->
                     val result = bundle.getBoolean(EndMatchDialogFragment.BUNDLE_KEY_END)
+
                     if(result) {
-                        matchDetailViewModel.completeMatch()
+
                         findNavController().popBackStack()
-                        findNavController().navigateUp()
+
+                        findNavController().navigate(DoublesDetailFragmentDirections.actionFragmentDoublesDetailToReturnToWinnersDialogFragment(
+                            arrayOf(
+                                match.teamOnePlayer1,match.teamOnePlayer2,match.teamTwoPlayer1,match.teamTwoPlayer2,match.teamThreePlayer
+                            ),
+                            MatchTypes.DOUBLES
+                        ))
+                        matchDetailViewModel.completeMatch()
+
                     }
+
                 }
             }
 
@@ -123,18 +133,18 @@ class DoublesDetailFragment: Fragment() {
         }
     }
 
-    private fun changeOrAddPlayer(playerAndTeam:String) {
+    private fun changeOrAddPlayer(playerAndTeam: String) {
         findNavController().navigate(
             DoublesDetailFragmentDirections.actionFragmentDoublesDetailToSelectFromRosterFragment(
             )
         )
         setFragmentResultListener(SelectFromRosterFragment.REQUEST_KEY_PLAYER) { _, bundle ->
             val result = bundle.getString(SelectFromRosterFragment.BUNDLE_KEY_PLAYER)
-            when(playerAndTeam) {
-                "t1p1"-> matchDetailViewModel.match!!.value!!.teamOnePlayer1 = result!!
-                "t1p2" -> matchDetailViewModel.match!!.value!!.teamOnePlayer2 =result!!
-                "t2p1"-> matchDetailViewModel.match!!.value!!.teamTwoPlayer1 = result!!
-                "t2p2" -> matchDetailViewModel.match!!.value!!.teamTwoPlayer2 =result!!
+            when (playerAndTeam) {
+                "t1p1" -> matchDetailViewModel.match!!.value!!.teamOnePlayer1 = result!!
+                "t1p2" -> matchDetailViewModel.match!!.value!!.teamOnePlayer2 = result!!
+                "t2p1" -> matchDetailViewModel.match!!.value!!.teamTwoPlayer1 = result!!
+                "t2p2" -> matchDetailViewModel.match!!.value!!.teamTwoPlayer2 = result!!
             }
             matchDetailViewModel.updateMatch()
         }
