@@ -10,6 +10,7 @@ data class Player(
     val id:Int,
     @ColumnInfo(name = "player_name")
     var name:String,
+    //If is winner then it be in the winner's
     @ColumnInfo(name = "is_winner")
     var isWinner:Boolean = false,
 )
