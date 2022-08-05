@@ -1,0 +1,112 @@
+{
+  "formatVersion": 1,
+  "database": {
+    "version": 3,
+    "identityHash": "1ced9a18a3e855ee86fd275181cb7772",
+    "entities": [
+      {
+        "tableName": "matches",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` BLOB NOT NULL, `match_type` TEXT NOT NULL, `court_number` TEXT NOT NULL, `t1_score` INTEGER NOT NULL, `t2_score` INTEGER NOT NULL, `t3_score` INTEGER NOT NULL, `t1_p1` TEXT NOT NULL, `t1_p2` TEXT NOT NULL, `t2_p1` TEXT NOT NULL, `t2_p2` TEXT NOT NULL, `t3_p1` TEXT NOT NULL, `is_completed` INTEGER NOT NULL, `winner` TEXT NOT NULL, `winner2` TEXT NOT NULL, PRIMARY KEY(`id`))",
+        "fields": [
+          {
+            "fieldPath": "id",
+            "columnName": "id",
+            "affinity": "BLOB",
+            "notNull": true
+          },
+          {
+            "fieldPath": "matchType",
+            "columnName": "match_type",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "courtNumber",
+            "columnName": "court_number",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "teamOneScore",
+            "columnName": "t1_score",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "teamTwoScore",
+            "columnName": "t2_score",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "teamThreeScore",
+            "columnName": "t3_score",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "teamOnePlayer1",
+            "columnName": "t1_p1",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "teamOnePlayer2",
+            "columnName": "t1_p2",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "teamTwoPlayer1",
+            "columnName": "t2_p1",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "teamTwoPlayer2",
+            "columnName": "t2_p2",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "teamThreePlayer",
+            "columnName": "t3_p1",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "isCompleted",
+            "columnName": "is_completed",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "winner1",
+            "columnName": "winner",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "winner2",
+            "columnName": "winner2",
+            "affinity": "TEXT",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "id"
+          ],
+          "autoGenerate": false
+        },
+        "indices": [],
+        "foreignKeys": []
+      }
+    ],
+    "views": [],
+    "setupQueries": [
+      "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '1ced9a18a3e855ee86fd275181cb7772')"
+    ]
+  }
+}
