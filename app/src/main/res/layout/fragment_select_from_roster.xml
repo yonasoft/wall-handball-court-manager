@@ -9,7 +9,7 @@
     <data>
         <variable
             name="viewModel"
-            type="com.example.handballcourtmanager.viewmodel.RosterSelectViewModel" />
+            type="com.yonasoft.handballcourtmanager.viewmodel.RosterSelectViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

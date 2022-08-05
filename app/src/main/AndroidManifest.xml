@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.handballcourtmanager">
+    package="com.yonasoft.handballcourtmanager">
 
     <application
-        android:name=".HandballApplication"
+        android:name="com.yonasoft.handballcourtmanager.HandballApplication"
         android:allowBackup="true"
-        android:icon="@mipmap/handball_icon"
+        android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
-        android:roundIcon="@mipmap/handball_icon"
+        android:roundIcon="@mipmap/ic_launcher"
         android:supportsRtl="true"
         android:theme="@style/Theme.HandballCourtManager">
         <activity
-            android:name=".MainActivity"
+            android:name="com.yonasoft.handballcourtmanager.MainActivity"
             android:exported="true"
             >
             

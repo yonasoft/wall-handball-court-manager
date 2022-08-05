@@ -8,7 +8,7 @@
     <data>
         <variable
             name="viewModel"
-            type="com.example.handballcourtmanager.viewmodel.RosterViewModel"/>
+            type="com.yonasoft.handballcourtmanager.viewmodel.RosterViewModel"/>
     </data>
 
 

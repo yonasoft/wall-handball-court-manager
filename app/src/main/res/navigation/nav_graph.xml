@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/matchesFragment"
-        android:name="com.example.handballcourtmanager.fragments.MatchesFragment"
+        android:name="com.yonasoft.handballcourtmanager.fragments.MatchesFragment"
         android:label="Current Matches"
         tools:layout="@layout/fragment_current_matches" >
         <action
@@ -34,7 +34,7 @@
 
     <fragment
         android:id="@+id/rosterFragment"
-        android:name="com.example.handballcourtmanager.fragments.RosterFragment"
+        android:name="com.yonasoft.handballcourtmanager.fragments.RosterFragment"
         android:label="Roster"
         tools:layout="@layout/fragment_roster" >
         <action
@@ -46,7 +46,7 @@
     </fragment>
     <fragment
         android:id="@+id/resultsFragment"
-        android:name="com.example.handballcourtmanager.fragments.ResultsFragment"
+        android:name="com.yonasoft.handballcourtmanager.fragments.ResultsFragment"
         android:label="Results"
         tools:layout="@layout/fragment_results" >
         <action
@@ -56,19 +56,19 @@
 
     <dialog
         android:id="@+id/addPlayerDialogFragment"
-        android:name="com.example.handballcourtmanager.fragments.AddPlayerDialogFragment"
+        android:name="com.yonasoft.handballcourtmanager.fragments.AddPlayerDialogFragment"
         android:label="Add Player" />
     <fragment
         android:id="@+id/helpFragment"
-        android:name="com.example.handballcourtmanager.fragments.HelpFragment"
+        android:name="com.yonasoft.handballcourtmanager.fragments.HelpFragment"
         android:label="Help" />
     <dialog
         android:id="@+id/createMatchDialogFragment"
-        android:name="com.example.handballcourtmanager.fragments.CreateMatchDialogFragment"
+        android:name="com.yonasoft.handballcourtmanager.fragments.CreateMatchDialogFragment"
         android:label="Create Matches" />
     <fragment
         android:id="@+id/fragmentDoublesDetail"
-        android:name="com.example.handballcourtmanager.fragments.DoublesDetailFragment"
+        android:name="com.yonasoft.handballcourtmanager.fragments.DoublesDetailFragment"
         android:label="Doubles Detail" >
         <action
             android:id="@+id/action_fragmentDoublesDetail_to_selectFromRosterFragment"
@@ -94,7 +94,7 @@
 
     <fragment
         android:id="@+id/fragmentTriangleDetail"
-        android:name="com.example.handballcourtmanager.fragments.TriangleDetailFragment"
+        android:name="com.yonasoft.handballcourtmanager.fragments.TriangleDetailFragment"
         android:label="Triangle Detail" >
         <action
             android:id="@+id/action_fragmentTriangleDetail_to_selectFromRosterFragment"
@@ -116,11 +116,11 @@
 
     <fragment
         android:id="@+id/selectFromRosterFragment"
-        android:name="com.example.handballcourtmanager.fragments.SelectFromRosterFragment"
+        android:name="com.yonasoft.handballcourtmanager.fragments.SelectFromRosterFragment"
         android:label="Select Player" />
     <fragment
         android:id="@+id/singlesDetailFragment"
-        android:name="com.example.handballcourtmanager.fragments.SinglesDetailFragment"
+        android:name="com.yonasoft.handballcourtmanager.fragments.SinglesDetailFragment"
         android:label="Singles Detail">
         <action
             android:id="@+id/action_singlesDetailFragment_to_selectFromRosterFragment"
@@ -142,11 +142,11 @@
     </fragment>
     <dialog
         android:id="@+id/endMatchDialogFragment"
-        android:name="com.example.handballcourtmanager.fragments.EndMatchDialogFragment"
+        android:name="com.yonasoft.handballcourtmanager.fragments.EndMatchDialogFragment"
         android:label="End Match?" />
     <dialog
         android:id="@+id/returnToWinnersDialogFragment"
-        android:name="com.example.handballcourtmanager.fragments.ReturnToWinnersDialogFragment"
+        android:name="com.yonasoft.handballcourtmanager.fragments.ReturnToWinnersDialogFragment"
         android:label="Return players to winner's queue" >
 
         <argument
@@ -158,7 +158,7 @@
     </dialog>
     <dialog
         android:id="@+id/returnToRegularQueueFragmentDialogFragment"
-        android:name="com.example.handballcourtmanager.fragments.ReturnToRegularQueueFragmentDialogFragment"
+        android:name="com.yonasoft.handballcourtmanager.fragments.ReturnToRegularQueueFragmentDialogFragment"
         android:label="Return players to regular queue" >
         <argument
             android:name="players"

@@ -34,20 +34,20 @@
     <com.google.android.material.textview.MaterialTextView
         android:id="@+id/team_one"
         style="@style/TextAppearance.AppCompat.Large"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:textAlignment="center"
         app:layout_constraintBottom_toTopOf="@+id/t1_score"
         app:layout_constraintEnd_toStartOf="@+id/tv_vs"
         app:layout_constraintStart_toEndOf="@+id/tv_court_number"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        />
 
     <com.google.android.material.textview.MaterialTextView
         android:id="@+id/team_two"
         style="@style/TextAppearance.AppCompat.Large"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-
         android:textAlignment="center"
         app:layout_constraintBottom_toTopOf="@+id/t2_score"
         app:layout_constraintEnd_toEndOf="parent"
