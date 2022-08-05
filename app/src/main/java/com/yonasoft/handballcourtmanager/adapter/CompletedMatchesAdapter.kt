@@ -14,7 +14,7 @@ import com.yonasoft.handballcourtmanager.db.matchesdb.MatchTypes
 
 //Adapter for results. same as the active matches adapter EXCEPT there is no click listener
 class CompletedMatchesAdapter(private val matches: List<Match>):RecyclerView.Adapter<RecyclerView.ViewHolder>(){
-
+    //Create view Holder
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         val inflater = LayoutInflater.from(parent.context)
         val bindingSingles =  SinglesMatchItemBinding.inflate(inflater,parent,false)
