@@ -27,6 +27,23 @@
     <string name="no">no</string>
     <string name="tv_return_winner">Select these players to send back to winner\'s queue?</string>
     <string name="tv_return_regular">Select these players to send back to regular queue?</string>
+    <string name="how_to_use">How to use the App</string>
+    <string name="roster">Roster</string>
+    <string name="matches">Matches</string>
+    <string name="results">Results</string>
+    <string name="adding_to_queue">Adding to queue</string>
+    <string name="adding_to_queue_desc"><![CDATA[1.Press the \'+\' button on the bottom right of the roster screen \n2.Enter a name to add to the regular queue and press add. \nNotes: \n>You can also return a player back to queue after a match has ended via the dialog. \n>You can only send a player to winner\'s queue after ending the match.]]></string>
+    <string name="removing_from_queue_desc"><![CDATA[>Swipe the player name to remove from the queue \n>Press \'...\' on toolbar to choose an option to delete multiple players from queue]]></string>
+    <string name="adding_matches">Adding Matches</string>
+    <string name="adding_match_desc">1.Press the \'+\' button at the bottom right of the screen. \n2.Select how many of each match type you would like to add. \n3.Press add.</string>
+    <string name="updating_a_match">Updating A Match</string>
+    <string name="updating_match_desc">1.Press on the \'TBA\' to update players. \n2.Select a player by either: \n 1.Selecting a player from the queue \n OR \n 2.Typing a name and pressing \'ADD\'. \n3.Add or deduct points by pressing the \'+\' \'-\' buttons. \nNOTE: A score of -1 indicates the player or team is unable to complete the match(ex.DQ, Injury, MIA, etc.)</string>
+    <string name="ending_a_match">Ending a match</string>
+    <string name="ending_match_desc">1.Press \'end match\' at the bottom of the match detail screen \n2.Confirm by pressing \'YES\' \n3.Select players to send to winner\'s queue \n4.Select players to send to regular queue \n5.The match will be saved in the results screen NOTE: A player in winner\'s queue indicates they have priority over a court. Typically, winners of a match are sent to winner\'s queue.</string>
+    <string name="removing_match_desc"><![CDATA[>To remove an individual match swipe to the side. \n>To remove multiple matches press \'...\' on the right side of the tool bar and press \'clear matches\']]></string>
+    <string name="results_desc"><![CDATA[>Once a match has ended, it cannot be edited, so make sure the information is accurate before ending the match! \n>To remove an individual result swipe to the side. \n>To remove all results press the \'...\' on the right side of the tool bar and press \'clear results\']]></string>
+    <string name="removing_from_queue">Removing from queue</string>
+    <string name="removing_a_match">Removing a match/matches</string>
 
 
 </resources>

@@ -1,21 +1,252 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:android="http://schemas.android.com/apk/res/android">
-<androidx.constraintlayout.widget.ConstraintLayout
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <TextView
-        android:layout_width="0dp"
+    <ScrollView
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/this_is_the_help_fragment"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:textAlignment="center"
-        android:textSize="24sp"
-        />
+        >
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            >
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/tv_how_to_use"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="@string/how_to_use"
+                android:textAlignment="center"
+                android:textSize="32sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/tv_queue_title"
+                    style="@style/help_title"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="@string/roster"
+                    app:layout_constraintEnd_toStartOf="@+id/queue_drop"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/tv_how_to_use" />
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/queue_drop"
+                    android:layout_width="48dp"
+                    android:layout_height="0dp"
+                    android:src="@drawable/ic_baseline_keyboard_arrow_down_24"
+                    app:layout_constraintBottom_toBottomOf="@+id/tv_queue_title"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="@+id/tv_queue_title" />
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_marginTop="8dp"
+                    android:id="@+id/queue_desc"
+                    style="@style/help_desc"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="@id/tv_queue_title"
+                    app:layout_constraintTop_toBottomOf="@+id/tv_queue_title">
+
+                    <com.google.android.material.textview.MaterialTextView
+                        android:id="@+id/tv_adding_to_queue_title"
+                        style="@style/help_mini_title"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:text="@string/adding_to_queue"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <com.google.android.material.textview.MaterialTextView
+                        android:id="@+id/adding_to_queue_desc"
+                        style="@style/help_desc"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:text="@string/adding_to_queue_desc"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/tv_adding_to_queue_title" />
+
+                    <com.google.android.material.textview.MaterialTextView
+                        android:id="@+id/tv_removing_from_queue"
+                        style="@style/help_mini_title"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:text="@string/removing_from_queue"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/adding_to_queue_desc" />
+
+                    <com.google.android.material.textview.MaterialTextView
+                        android:id="@+id/removing_from_queue_desc"
+                        style="@style/help_desc"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:text="@string/removing_from_queue_desc"
+                        app:layout_constraintEnd_toEndOf="@id/tv_removing_from_queue"
+                        app:layout_constraintStart_toStartOf="@id/tv_removing_from_queue"
+                        app:layout_constraintTop_toBottomOf="@id/tv_removing_from_queue" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/tv_match_title"
+            style="@style/help_title"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="@string/matches"
+            app:layout_constraintEnd_toStartOf="@+id/match_drop"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/queue_desc" />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/match_drop"
+            android:layout_width="48dp"
+            android:layout_height="0dp"
+            android:src="@drawable/ic_baseline_keyboard_arrow_down_24"
+            app:layout_constraintBottom_toBottomOf="@+id/tv_match_title"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/tv_match_title"
+            style="@style/help_title"
+            />
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_marginTop="8dp"
+                android:id="@+id/match_desc"
+                style="@style/help_desc"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="@id/tv_match_title"
+                app:layout_constraintTop_toBottomOf="@+id/tv_match_title">
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/tv_adding_match"
+                    style="@style/help_mini_title"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="@string/adding_matches"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/adding_match_desc"
+                    style="@style/help_desc"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="@string/adding_match_desc"
+                    app:layout_constraintEnd_toEndOf="@id/tv_adding_match"
+                    app:layout_constraintStart_toStartOf="@id/tv_adding_match"
+                    app:layout_constraintTop_toBottomOf="@id/tv_adding_match" />
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/tv_update_match_info"
+                    style="@style/help_mini_title"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="@string/updating_a_match"
+                    app:layout_constraintEnd_toEndOf="@id/tv_adding_match"
+                    app:layout_constraintStart_toStartOf="@id/tv_adding_match"
+                    app:layout_constraintTop_toBottomOf="@id/adding_match_desc" />
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/updating_match_desc"
+                    style="@style/help_desc"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="@string/updating_match_desc"
+                    app:layout_constraintEnd_toEndOf="@id/tv_update_match_info"
+                    app:layout_constraintStart_toStartOf="@id/tv_update_match_info"
+                    app:layout_constraintTop_toBottomOf="@id/tv_update_match_info" />
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/tv_ending_match"
+                    style="@style/help_mini_title"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="@string/ending_a_match"
+                    app:layout_constraintEnd_toEndOf="@id/updating_match_desc"
+                    app:layout_constraintStart_toStartOf="@id/updating_match_desc"
+                    app:layout_constraintTop_toBottomOf="@id/updating_match_desc" />
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/ending_match_desc"
+                    style="@style/help_desc"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="@string/ending_match_desc"
+                    app:layout_constraintEnd_toEndOf="@id/tv_ending_match"
+                    app:layout_constraintStart_toStartOf="@id/tv_ending_match"
+                    app:layout_constraintTop_toBottomOf="@id/tv_ending_match" />
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/tv_removing_matches"
+                    style="@style/help_mini_title"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="@string/removing_a_match"
+                    app:layout_constraintEnd_toEndOf="@id/ending_match_desc"
+                    app:layout_constraintStart_toStartOf="@id/ending_match_desc"
+                    app:layout_constraintTop_toBottomOf="@id/ending_match_desc" />
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/removing_match_desc"
+                    style="@style/help_desc"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="@string/removing_match_desc"
+                    app:layout_constraintEnd_toEndOf="@id/tv_removing_matches"
+                    app:layout_constraintStart_toStartOf="@id/tv_removing_matches"
+                    app:layout_constraintTop_toBottomOf="@id/tv_removing_matches" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/tv_results_title"
+                style="@style/help_title"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="@string/results"
+                app:layout_constraintEnd_toStartOf="@id/results_drop"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/match_desc" />
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/results_drop"
+                style="@style/help_title"
+                android:layout_width="48dp"
+                android:layout_height="0dp"
+                android:src="@drawable/ic_baseline_keyboard_arrow_down_24"
+                app:layout_constraintBottom_toBottomOf="@+id/tv_results_title"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/match_desc" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/results_desc"
+            style="@style/help_desc"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@id/tv_results_title"
+            app:layout_constraintTop_toBottomOf="@id/tv_results_title">
+            <TextView
+                android:id="@+id/desc_results"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                style="@style/help_desc"
+                android:text="@string/results_desc"
+                />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
 </layout>

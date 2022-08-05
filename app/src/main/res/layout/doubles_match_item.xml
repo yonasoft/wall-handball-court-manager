@@ -34,8 +34,9 @@
         <com.google.android.material.textview.MaterialTextView
             android:id="@+id/team_one_p1"
             style="@style/TextAppearance.AppCompat.Large"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:textAlignment="center"
             app:layout_constraintBottom_toTopOf="@+id/team_one_p2"
             app:layout_constraintEnd_toEndOf="@+id/team_one_p2"
             app:layout_constraintStart_toStartOf="@+id/team_one_p2"
@@ -44,30 +45,33 @@
         <com.google.android.material.textview.MaterialTextView
             android:id="@+id/team_one_p2"
             style="@style/TextAppearance.AppCompat.Large"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             app:layout_constraintEnd_toStartOf="@+id/tv_vs"
             app:layout_constraintStart_toStartOf="@id/tv_court_number"
-            app:layout_constraintBottom_toTopOf="@id/t1_score" />
+            app:layout_constraintBottom_toTopOf="@id/t1_score"
+            android:textAlignment="center"/>
 
         <com.google.android.material.textview.MaterialTextView
             android:id="@+id/team_two_p1"
             style="@style/TextAppearance.AppCompat.Large"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             app:layout_constraintBottom_toTopOf="@id/team_two_p2"
             app:layout_constraintEnd_toEndOf="@+id/team_two_p2"
             app:layout_constraintStart_toStartOf="@+id/team_two_p2"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            android:textAlignment="center"/>
 
         <com.google.android.material.textview.MaterialTextView
             android:id="@+id/team_two_p2"
             style="@style/TextAppearance.AppCompat.Large"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             app:layout_constraintBottom_toTopOf="@id/t2_score"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/tv_vs"
+            android:textAlignment="center"
             />
 
         <com.google.android.material.textview.MaterialTextView

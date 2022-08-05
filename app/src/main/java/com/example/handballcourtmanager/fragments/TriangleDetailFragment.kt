@@ -127,6 +127,11 @@ class TriangleDetailFragment : Fragment() {
                 }
                 //When you press the check button aka enter? on the on-screen keyboard it will set the new edited text as the court number
                 setImeActionLabel(binding!!.editTextNum.text.toString(), KeyEvent.KEYCODE_ENTER)
+                //Changes court number when out of focus
+                setOnFocusChangeListener { _, _ ->
+                    matchDetailViewModel.updateCourtNum(binding!!.editTextNum.text.toString())
+                }
+
             }
         }
     }
