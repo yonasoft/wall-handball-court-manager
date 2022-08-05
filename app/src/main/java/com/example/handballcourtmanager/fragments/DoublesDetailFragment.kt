@@ -99,7 +99,7 @@ class DoublesDetailFragment : Fragment() {
                         if (result) {
                             //Pop back stack to this fragment
                             findNavController().popBackStack()
-                            //Navigate to dialog to return to winner's queue with an array of the players in this match, and the amtch type
+                            //Navigate to dialog to return to winner's queue with an array of the players in this match, and the match type
                             findNavController().navigate(
                                 DoublesDetailFragmentDirections.actionFragmentDoublesDetailToReturnToWinnersDialogFragment(
                                     arrayOf(
@@ -131,7 +131,10 @@ class DoublesDetailFragment : Fragment() {
                 }
                 //When you press the check button aka enter? on the on-screen keyboard it will set the new edited text as the court number
                 setImeActionLabel(binding!!.editTextNum.text.toString(), KeyEvent.KEYCODE_ENTER)
-
+                //Changes court number when out of focus
+                setOnFocusChangeListener { _, _ ->
+                    matchDetailViewModel.updateCourtNum(binding!!.editTextNum.text.toString())
+                }
             }
         }
     }
@@ -159,7 +162,7 @@ class DoublesDetailFragment : Fragment() {
             DoublesDetailFragmentDirections.actionFragmentDoublesDetailToSelectFromRosterFragment(
             )
         )
-        //Gets the result of the player the will be added or changed to the match from the selection screen that was opened
+        //Gets the result of the player that will be added or changed to the match from the selection fragment that was opened
         setFragmentResultListener(SelectFromRosterFragment.REQUEST_KEY_PLAYER) { _, bundle ->
             val result = bundle.getString(SelectFromRosterFragment.BUNDLE_KEY_PLAYER)
             when (playerAndTeam) {

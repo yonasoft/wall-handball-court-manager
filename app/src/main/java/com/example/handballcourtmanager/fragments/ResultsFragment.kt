@@ -71,7 +71,6 @@ class ResultsFragment : Fragment() {
                 viewModel.addMatches(removedList)
             }
         snackBar.show()
-
     }
 
     private fun setupRecyclerView() {

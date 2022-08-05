@@ -8,6 +8,7 @@ import com.example.handballcourtmanager.repositories.PlayersRepository
 class HandballApplication:Application() {
     override fun onCreate() {
         super.onCreate()
+        //Initializes repositories
         PlayersRepository.initialize(this)
         MatchesRepository.initialize(this)
     }

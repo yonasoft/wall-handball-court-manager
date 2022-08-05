@@ -17,7 +17,7 @@ import com.example.handballcourtmanager.db.playersdb.Player
 import com.example.handballcourtmanager.viewmodel.RosterViewModel
 import com.google.android.material.snackbar.Snackbar
 
-
+//List of all the players in queue
 class RosterFragment : Fragment() {
 
     lateinit var binding: FragmentRosterBinding
@@ -36,9 +36,12 @@ class RosterFragment : Fragment() {
         setHasOptionsMenu(true)
 
         binding.viewModel = viewModel
+        //Recycler view for regular queue
         setupRecyclerView(binding.queueRcv, viewModel.regularQueue)
+        //Recycler view for winner's queue
         setupRecyclerView(binding.winnersRcv,viewModel.winnerQueue)
 
+        // OnclickListener for opening dialog to add player to regular queue
         binding.fabAddPlayers.setOnClickListener {
             findNavController().navigate(
                 R.id.action_rosterFragment_to_addPlayerDialogFragment
@@ -54,13 +57,15 @@ class RosterFragment : Fragment() {
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-
+        //Deletes item(s) based on item id
         onDeleteQueue(item.itemId)
 
         return super.onOptionsItemSelected(item)
     }
 
-
+    //Sets up recycler view based on the queue
+    // winners queue -> players with isWinner set to true
+    // regular queue -> players with isWinner set to false
     private fun setupRecyclerView(rcv: RecyclerView, queue: LiveData<List<Player>>) {
 
         val layoutManager = LinearLayoutManager(this.context)
@@ -70,6 +75,7 @@ class RosterFragment : Fragment() {
             rcv.adapter = QueueAdapter(it)
         }
 
+        //Swipe to delete feature
         ItemTouchHelper(object : ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.RIGHT) {
             override fun onMove(
                 recyclerView: RecyclerView,
@@ -98,29 +104,33 @@ class RosterFragment : Fragment() {
 
     }
 
+    //Deletes based on id passed
     private fun onDeleteQueue(idOfQueueDeletion: Int) {
-        val removedQueueText: String
+        var removedQueueText: String = ""
         val removedList = mutableListOf<Player>()
 
         when (idOfQueueDeletion) {
+            //deletes regular queue
             R.id.clear_regular -> {
                 removedQueueText = "Regular queue is cleared!"
                 viewModel.regularQueue.value?.let { removedList.addAll(it) }
                 viewModel.deleteRegularPlayers()
             }
+            //deletes winner queue
             R.id.clear_winners -> {
                 removedQueueText = "Winner queue is cleared"
                 viewModel.winnerQueue.value?.let { removedList.addAll(it) }
                 viewModel.deleteWinnerPlayers()
             }
-            else -> {
+            //clears entire queue
+            R.id.clear_all_queues -> {
                 removedQueueText = "The entire queue is clear!"
                 viewModel.regularQueue.value?.let { removedList.addAll(it) }
                 viewModel.winnerQueue.value?.let { removedList.addAll(it) }
                 viewModel.deleteAllPlayers()
             }
         }
-
+        //Snack bar message when a queue is cleared
         val snackBar =
             Snackbar.make(binding.root, removedQueueText, Snackbar.LENGTH_LONG).setAction(
                 "Undo"
@@ -128,7 +138,5 @@ class RosterFragment : Fragment() {
                 viewModel.addAllPlayers(removedList)
             }
         snackBar.show()
-
     }
-
 }

@@ -18,7 +18,6 @@ class EndMatchDialogFragment: DialogFragment() {
 
     private var binding:FragmentEndMatchDialogBinding?=null
 
-
     companion object{
         const val REQUEST_KEY_END = "request_key"
         const val BUNDLE_KEY_END = "bundle_key"
@@ -61,5 +60,4 @@ class EndMatchDialogFragment: DialogFragment() {
             dismiss()
         }
     }
-
 }

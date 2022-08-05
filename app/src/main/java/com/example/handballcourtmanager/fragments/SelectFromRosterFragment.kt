@@ -18,21 +18,19 @@ import com.example.handballcourtmanager.adapter.PlayerSelectAdapter
 import com.example.handballcourtmanager.databinding.FragmentSelectFromRosterBinding
 import com.example.handballcourtmanager.db.playersdb.Player
 import com.example.handballcourtmanager.viewmodel.RosterSelectViewModel
-import com.example.handballcourtmanager.viewmodel.RosterSelectViewModelFactory
 
-
+//Fragment when selecting player to add the match
 class SelectFromRosterFragment:Fragment() {
 
     var binding:FragmentSelectFromRosterBinding?=null
 
     companion object{
+        //Player info to send back the detail fragment
         const val REQUEST_KEY_PLAYER ="request_key_player"
         const val BUNDLE_KEY_PLAYER = "bundle_key_player"
     }
 
-    private val viewModel:RosterSelectViewModel by viewModels{
-        RosterSelectViewModelFactory()
-    }
+    private val viewModel:RosterSelectViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -43,7 +41,9 @@ class SelectFromRosterFragment:Fragment() {
         val view = binding!!.root
         binding!!.viewModel = viewModel
 
+        //Regular queue that is displayed
         setupRecyclerView(binding!!.queueRcv, viewModel.regularQueue)
+        //Winners queue that is displayed
         setupRecyclerView(binding!!.winnersRcv,viewModel.winnerQueue)
 
         return view
@@ -51,24 +51,28 @@ class SelectFromRosterFragment:Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
+        // Add player by name by pressing add and it will add text input as the player
         binding!!.btnAdd.setOnClickListener{
+            //Sends player name back to the previous fragment
             val nameToAdd = viewModel.nameToAdd
             setFragmentResult(REQUEST_KEY_PLAYER,
             bundleOf(BUNDLE_KEY_PLAYER to nameToAdd.value),
             )
+            //navigates back to previous fragment
             findNavController().navigateUp()
         }
     }
 
     private fun setupRecyclerView(rcv: RecyclerView, queue: LiveData<List<Player>>) {
 
+        //Sets up recycler view of the queue
         val layoutManager = LinearLayoutManager(this.context)
         layoutManager.orientation = RecyclerView.VERTICAL
         rcv.layoutManager = layoutManager
         queue.observe(viewLifecycleOwner) {
             val adapter = PlayerSelectAdapter(it)
             rcv.adapter = adapter
+            //Clicking the player will send the player name to previous fragment and sets the name to the player clicked
             adapter.setOnItemClickListener(object : PlayerSelectAdapter.OnItemClickListener{
                 override fun onItemClick(position: Int) {
                     val playerToAdd = queue.value!![position]
@@ -78,12 +82,7 @@ class SelectFromRosterFragment:Fragment() {
                     viewModel.deletePlayer(playerToAdd)
                     findNavController().navigateUp()
                 }
-
             })
-
         }
-
-
     }
-
 }

@@ -20,21 +20,22 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
 
         binding = DataBindingUtil.setContentView(this,R.layout.activity_main)
-
+        //Sets up navigation
         setupNavigation()
 
     }
-
+    //Sets up navigation
     private fun setupNavigation() {
-
+        //Action bar
         setSupportActionBar(binding!!.toolbar)
         val navHostFragment =
             supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
         val navController = navHostFragment.navController
         appBarConfiguration = AppBarConfiguration.Builder(navController.graph).build()
+        //Navigation for tool bar
         binding!!.toolbar.setupWithNavController(navController,appBarConfiguration)
+        //Navigation for bottom nav bar
         binding!!.bottomNav.setupWithNavController(navController)
-
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -51,7 +52,6 @@ class MainActivity : AppCompatActivity() {
         return navController.navigateUp(appBarConfiguration)
                 || super.onSupportNavigateUp()
     }
-
 }
 
 

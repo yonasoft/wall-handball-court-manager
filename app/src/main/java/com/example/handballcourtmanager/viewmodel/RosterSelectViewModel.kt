@@ -10,11 +10,12 @@ import kotlinx.coroutines.withContext
 class RosterSelectViewModel : ViewModel() {
 
     val nameToAdd = MutableLiveData("")
-
+    //Matches in regular queue
     var regularQueue: LiveData<List<Player>> = PlayersRepository.get().getRegularRoster()
+    //Matches in winners queue
     var winnerQueue: LiveData<List<Player>> = PlayersRepository.get().getWinnersRoster()
 
-
+    //Deletes player
     fun deletePlayer(player: Player) {
         viewModelScope.launch {
             withContext(Dispatchers.IO) {
@@ -24,8 +25,4 @@ class RosterSelectViewModel : ViewModel() {
     }
 }
 
-class RosterSelectViewModelFactory: ViewModelProvider.Factory {
-    override fun <T : ViewModel> create(modelClass: Class<T>): T {
-        return RosterSelectViewModel() as T
-    }
-}
+

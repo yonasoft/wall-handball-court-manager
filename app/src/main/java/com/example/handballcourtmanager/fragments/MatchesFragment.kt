@@ -54,11 +54,12 @@ class MatchesFragment : Fragment() {
         val layoutManager = LinearLayoutManager(this.context)
         layoutManager.orientation = RecyclerView.VERTICAL
         binding!!.rcvActiveMatches.layoutManager = layoutManager
+        //Observer for match data
         viewModel.matchesList.observe(viewLifecycleOwner) {
             binding!!.rcvActiveMatches.adapter = ActiveMatchesAdapter(it)
 
         }
-
+        //Below is the swipe to delete feature
         ItemTouchHelper(object : ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.RIGHT) {
             override fun onMove(
                 recyclerView: RecyclerView,
@@ -67,12 +68,11 @@ class MatchesFragment : Fragment() {
             ): Boolean {
                 return false
             }
-
-
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
                 val removedMatch: Match = viewModel.matchesList.value!![viewHolder.adapterPosition]
                 viewModel.removeMatch(removedMatch)
 
+                //Option to undo delete
                 Snackbar.make(
                     binding!!.root, "Match is being removed. press 'Undo' to stop!",
                     Snackbar.LENGTH_LONG
@@ -97,6 +97,7 @@ class MatchesFragment : Fragment() {
         return super.onOptionsItemSelected(item)
     }
 
+    //Deletes the match if it the menu is a specific id
     private fun onDeleteMatches(idOfQueueDeletion: Int) {
         val removedQueueText: String
         val removedList = mutableListOf<Match>()

@@ -82,7 +82,9 @@ class TriangleDetailFragment : Fragment() {
 
             btnEndMatch.setOnClickListener {
                 val match = matchDetailViewModel.match!!.value!!
+                //Makes sure all the textview for the players are filled in
                 if (match.teamOnePlayer1 != "TBA" && match.teamTwoPlayer1 != "TBA" && match.teamThreePlayer != "TBA") {
+                    //Navigate to dialog to return to winner's queue with an array of the players in this match, and the match type
                     findNavController().navigate(
                         TriangleDetailFragmentDirections.actionFragmentTriangleDetailToEndMatchDialogFragment()
                     )
@@ -112,27 +114,23 @@ class TriangleDetailFragment : Fragment() {
 
                     }
                 } else {
+                    //Prompts user to add player if they haven't already
                     Toast.makeText(context, "Press the \"TBA\" to add a player!", Toast.LENGTH_LONG)
                         .show()
                 }
             }
-
+            //Code for interaction for editing court number
             binding!!.editTextNum.apply {
 
                 setOnClickListener {
                     binding!!.editTextNum.text!!.clear()
                 }
-
+                //When you press the check button aka enter? on the on-screen keyboard it will set the new edited text as the court number
                 setImeActionLabel(binding!!.editTextNum.text.toString(), KeyEvent.KEYCODE_ENTER)
-
-                setOnFocusChangeListener { _, _ ->
-                    matchDetailViewModel.updateCourtNum(binding!!.editTextNum.text.toString())
-                }
-
             }
         }
     }
-
+    //Observers for updated data to be reflected in the views
     private fun setupObservers() {
         binding!!.viewModel!!.match!!.observe(viewLifecycleOwner) {
             binding!!.apply {
@@ -146,12 +144,13 @@ class TriangleDetailFragment : Fragment() {
             }
         }
     }
-
+    //Code for changing and adding player
+    //Parameter is what player and team will be changed in this match represented as a string
     private fun changeOrAddPlayer(playerAndTeam: String) {
         findNavController().navigate(
             TriangleDetailFragmentDirections.actionFragmentTriangleDetailToSelectFromRosterFragment()
         )
-
+        //Gets the result of the player that will be added or changed to the match from the selection fragment that was opened
         setFragmentResultListener(SelectFromRosterFragment.REQUEST_KEY_PLAYER) { _, bundle ->
             val result = bundle.getString(SelectFromRosterFragment.BUNDLE_KEY_PLAYER)
             when (playerAndTeam) {
@@ -159,6 +158,7 @@ class TriangleDetailFragment : Fragment() {
                 "t2" -> matchDetailViewModel.match!!.value!!.teamTwoPlayer1 = result!!
                 "t3" -> matchDetailViewModel.match!!.value!!.teamThreePlayer = result!!
             }
+            //Updates the players in tha match through the view model into database
             matchDetailViewModel.updateMatch()
         }
     }

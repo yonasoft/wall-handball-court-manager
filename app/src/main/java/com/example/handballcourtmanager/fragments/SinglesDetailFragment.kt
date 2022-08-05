@@ -38,6 +38,7 @@ class SinglesDetailFragment : Fragment() {
         binding!!.viewModel = matchDetailViewModel
 
         setHasOptionsMenu(true)
+        //Setup observers of the views
         setupObservers()
 
         return view
@@ -45,18 +46,21 @@ class SinglesDetailFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        //Sets up listeners
         setUpListeners()
     }
 
 
     private fun setUpListeners() {
         binding!!.apply {
+            //Add or change players when click which open an add player dialog
             tvT1.setOnClickListener {
                 changeOrAddPlayer("t1")
             }
             tvT2.setOnClickListener {
                 changeOrAddPlayer("t2")
             }
+            //Add or deduct points based on team
             btnT1Add.setOnClickListener {
                 matchDetailViewModel.addPoints("t1")
             }
@@ -69,19 +73,20 @@ class SinglesDetailFragment : Fragment() {
             btnT2Sub.setOnClickListener {
                 matchDetailViewModel.deductPoints("t2")
             }
-
+            //Ends match
             btnEndMatch.setOnClickListener {
                 val match = matchDetailViewModel.match!!.value!!
+                //Makes sure all the textview for the players are filled in
                 if (match.teamOnePlayer1 != "TBA" && match.teamTwoPlayer1 != "TBA") {
                     findNavController().navigate(SinglesDetailFragmentDirections.actionSinglesDetailFragmentToEndMatchDialogFragment())
-
+                    //Set listener to determine the result of the dialog.
                     setFragmentResultListener(EndMatchDialogFragment.REQUEST_KEY_END) { _, bundle ->
                         val result = bundle.getBoolean(EndMatchDialogFragment.BUNDLE_KEY_END)
-
+                        //If the answer is true to the dialog this runs
                         if (result) {
-
+                            //Pop back stack to this fragment
                             findNavController().popBackStack()
-
+                            //Navigate to dialog to return to winner's queue with an array of the players in this match, and the match type
                             findNavController().navigate(
                                 SinglesDetailFragmentDirections.actionSinglesDetailFragmentToReturnToWinnersDialogFragment(
                                     arrayOf(
@@ -94,35 +99,33 @@ class SinglesDetailFragment : Fragment() {
                                     MatchTypes.SINGLES
                                 )
                             )
+                            //Completes match
                             matchDetailViewModel.completeMatch()
-
                         }
-
                     }
 
-                }
-                else{
-                    Toast.makeText(context,"Press the \"TBA\" to add a player!",Toast.LENGTH_LONG).show()
+                } else {
+                    Toast.makeText(context, "Press the \"TBA\" to add a player!", Toast.LENGTH_LONG)
+                        .show()
                 }
             }
 
-
+            //Code for interaction for editing court number
             editTextNum.apply {
-
                 setOnClickListener {
+                    //Clears the court number for future editing
                     binding!!.editTextNum.text!!.clear()
                 }
-
+                //When you press the check button aka enter? on the on-screen keyboard it will set the new edited text as the court number
                 setImeActionLabel(binding!!.editTextNum.text.toString(), KeyEvent.KEYCODE_ENTER)
-
+                //Changes court number when out of focus
                 setOnFocusChangeListener { _, _ ->
                     matchDetailViewModel.updateCourtNum(binding!!.editTextNum.text.toString())
                 }
-
             }
         }
     }
-
+    //Observers for updated data to be reflected in the views
     private fun setupObservers() {
         binding!!.viewModel!!.match!!.observe(viewLifecycleOwner) {
             binding!!.apply {
@@ -135,17 +138,21 @@ class SinglesDetailFragment : Fragment() {
         }
     }
 
+    //Code for changing and adding player
+    //Parameter is what player and team will be changed in this match represented as a string
     private fun changeOrAddPlayer(playerAndTeam: String) {
         findNavController().navigate(
             SinglesDetailFragmentDirections.actionSinglesDetailFragmentToSelectFromRosterFragment(
             )
         )
+        //Gets the result of the player that will be added or changed to the match from the fragment screen that was opened
         setFragmentResultListener(SelectFromRosterFragment.REQUEST_KEY_PLAYER) { _, bundle ->
             val result = bundle.getString(SelectFromRosterFragment.BUNDLE_KEY_PLAYER)
             when (playerAndTeam) {
                 "t1" -> matchDetailViewModel.match!!.value!!.teamOnePlayer1 = result!!
                 "t2" -> matchDetailViewModel.match!!.value!!.teamTwoPlayer1 = result!!
             }
+            //Updates the players in tha match through the view model into database
             matchDetailViewModel.updateMatch()
         }
     }

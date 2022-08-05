@@ -14,28 +14,28 @@ import kotlinx.coroutines.withContext
 class RosterViewModel : ViewModel() {
 
     val nameToAdd = MutableLiveData<String>()
-
+    //Matches in regular queue
     var regularQueue: LiveData<List<Player>> = PlayersRepository.get().getRegularRoster()
+    //Matches in winners queue
     var winnerQueue: LiveData<List<Player>> = PlayersRepository.get().getWinnersRoster()
 
+    //Add  new player with string
     fun addPlayer(name: String = this.nameToAdd.value!!) {
         viewModelScope.launch {
             withContext(Dispatchers.IO) {
                 PlayersRepository.get().addPlayer(Player(id = 0, name = name))
             }
         }
-
     }
-
+    //Add player as Player class object
     fun addPlayer(player: Player) {
         viewModelScope.launch {
             withContext(Dispatchers.IO) {
                 PlayersRepository.get().addPlayer(player)
             }
         }
-
     }
-
+    //Add multiple players from list
     fun addAllPlayers(players: List<Player>) {
         viewModelScope.launch {
             withContext(Dispatchers.IO) {
@@ -44,7 +44,7 @@ class RosterViewModel : ViewModel() {
         }
 
     }
-
+    //Add multiple players from list to specific queue(isWinner/areWinner)
     fun addAllPlayers(players: List<String>, areWinners:Boolean) {
         viewModelScope.launch {
             withContext(Dispatchers.IO) {
@@ -57,16 +57,15 @@ class RosterViewModel : ViewModel() {
         }
 
     }
-
+    //Update player to database
     fun updatePlayer(player: Player) {
         viewModelScope.launch {
             withContext(Dispatchers.IO) {
                 PlayersRepository.get().updatePlayer(player)
             }
         }
-
     }
-
+    //Delete player from database
     fun deletePlayer(player: Player) {
         viewModelScope.launch {
             withContext(Dispatchers.IO) {
@@ -74,7 +73,7 @@ class RosterViewModel : ViewModel() {
             }
         }
     }
-
+    //Deletes all players from database
     fun deleteAllPlayers() {
         viewModelScope.launch {
             withContext(Dispatchers.IO) {
@@ -82,7 +81,7 @@ class RosterViewModel : ViewModel() {
             }
         }
     }
-
+    //Deletes all players in regular queue
     fun deleteRegularPlayers() {
         viewModelScope.launch {
             withContext(Dispatchers.IO) {
@@ -90,7 +89,7 @@ class RosterViewModel : ViewModel() {
             }
         }
     }
-
+    //Deletes all players from winners queue
     fun deleteWinnerPlayers() {
         viewModelScope.launch {
             withContext(Dispatchers.IO) {
@@ -98,6 +97,4 @@ class RosterViewModel : ViewModel() {
             }
         }
     }
-
-
 }
