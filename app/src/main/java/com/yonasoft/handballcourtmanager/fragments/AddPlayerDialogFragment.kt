@@ -13,16 +13,18 @@ import com.yonasoft.handballcourtmanager.databinding.FragmentAddPlayerDialogBind
 import com.yonasoft.handballcourtmanager.viewmodel.RosterViewModel
 
 
-class AddPlayerDialogFragment:DialogFragment() {
+class AddPlayerDialogFragment : DialogFragment() {
 
     lateinit var binding: FragmentAddPlayerDialogBinding
     private val viewModel: RosterViewModel by viewModels()
-    var name:String ?= null
 
     override fun onStart() {
         super.onStart()
         //Sets the size of the dialog
-        dialog?.window?.setLayout(LinearLayout.LayoutParams.MATCH_PARENT,LinearLayout.LayoutParams.WRAP_CONTENT)
+        dialog?.window?.setLayout(
+            LinearLayout.LayoutParams.MATCH_PARENT,
+            LinearLayout.LayoutParams.WRAP_CONTENT
+        )
     }
 
     override fun onCreateView(
@@ -31,21 +33,19 @@ class AddPlayerDialogFragment:DialogFragment() {
         savedInstanceState: Bundle?
     ): View {
 
-        binding = DataBindingUtil.inflate(layoutInflater,
-            R.layout.fragment_add_player_dialog,container,false)
-        val view=binding.root
+        binding = DataBindingUtil.inflate(
+            layoutInflater,
+            R.layout.fragment_add_player_dialog, container, false
+        )
+        val view = binding.root
 
         binding.viewModel = viewModel
         binding.lifecycleOwner = this
-
         //Adds the player entered into queue
         binding.addPlayerButton.setOnClickListener {
             viewModel.addPlayer()
             dismiss()
         }
-
         return view
     }
-
-
 }

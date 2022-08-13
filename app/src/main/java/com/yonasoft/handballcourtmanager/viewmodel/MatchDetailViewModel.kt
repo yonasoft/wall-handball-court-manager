@@ -14,7 +14,7 @@ import java.util.*
 
 class MatchDetailViewModel(matchId: UUID) : ViewModel() {
 
-    var match:LiveData<Match>?=null
+    var match:LiveData<Match>
 
         init{
             //Initialized the match property from the database to the view model
@@ -23,9 +23,9 @@ class MatchDetailViewModel(matchId: UUID) : ViewModel() {
     //Add point based on team as parameter represented as string
     fun addPoints(team:String){
         when(team){
-            "t1" -> match!!.value!!.teamOneScore++
-            "t2" -> match!!.value!!.teamTwoScore++
-            "t3" -> match!!.value!!.teamThreeScore++
+            "t1" -> match.value!!.teamOneScore++
+            "t2" -> match.value!!.teamTwoScore++
+            "t3" -> match.value!!.teamThreeScore++
         }
         //Updates match after change
         updateMatch()
@@ -33,16 +33,16 @@ class MatchDetailViewModel(matchId: UUID) : ViewModel() {
     //Deducts point based on team as parameter represented as string
     fun deductPoints(team:String){
         when(team){
-            "t1" -> if(match!!.value!!.teamOneScore>-1) match!!.value!!.teamOneScore--
-            "t2" -> if(match!!.value!!.teamTwoScore>-1) match!!.value!!.teamTwoScore--
-            "t3" -> if(match!!.value!!.teamThreeScore>-1) match!!.value!!.teamThreeScore--
+            "t1" -> if(match.value!!.teamOneScore>-1) match.value!!.teamOneScore--
+            "t2" -> if(match.value!!.teamTwoScore>-1) match.value!!.teamTwoScore--
+            "t3" -> if(match.value!!.teamThreeScore>-1) match.value!!.teamThreeScore--
         }
         //Updates match after change
         updateMatch()
     }
     //Sets the isCompleted to true to end the match
     fun completeMatch(){
-        match!!.value!!.isCompleted=true
+        match.value!!.isCompleted=true
         updateMatch()
     }
     //Updates match after court number change
@@ -53,7 +53,7 @@ class MatchDetailViewModel(matchId: UUID) : ViewModel() {
         }
     }
     //Updates the mach
-    fun updateMatch(match: Match= this.match!!.value!!) {
+    fun updateMatch(match: Match= this.match.value!!) {
         viewModelScope.launch {
             withContext(Dispatchers.IO) {
                 MatchesRepository.get().updateMatch(match)

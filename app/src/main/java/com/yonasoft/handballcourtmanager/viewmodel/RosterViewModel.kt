@@ -15,9 +15,9 @@ class RosterViewModel : ViewModel() {
 
     val nameToAdd = MutableLiveData<String>()
     //Matches in regular queue
-    var regularQueue: LiveData<List<Player>> = PlayersRepository.get().getRegularRoster()
+    val regularQueue: LiveData<List<Player>> = PlayersRepository.get().getRegularRoster()
     //Matches in winners queue
-    var winnerQueue: LiveData<List<Player>> = PlayersRepository.get().getWinnersRoster()
+    val winnerQueue: LiveData<List<Player>> = PlayersRepository.get().getWinnersRoster()
 
     //Add  new player with string
     fun addPlayer(name: String = this.nameToAdd.value!!) {

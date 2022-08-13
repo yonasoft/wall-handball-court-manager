@@ -28,10 +28,7 @@ abstract class MatchesDatabase: RoomDatabase() {
 
                 }
                 return instance
-
             }
-
         }
-
     }
 }

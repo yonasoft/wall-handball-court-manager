@@ -32,9 +32,7 @@ class RosterFragment : Fragment() {
             R.layout.fragment_roster, container, false
         )
         val view = binding.root
-
         setHasOptionsMenu(true)
-
         binding.viewModel = viewModel
         //Recycler view for regular queue
         setupRecyclerView(binding.queueRcv, viewModel.regularQueue)

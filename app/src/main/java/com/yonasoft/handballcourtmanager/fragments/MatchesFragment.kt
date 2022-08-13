@@ -31,7 +31,6 @@ class MatchesFragment : Fragment() {
             R.layout.fragment_current_matches, container, false
         )
         val view = binding!!.root
-
         setHasOptionsMenu(true)
         //Recycler view for all the matches
         setupRecyclerView()
@@ -41,7 +40,6 @@ class MatchesFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
         binding!!.fabAddMatches.setOnClickListener {
             findNavController().navigate(
                 MatchesFragmentDirections.actionMatchesFragmentToCreateMatchDialogFragment()
@@ -57,7 +55,6 @@ class MatchesFragment : Fragment() {
         //Observer for match data
         viewModel.matchesList.observe(viewLifecycleOwner) {
             binding!!.rcvActiveMatches.adapter = ActiveMatchesAdapter(it)
-
         }
         //Below is the swipe to delete feature
         ItemTouchHelper(object : ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.RIGHT) {
@@ -68,6 +65,7 @@ class MatchesFragment : Fragment() {
             ): Boolean {
                 return false
             }
+
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
                 val removedMatch: Match = viewModel.matchesList.value!![viewHolder.adapterPosition]
                 viewModel.removeMatch(removedMatch)
@@ -108,8 +106,7 @@ class MatchesFragment : Fragment() {
                 removedQueueText = "Matches are being cleared!"
                 viewModel.removeAllCurrentMatches()
             }
-            else-> return
-
+            else -> return
         }
 
         val snackBar =
@@ -119,9 +116,5 @@ class MatchesFragment : Fragment() {
                 viewModel.addMatches(removedList)
             }
         snackBar.show()
-
-
     }
-
-
 }

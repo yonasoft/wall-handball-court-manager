@@ -12,7 +12,7 @@ import com.yonasoft.handballcourtmanager.databinding.FragmentHelpBinding
 //Help fragment for help and faq related to this app
 class HelpFragment : Fragment() {
 
-    private var binding: FragmentHelpBinding? = null
+    private lateinit var binding: FragmentHelpBinding
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -20,11 +20,11 @@ class HelpFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_help, container, false)
-        val view = binding!!.root
+        val view = binding.root
 
-        binding!!.queueDesc.visibility = View.GONE
-        binding!!.matchDesc.visibility = View.GONE
-        binding!!.resultsDesc.visibility = View.GONE
+        binding.queueDesc.visibility = View.GONE
+        binding.matchDesc.visibility = View.GONE
+        binding.resultsDesc.visibility = View.GONE
 
         return view
     }
@@ -32,48 +32,48 @@ class HelpFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding!!.tvQueueTitle.setOnClickListener {
-            if (binding!!.queueDesc.visibility == View.GONE) {
-                binding!!.queueDesc.visibility = View.VISIBLE
+        binding.tvQueueTitle.setOnClickListener {
+            if (binding.queueDesc.visibility == View.GONE) {
+                binding.queueDesc.visibility = View.VISIBLE
             } else {
-                binding!!.queueDesc.visibility = View.GONE
+                binding.queueDesc.visibility = View.GONE
             }
         }
-        binding!!.queueDrop.setOnClickListener{
-            if (binding!!.queueDesc.visibility == View.GONE) {
-                binding!!.queueDesc.visibility = View.VISIBLE
+        binding.queueDrop.setOnClickListener{
+            if (binding.queueDesc.visibility == View.GONE) {
+                binding.queueDesc.visibility = View.VISIBLE
             } else {
-                binding!!.queueDesc.visibility = View.GONE
-            }
-        }
-
-        binding!!.tvMatchTitle.setOnClickListener {
-            if (binding!!.matchDesc.visibility == View.GONE) {
-                binding!!.matchDesc.visibility = View.VISIBLE
-            } else {
-                binding!!.matchDesc.visibility = View.GONE
-            }
-        }
-        binding!!.matchDrop.setOnClickListener{
-            if (binding!!.matchDesc.visibility == View.GONE) {
-                binding!!.matchDesc.visibility = View.VISIBLE
-            } else {
-                binding!!.matchDesc.visibility = View.GONE
+                binding.queueDesc.visibility = View.GONE
             }
         }
 
-        binding!!.tvResultsTitle.setOnClickListener {
-            if (binding!!.resultsDesc.visibility == View.GONE) {
-                binding!!.resultsDesc.visibility = View.VISIBLE
+        binding.tvMatchTitle.setOnClickListener {
+            if (binding.matchDesc.visibility == View.GONE) {
+                binding.matchDesc.visibility = View.VISIBLE
             } else {
-                binding!!.resultsDesc.visibility = View.GONE
+                binding.matchDesc.visibility = View.GONE
             }
         }
-        binding!!.resultsDrop.setOnClickListener{
-            if (binding!!.resultsDesc.visibility == View.GONE) {
-                binding!!.resultsDesc.visibility = View.VISIBLE
+        binding.matchDrop.setOnClickListener{
+            if (binding.matchDesc.visibility == View.GONE) {
+                binding.matchDesc.visibility = View.VISIBLE
             } else {
-                binding!!.resultsDesc.visibility = View.GONE
+                binding.matchDesc.visibility = View.GONE
+            }
+        }
+
+        binding.tvResultsTitle.setOnClickListener {
+            if (binding.resultsDesc.visibility == View.GONE) {
+                binding.resultsDesc.visibility = View.VISIBLE
+            } else {
+                binding.resultsDesc.visibility = View.GONE
+            }
+        }
+        binding.resultsDrop.setOnClickListener{
+            if (binding.resultsDesc.visibility == View.GONE) {
+                binding.resultsDesc.visibility = View.VISIBLE
+            } else {
+                binding.resultsDesc.visibility = View.GONE
             }
         }
 

@@ -20,7 +20,7 @@ import com.yonasoft.handballcourtmanager.viewmodel.MatchDetailViewModelFactory
 
 class SinglesDetailFragment : Fragment() {
 
-    private var binding: FragmentSinglesDetailBinding? = null
+    private lateinit var binding: FragmentSinglesDetailBinding
     private val args: SinglesDetailFragmentArgs by navArgs()
     private val matchDetailViewModel: MatchDetailViewModel by viewModels {
         MatchDetailViewModelFactory(args.matchId)
@@ -33,9 +33,9 @@ class SinglesDetailFragment : Fragment() {
     ): View {
         binding =
             DataBindingUtil.inflate(inflater, R.layout.fragment_singles_detail, container, false)
-        val view = binding!!.root
+        val view = binding.root
 
-        binding!!.viewModel = matchDetailViewModel
+        binding.viewModel = matchDetailViewModel
 
         setHasOptionsMenu(true)
         //Setup observers of the views
@@ -52,7 +52,7 @@ class SinglesDetailFragment : Fragment() {
 
 
     private fun setUpListeners() {
-        binding!!.apply {
+        binding.apply {
             //Add or change players when click which open an add player dialog
             tvT1.setOnClickListener {
                 changeOrAddPlayer("t1")
@@ -75,7 +75,7 @@ class SinglesDetailFragment : Fragment() {
             }
             //Ends match
             btnEndMatch.setOnClickListener {
-                val match = matchDetailViewModel.match!!.value!!
+                val match = matchDetailViewModel.match.value!!
                 //Makes sure all the textview for the players are filled in
                 if (match.teamOnePlayer1 != "TBA" && match.teamTwoPlayer1 != "TBA") {
                     findNavController().navigate(SinglesDetailFragmentDirections.actionSinglesDetailFragmentToEndMatchDialogFragment())
@@ -112,23 +112,25 @@ class SinglesDetailFragment : Fragment() {
 
             //Code for interaction for editing court number
             editTextNum.apply {
+                isCursorVisible
                 setOnClickListener {
                     //Clears the court number for future editing
-                    binding!!.editTextNum.text!!.clear()
+                    binding.editTextNum.text!!.clear()
                 }
                 //When you press the check button aka enter? on the on-screen keyboard it will set the new edited text as the court number
-                setImeActionLabel(binding!!.editTextNum.text.toString(), KeyEvent.KEYCODE_ENTER)
+                setImeActionLabel(binding.editTextNum.text.toString(), KeyEvent.KEYCODE_ENTER)
                 //Changes court number when out of focus
                 setOnFocusChangeListener { _, _ ->
-                    matchDetailViewModel.updateCourtNum(binding!!.editTextNum.text.toString())
+                    matchDetailViewModel.updateCourtNum(binding.editTextNum.text.toString())
+                    isCursorVisible=false
                 }
             }
         }
     }
     //Observers for updated data to be reflected in the views
     private fun setupObservers() {
-        binding!!.viewModel!!.match!!.observe(viewLifecycleOwner) {
-            binding!!.apply {
+        binding.viewModel!!.match.observe(viewLifecycleOwner) {
+            binding.apply {
                 editTextNum.setText(it.courtNumber)
                 tvT1.text = it.teamOnePlayer1
                 tvT2.text = it.teamTwoPlayer1
@@ -149,13 +151,11 @@ class SinglesDetailFragment : Fragment() {
         setFragmentResultListener(SelectFromRosterFragment.REQUEST_KEY_PLAYER) { _, bundle ->
             val result = bundle.getString(SelectFromRosterFragment.BUNDLE_KEY_PLAYER)
             when (playerAndTeam) {
-                "t1" -> matchDetailViewModel.match!!.value!!.teamOnePlayer1 = result!!
-                "t2" -> matchDetailViewModel.match!!.value!!.teamTwoPlayer1 = result!!
+                "t1" -> matchDetailViewModel.match.value!!.teamOnePlayer1 = result!!
+                "t2" -> matchDetailViewModel.match.value!!.teamTwoPlayer1 = result!!
             }
             //Updates the players in tha match through the view model into database
             matchDetailViewModel.updateMatch()
         }
     }
-
-
 }

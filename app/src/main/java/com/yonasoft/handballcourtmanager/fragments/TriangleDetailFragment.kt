@@ -20,7 +20,7 @@ import com.yonasoft.handballcourtmanager.viewmodel.MatchDetailViewModelFactory
 
 class TriangleDetailFragment : Fragment() {
 
-    private var binding: FragmentTriangleDetailBinding? = null
+    private lateinit var binding: FragmentTriangleDetailBinding
     private val args: TriangleDetailFragmentArgs by navArgs()
     private val matchDetailViewModel: MatchDetailViewModel by viewModels {
         MatchDetailViewModelFactory(args.matchId)
@@ -34,9 +34,9 @@ class TriangleDetailFragment : Fragment() {
 
         binding =
             DataBindingUtil.inflate(inflater, R.layout.fragment_triangle_detail, container, false)
-        val view = binding!!.root
+        val view = binding.root
 
-        binding!!.viewModel = matchDetailViewModel
+        binding.viewModel = matchDetailViewModel
         setHasOptionsMenu(true)
         setupObservers()
 
@@ -51,7 +51,7 @@ class TriangleDetailFragment : Fragment() {
 
     private fun setUpListeners() {
 
-        binding!!.apply {
+        binding.apply {
             tvT1.setOnClickListener {
                 changeOrAddPlayer("t1")
             }
@@ -81,7 +81,7 @@ class TriangleDetailFragment : Fragment() {
             }
 
             btnEndMatch.setOnClickListener {
-                val match = matchDetailViewModel.match!!.value!!
+                val match = matchDetailViewModel.match.value!!
                 //Makes sure all the textview for the players are filled in
                 if (match.teamOnePlayer1 != "TBA" && match.teamTwoPlayer1 != "TBA" && match.teamThreePlayer != "TBA") {
                     //Navigate to dialog to return to winner's queue with an array of the players in this match, and the match type
@@ -120,16 +120,17 @@ class TriangleDetailFragment : Fragment() {
                 }
             }
             //Code for interaction for editing court number
-            binding!!.editTextNum.apply {
+            binding.editTextNum.apply {
 
                 setOnClickListener {
-                    binding!!.editTextNum.text!!.clear()
+                    binding.editTextNum.text!!.clear()
                 }
                 //When you press the check button aka enter? on the on-screen keyboard it will set the new edited text as the court number
-                setImeActionLabel(binding!!.editTextNum.text.toString(), KeyEvent.KEYCODE_ENTER)
+                setImeActionLabel(binding.editTextNum.text.toString(), KeyEvent.KEYCODE_ENTER)
                 //Changes court number when out of focus
                 setOnFocusChangeListener { _, _ ->
-                    matchDetailViewModel.updateCourtNum(binding!!.editTextNum.text.toString())
+                    matchDetailViewModel.updateCourtNum(binding.editTextNum.text.toString())
+                    isCursorVisible=false
                 }
 
             }
@@ -137,8 +138,8 @@ class TriangleDetailFragment : Fragment() {
     }
     //Observers for updated data to be reflected in the views
     private fun setupObservers() {
-        binding!!.viewModel!!.match!!.observe(viewLifecycleOwner) {
-            binding!!.apply {
+        binding.viewModel!!.match.observe(viewLifecycleOwner) {
+            binding.apply {
                 editTextNum.setText(it.courtNumber)
                 tvT1.text = it.teamOnePlayer1
                 tvT2.text = it.teamTwoPlayer1
@@ -159,9 +160,9 @@ class TriangleDetailFragment : Fragment() {
         setFragmentResultListener(SelectFromRosterFragment.REQUEST_KEY_PLAYER) { _, bundle ->
             val result = bundle.getString(SelectFromRosterFragment.BUNDLE_KEY_PLAYER)
             when (playerAndTeam) {
-                "t1" -> matchDetailViewModel.match!!.value!!.teamOnePlayer1 = result!!
-                "t2" -> matchDetailViewModel.match!!.value!!.teamTwoPlayer1 = result!!
-                "t3" -> matchDetailViewModel.match!!.value!!.teamThreePlayer = result!!
+                "t1" -> matchDetailViewModel.match.value!!.teamOnePlayer1 = result!!
+                "t2" -> matchDetailViewModel.match.value!!.teamTwoPlayer1 = result!!
+                "t3" -> matchDetailViewModel.match.value!!.teamThreePlayer = result!!
             }
             //Updates the players in tha match through the view model into database
             matchDetailViewModel.updateMatch()

@@ -134,6 +134,7 @@ class DoublesDetailFragment : Fragment() {
                 //Changes court number when out of focus
                 setOnFocusChangeListener { _, _ ->
                     matchDetailViewModel.updateCourtNum(binding!!.editTextNum.text.toString())
+                    isCursorVisible=false
                 }
             }
         }
@@ -141,7 +142,7 @@ class DoublesDetailFragment : Fragment() {
 
     //Observers for updated data to be reflected in the views
     private fun setupObservers() {
-        binding!!.viewModel!!.match!!.observe(viewLifecycleOwner) {
+        binding!!.viewModel!!.match.observe(viewLifecycleOwner) {
             binding!!.apply {
                 tvT1P1.text = it.teamOnePlayer1
                 tvT1P2.text = it.teamOnePlayer2

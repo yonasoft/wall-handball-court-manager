@@ -18,9 +18,8 @@ import com.google.android.material.snackbar.Snackbar
 class ResultsFragment : Fragment() {
 
 
-    private var binding: FragmentResultsBinding? = null
+    private lateinit var binding: FragmentResultsBinding
     private val viewModel: MatchesViewModel by viewModels()
-
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -31,12 +30,11 @@ class ResultsFragment : Fragment() {
         setHasOptionsMenu(true)
         setupRecyclerView()
 
-        return binding!!.root
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
@@ -48,7 +46,6 @@ class ResultsFragment : Fragment() {
         onDeleteMatches(item.itemId)
         return super.onOptionsItemSelected(item)
     }
-
 
     private fun onDeleteMatches(idOfQueueDeletion: Int) {
         val removedQueueText: String
@@ -64,7 +61,7 @@ class ResultsFragment : Fragment() {
         }
 
         val snackBar =
-            Snackbar.make(binding!!.root, removedQueueText, Snackbar.LENGTH_LONG).setAction(
+            Snackbar.make(binding.root, removedQueueText, Snackbar.LENGTH_LONG).setAction(
                 "Undo"
             ) {
                 viewModel.addMatches(removedList)
@@ -75,9 +72,9 @@ class ResultsFragment : Fragment() {
     private fun setupRecyclerView() {
         val layoutManager = LinearLayoutManager(this.context)
         layoutManager.orientation = RecyclerView.VERTICAL
-        binding!!.rcvResults.layoutManager = layoutManager
+        binding.rcvResults.layoutManager = layoutManager
         viewModel.resultsList.observe(viewLifecycleOwner) {
-            binding!!.rcvResults.adapter = CompletedMatchesAdapter(it)
+            binding.rcvResults.adapter = CompletedMatchesAdapter(it)
         }
 
         ItemTouchHelper(object : ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.RIGHT) {
@@ -89,13 +86,12 @@ class ResultsFragment : Fragment() {
                 return false
             }
 
-
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
                 val removedMatch: Match = viewModel.resultsList.value!![viewHolder.adapterPosition]
                 viewModel.removeMatch(removedMatch)
 
                 Snackbar.make(
-                    binding!!.root, "Result is being removed. press 'Undo' to stop!",
+                    binding.root, "Result is being removed. press 'Undo' to stop!",
                     Snackbar.LENGTH_LONG
                 ).setAction(
                     "Undo"
@@ -103,7 +99,6 @@ class ResultsFragment : Fragment() {
                     viewModel.addMatch(removedMatch)
                 }.show()
             }
-        }).attachToRecyclerView(binding!!.rcvResults)
+        }).attachToRecyclerView(binding.rcvResults)
     }
-
 }
