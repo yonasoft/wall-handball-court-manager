@@ -85,7 +85,7 @@ class DoublesDetailFragment : Fragment() {
 
             //Ends match
             btnEndMatch.setOnClickListener {
-                val match = matchDetailViewModel.match!!.value!!
+                val match = matchDetailViewModel.match.value!!
                 //Makes sure all the textview for the players are filled in
                 if (match.teamOnePlayer1 != "TBA" && match.teamTwoPlayer1 != "TBA" && match.teamOnePlayer2 != "TBA" && match.teamTwoPlayer2 != "TBA") {
                     //Navigates to end match confirmation
@@ -168,10 +168,10 @@ class DoublesDetailFragment : Fragment() {
             val result = bundle.getString(SelectFromRosterFragment.BUNDLE_KEY_PLAYER)
             when (playerAndTeam) {
                 //t for team and p for player
-                "t1p1" -> matchDetailViewModel.match!!.value!!.teamOnePlayer1 = result!!
-                "t1p2" -> matchDetailViewModel.match!!.value!!.teamOnePlayer2 = result!!
-                "t2p1" -> matchDetailViewModel.match!!.value!!.teamTwoPlayer1 = result!!
-                "t2p2" -> matchDetailViewModel.match!!.value!!.teamTwoPlayer2 = result!!
+                "t1p1" -> matchDetailViewModel.match.value!!.teamOnePlayer1 = result!!
+                "t1p2" -> matchDetailViewModel.match.value!!.teamOnePlayer2 = result!!
+                "t2p1" -> matchDetailViewModel.match.value!!.teamTwoPlayer1 = result!!
+                "t2p2" -> matchDetailViewModel.match.value!!.teamTwoPlayer2 = result!!
             }
             //Updates the players in tha match through the view model into database
             matchDetailViewModel.updateMatch()

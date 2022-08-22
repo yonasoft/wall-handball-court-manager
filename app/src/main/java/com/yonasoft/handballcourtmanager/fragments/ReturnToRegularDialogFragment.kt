@@ -54,7 +54,7 @@ class ReturnToRegularQueueFragmentDialogFragment:DialogFragment() {
                 sendToQueue.add(args.players[1])
                 args.players[1] = "TBA"
             }
-            if (binding!!.checkboxT2p1.isChecked) {
+            if (binding.checkboxT2p1.isChecked) {
                 sendToQueue.add(args.players[2])
                 args.players[2] = "TBA"
             }
@@ -73,7 +73,7 @@ class ReturnToRegularQueueFragmentDialogFragment:DialogFragment() {
 
     private fun setViews() {
         binding.apply {
-            //Question text view for the reggular fragment
+            //Question text view for the regular fragment
             tvReturnToQueueMessage.text = "Select these players back to regular queue?"
 
             //All the players available and eligible to return to regular queue will be displayed in their respective checkbox

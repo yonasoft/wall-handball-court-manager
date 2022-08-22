@@ -38,7 +38,7 @@ class SelectFromRosterFragment:Fragment() {
         savedInstanceState: Bundle?
     ): View {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_select_from_roster,container,false)
-        val view = binding!!.root
+        val view = binding.root
         binding.viewModel = viewModel
         //Regular queue that is displayed
         setupRecyclerView(binding.queueRcv, viewModel.regularQueue)

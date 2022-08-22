@@ -104,7 +104,7 @@ class RosterFragment : Fragment() {
 
     //Deletes based on id passed
     private fun onDeleteQueue(idOfQueueDeletion: Int) {
-        var removedQueueText: String = ""
+        var removedQueueText = ""
         val removedList = mutableListOf<Player>()
 
         when (idOfQueueDeletion) {
