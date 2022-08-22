@@ -37,7 +37,6 @@ class SinglesDetailFragment : Fragment() {
 
         binding.viewModel = matchDetailViewModel
 
-        setHasOptionsMenu(true)
         //Setup observers of the views
         setupObservers()
 

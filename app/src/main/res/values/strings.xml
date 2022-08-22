@@ -44,6 +44,8 @@
     <string name="results_desc"><![CDATA[>Once a match has ended, it cannot be edited, so make sure the information is accurate before ending the match! \n>To remove an individual result swipe to the side. \n>To remove all results press the \'...\' on the right side of the tool bar and press \'clear results\']]></string>
     <string name="removing_from_queue">Removing from queue</string>
     <string name="removing_a_match">Removing a match/matches</string>
+    <string name="send_to_regular_msg">Select these players back to regular queue?</string>
+    <string name="send_to_winner_msg">Select these players back to Winners queue?</string>
 
 
 </resources>

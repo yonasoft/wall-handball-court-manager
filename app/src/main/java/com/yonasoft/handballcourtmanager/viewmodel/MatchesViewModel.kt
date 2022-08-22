@@ -64,15 +64,7 @@ class MatchesViewModel:ViewModel() {
             }
         }
     }
-    //updates a match
-    fun updateMatch(match: Match) {
-        viewModelScope.launch {
-            withContext(Dispatchers.IO) {
-                MatchesRepository.get().updateMatch(match)
-            }
-        }
 
-    }
     //Removes a match
     fun removeMatch(match:Match){
         viewModelScope.launch {

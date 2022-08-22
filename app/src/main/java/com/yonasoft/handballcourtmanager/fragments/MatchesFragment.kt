@@ -2,9 +2,12 @@ package com.yonasoft.handballcourtmanager.fragments
 
 import android.os.Bundle
 import android.view.*
+import androidx.core.view.MenuHost
+import androidx.core.view.MenuProvider
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -31,7 +34,6 @@ class MatchesFragment : Fragment() {
             R.layout.fragment_current_matches, container, false
         )
         val view = binding!!.root
-        setHasOptionsMenu(true)
         //Recycler view for all the matches
         setupRecyclerView()
 
@@ -40,6 +42,21 @@ class MatchesFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        val menuHost: MenuHost =requireActivity()
+        menuHost.addMenuProvider(object: MenuProvider {
+            override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
+                menuInflater.inflate(R.menu.matches_toolbar, menu)
+            }
+
+            override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
+                onDeleteMatches(menuItem.itemId)
+                return true
+            }
+        }
+        ,viewLifecycleOwner,Lifecycle.State.RESUMED
+        )
+
         binding!!.fabAddMatches.setOnClickListener {
             findNavController().navigate(
                 MatchesFragmentDirections.actionMatchesFragmentToCreateMatchDialogFragment()
@@ -85,15 +102,6 @@ class MatchesFragment : Fragment() {
 
     }
 
-    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        inflater.inflate(R.menu.matches_toolbar, menu)
-        super.onCreateOptionsMenu(menu, inflater)
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        onDeleteMatches(item.itemId)
-        return super.onOptionsItemSelected(item)
-    }
 
     //Deletes the match if it the menu is a specific id
     private fun onDeleteMatches(idOfQueueDeletion: Int) {

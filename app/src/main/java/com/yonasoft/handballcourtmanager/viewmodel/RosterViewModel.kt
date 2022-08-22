@@ -57,14 +57,7 @@ class RosterViewModel : ViewModel() {
         }
 
     }
-    //Update player to database
-    fun updatePlayer(player: Player) {
-        viewModelScope.launch {
-            withContext(Dispatchers.IO) {
-                PlayersRepository.get().updatePlayer(player)
-            }
-        }
-    }
+
     //Delete player from database
     fun deletePlayer(player: Player) {
         viewModelScope.launch {

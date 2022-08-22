@@ -64,6 +64,7 @@ class MatchDetailViewModel(matchId: UUID) : ViewModel() {
 
 }
 
+@Suppress("UNCHECKED_CAST")
 class MatchDetailViewModelFactory(
     private val matchId: UUID
 ) : ViewModelProvider.Factory {

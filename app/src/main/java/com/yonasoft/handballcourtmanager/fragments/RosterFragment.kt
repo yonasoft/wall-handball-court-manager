@@ -2,9 +2,12 @@ package com.yonasoft.handballcourtmanager.fragments
 
 import android.os.Bundle
 import android.view.*
+import androidx.core.view.MenuHost
+import androidx.core.view.MenuProvider
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LiveData
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.ItemTouchHelper
@@ -32,12 +35,24 @@ class RosterFragment : Fragment() {
             R.layout.fragment_roster, container, false
         )
         val view = binding.root
-        setHasOptionsMenu(true)
         binding.viewModel = viewModel
         //Recycler view for regular queue
         setupRecyclerView(binding.queueRcv, viewModel.regularQueue)
         //Recycler view for winner's queue
         setupRecyclerView(binding.winnersRcv,viewModel.winnerQueue)
+
+        val menuHost: MenuHost =requireActivity()
+        menuHost.addMenuProvider(object: MenuProvider {
+            override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
+                menuInflater.inflate(R.menu.roster_list_toolbar, menu)
+            }
+
+            override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
+                onDeleteQueue(menuItem.itemId)
+                return true
+            }
+        }, viewLifecycleOwner, Lifecycle.State.RESUMED
+        )
 
         // OnclickListener for opening dialog to add player to regular queue
         binding.fabAddPlayers.setOnClickListener {
@@ -47,18 +62,6 @@ class RosterFragment : Fragment() {
         }
 
         return view
-    }
-
-    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        inflater.inflate(R.menu.roster_list_toolbar, menu)
-        super.onCreateOptionsMenu(menu, inflater)
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        //Deletes item(s) based on item id
-        onDeleteQueue(item.itemId)
-
-        return super.onOptionsItemSelected(item)
     }
 
     //Sets up recycler view based on the queue

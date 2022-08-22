@@ -37,7 +37,7 @@ class TriangleDetailFragment : Fragment() {
         val view = binding.root
 
         binding.viewModel = matchDetailViewModel
-        setHasOptionsMenu(true)
+
         setupObservers()
 
         return view

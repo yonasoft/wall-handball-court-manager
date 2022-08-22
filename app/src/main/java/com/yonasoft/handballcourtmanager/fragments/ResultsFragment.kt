@@ -2,9 +2,12 @@ package com.yonasoft.handballcourtmanager.fragments
 
 import android.os.Bundle
 import android.view.*
+import androidx.core.view.MenuHost
+import androidx.core.view.MenuProvider
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -27,25 +30,26 @@ class ResultsFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_results, container, false)
-        setHasOptionsMenu(true)
+
+        val menuHost: MenuHost =requireActivity()
+        menuHost.addMenuProvider(object:MenuProvider{
+            override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
+                menuInflater.inflate(R.menu.results_toolbar, menu)
+            }
+
+            override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
+                onDeleteMatches(menuItem.itemId)
+                return true
+            }
+        }
+            ,viewLifecycleOwner, Lifecycle.State.RESUMED
+            )
+
         setupRecyclerView()
 
         return binding.root
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-    }
-
-    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        inflater.inflate(R.menu.results_toolbar, menu)
-        super.onCreateOptionsMenu(menu, inflater)
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        onDeleteMatches(item.itemId)
-        return super.onOptionsItemSelected(item)
-    }
 
     private fun onDeleteMatches(idOfQueueDeletion: Int) {
         val removedQueueText: String

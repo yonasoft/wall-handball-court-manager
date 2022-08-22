@@ -37,7 +37,6 @@ class DoublesDetailFragment : Fragment() {
         binding =
             DataBindingUtil.inflate(inflater, R.layout.fragment_doubles_detail, container, false)
         val view = binding!!.root
-        setHasOptionsMenu(true)
         binding!!.viewModel = matchDetailViewModel
         setupObservers()
 

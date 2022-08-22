@@ -74,7 +74,7 @@ class ReturnToRegularQueueFragmentDialogFragment:DialogFragment() {
     private fun setViews() {
         binding.apply {
             //Question text view for the regular fragment
-            tvReturnToQueueMessage.text = "Select these players back to regular queue?"
+            tvReturnToQueueMessage.text = getString(R.string.send_to_regular_msg)
 
             //All the players available and eligible to return to regular queue will be displayed in their respective checkbox
             if (args.players[0] != "TBA") checkboxT1p1.text =

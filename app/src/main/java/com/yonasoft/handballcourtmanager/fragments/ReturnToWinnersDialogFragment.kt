@@ -81,7 +81,7 @@ class ReturnToWinnersDialogFragment : DialogFragment() {
     private fun setViews() {
         binding.apply {
             //Message for the dialog
-            tvReturnToQueueMessage.text = "Select these players back to Winners queue?"
+            tvReturnToQueueMessage.text = getString(R.string.send_to_winner_msg)
             //All the players available and eligible to return to regular queue will be displayed in their respective checkbox
             if (args.players[0] != "TBA") checkboxT1p1.text =
                 args.players[0] else binding.checkboxT1p1.visibility = View.GONE
