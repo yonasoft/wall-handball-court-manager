@@ -25,6 +25,7 @@ class MainActivity : AppCompatActivity() {
 
     }
     //Sets up navigation
+    @OptIn(NavigationUiSaveStateControl::class)
     private fun setupNavigation() {
         //Action bar
         setSupportActionBar(binding.toolbar)
@@ -35,7 +36,9 @@ class MainActivity : AppCompatActivity() {
         //Navigation for tool bar
         binding.toolbar.setupWithNavController(navController,appBarConfiguration)
         //Navigation for bottom nav bar
-        binding.bottomNav.setupWithNavController(navController)
+
+        NavigationUI.setupWithNavController(binding.bottomNav, navController, false)
+
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
