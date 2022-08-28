@@ -6,7 +6,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.yonasoft.handballcourtmanager.repositories.MatchesRepository
 import com.yonasoft.handballcourtmanager.db.matchesdb.Match
-import com.yonasoft.handballcourtmanager.db.matchesdb.MatchTypes
+import com.yonasoft.handballcourtmanager.db.matchesdb.MatchType
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -27,13 +27,13 @@ class MatchesViewModel:ViewModel() {
         triangles: Int = numOfTrianglesToAdd.value!!
     ) {
         for (i in 1..singles) {
-            createMatch(MatchTypes.SINGLES)
+            createMatch(MatchType.SINGLES)
         }
         for (i in 1..doubles) {
-            createMatch(MatchTypes.DOUBLES)
+            createMatch(MatchType.DOUBLES)
         }
         for (i in 1..triangles) {
-            createMatch(MatchTypes.TRIANGLE)
+            createMatch(MatchType.TRIANGLE)
         }
     }
     //Adds a match
@@ -54,7 +54,7 @@ class MatchesViewModel:ViewModel() {
     }
     //Creates and adds a new match
     private fun createMatch(
-        matchType: String,
+        matchType: MatchType,
         ) {
         viewModelScope.launch {
             withContext(Dispatchers.IO) {

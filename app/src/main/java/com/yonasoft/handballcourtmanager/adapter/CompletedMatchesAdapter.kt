@@ -9,7 +9,7 @@ import com.yonasoft.handballcourtmanager.databinding.DoublesMatchItemBinding
 import com.yonasoft.handballcourtmanager.databinding.SinglesMatchItemBinding
 import com.yonasoft.handballcourtmanager.databinding.TriangleMatchItemBinding
 import com.yonasoft.handballcourtmanager.db.matchesdb.Match
-import com.yonasoft.handballcourtmanager.db.matchesdb.MatchTypes
+import com.yonasoft.handballcourtmanager.db.matchesdb.MatchType
 
 
 //Adapter for results. same as the active matches adapter EXCEPT there is no click listener
@@ -44,10 +44,9 @@ class CompletedMatchesAdapter(private val matches: List<Match>):RecyclerView.Ada
 
     override fun getItemViewType(position: Int): Int {
         return when(matches[position].matchType){
-            MatchTypes.SINGLES -> R.layout.singles_match_item
-            MatchTypes.DOUBLES -> R.layout.doubles_match_item
-            MatchTypes.TRIANGLE -> R.layout.triangle_match_item
-            else -> throw RuntimeException("Not an excepted type")
+            MatchType.SINGLES -> R.layout.singles_match_item
+            MatchType.DOUBLES -> R.layout.doubles_match_item
+            MatchType.TRIANGLE -> R.layout.triangle_match_item
         }
     }
 

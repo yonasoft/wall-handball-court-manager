@@ -14,7 +14,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.yonasoft.handballcourtmanager.R
 import com.yonasoft.handballcourtmanager.databinding.FragmentSinglesDetailBinding
-import com.yonasoft.handballcourtmanager.db.matchesdb.MatchTypes
+import com.yonasoft.handballcourtmanager.db.matchesdb.MatchType
 import com.yonasoft.handballcourtmanager.viewmodel.MatchDetailViewModel
 import com.yonasoft.handballcourtmanager.viewmodel.MatchDetailViewModelFactory
 
@@ -95,7 +95,7 @@ class SinglesDetailFragment : Fragment() {
                                         match.teamTwoPlayer2,
                                         match.teamThreePlayer
                                     ),
-                                    MatchTypes.SINGLES
+                                    MatchType.SINGLES.name
                                 )
                             )
                             //Completes match

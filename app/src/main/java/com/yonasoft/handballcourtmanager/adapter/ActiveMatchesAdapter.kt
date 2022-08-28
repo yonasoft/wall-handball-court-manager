@@ -10,7 +10,7 @@ import com.yonasoft.handballcourtmanager.databinding.DoublesMatchItemBinding
 import com.yonasoft.handballcourtmanager.databinding.SinglesMatchItemBinding
 import com.yonasoft.handballcourtmanager.databinding.TriangleMatchItemBinding
 import com.yonasoft.handballcourtmanager.db.matchesdb.Match
-import com.yonasoft.handballcourtmanager.db.matchesdb.MatchTypes
+import com.yonasoft.handballcourtmanager.db.matchesdb.MatchType
 import com.yonasoft.handballcourtmanager.fragments.MatchesFragmentDirections
 
 
@@ -108,10 +108,9 @@ class ActiveMatchesAdapter(private val matches: List<Match>):RecyclerView.Adapte
     //Check the match type and return a layout
     override fun getItemViewType(position: Int): Int {
         return when(matches[position].matchType){
-            MatchTypes.SINGLES -> R.layout.singles_match_item
-            MatchTypes.DOUBLES -> R.layout.doubles_match_item
-            MatchTypes.TRIANGLE -> R.layout.triangle_match_item
-            else -> throw RuntimeException("Not an excepted type")
+            MatchType.SINGLES -> R.layout.singles_match_item
+            MatchType.DOUBLES -> R.layout.doubles_match_item
+            MatchType.TRIANGLE -> R.layout.triangle_match_item
         }
     }
 

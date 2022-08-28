@@ -11,7 +11,7 @@ data class Match(
     val id: UUID,
     //Type of match (See the enum "Match_Types").
     @ColumnInfo(name="match_type")
-    val matchType:String,
+    val matchType:MatchType,
     @ColumnInfo(name="court_number")
     var courtNumber: String = "N/A",
     @ColumnInfo(name="t1_score")

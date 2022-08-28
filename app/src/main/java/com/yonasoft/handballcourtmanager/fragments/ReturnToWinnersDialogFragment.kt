@@ -13,7 +13,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.yonasoft.handballcourtmanager.R
 import com.yonasoft.handballcourtmanager.databinding.FragmentReturnToQueueDialogBinding
-import com.yonasoft.handballcourtmanager.db.matchesdb.MatchTypes
+import com.yonasoft.handballcourtmanager.db.matchesdb.MatchType
 import com.yonasoft.handballcourtmanager.viewmodel.RosterViewModel
 
 
@@ -104,13 +104,13 @@ class ReturnToWinnersDialogFragment : DialogFragment() {
         val navigateTo = when(
             args.matchType
         ){
-            MatchTypes.SINGLES->SinglesDetailFragmentDirections.actionSinglesDetailFragmentToReturnToRegularQueueFragmentDialogFragment(
+            MatchType.SINGLES.name->SinglesDetailFragmentDirections.actionSinglesDetailFragmentToReturnToRegularQueueFragmentDialogFragment(
                 players
             )
-            MatchTypes.DOUBLES->DoublesDetailFragmentDirections.actionFragmentDoublesDetailToReturnToRegularQueueFragmentDialogFragment(
+            MatchType.DOUBLES.name->DoublesDetailFragmentDirections.actionFragmentDoublesDetailToReturnToRegularQueueFragmentDialogFragment(
                 players
             )
-            MatchTypes.TRIANGLE->TriangleDetailFragmentDirections.actionFragmentTriangleDetailToReturnToRegularQueueFragmentDialogFragment(
+            MatchType.TRIANGLE.name->TriangleDetailFragmentDirections.actionFragmentTriangleDetailToReturnToRegularQueueFragmentDialogFragment(
                 players
             )
             else -> throw IllegalArgumentException("Incorrect Match Type")

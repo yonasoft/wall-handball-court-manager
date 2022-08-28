@@ -37,7 +37,7 @@ class CreateMatchDialogFragment:DialogFragment(){
 
         //Creates spinner items aka the numbers that will show in the spinner
         val spinnerItems = List(33){ i ->i }
-        val arrayAdapter:ArrayAdapter<Int> = ArrayAdapter(this.context!!,android.R.layout.simple_spinner_dropdown_item,spinnerItems)
+        val arrayAdapter:ArrayAdapter<Int> = ArrayAdapter(this.requireContext(),android.R.layout.simple_spinner_dropdown_item,spinnerItems)
 
         //Adapter that applies spinner for each individual spinner for each match type
         binding.spinnerSingles.adapter = arrayAdapter
