@@ -11,17 +11,15 @@
             type="com.yonasoft.handballcourtmanager.viewmodel.MatchDetailViewModel" />
     </data>
 
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
 
 <androidx.constraintlayout.widget.ConstraintLayout
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
-
-
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@color/blue_3"
-        >
+    android:layout_height="match_parent"
+    android:padding="20dp"
+    >
 
         <com.google.android.material.textview.MaterialTextView
             android:layout_marginTop="16dp"
@@ -61,6 +59,7 @@
             android:id="@+id/tv_t1"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
             android:text="Team One"
             android:textAlignment="center"
             android:textSize="32sp"
@@ -72,6 +71,7 @@
             android:id="@+id/tv_t2"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
             android:text="Team Two"
             android:textAlignment="center"
             android:textSize="32sp"
@@ -238,8 +238,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent" />
     </androidx.constraintlayout.widget.ConstraintLayout>
-    
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>
 
 </layout>

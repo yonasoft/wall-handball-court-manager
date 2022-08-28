@@ -11,6 +11,8 @@ import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.*
 import com.yonasoft.handballcourtmanager.databinding.ActivityMainBinding
 
+//Change colors for results, matches, players, and list items.
+
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding:ActivityMainBinding
@@ -36,9 +38,7 @@ class MainActivity : AppCompatActivity() {
         //Navigation for tool bar
         binding.toolbar.setupWithNavController(navController,appBarConfiguration)
         //Navigation for bottom nav bar
-
         NavigationUI.setupWithNavController(binding.bottomNav, navController, false)
-
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {

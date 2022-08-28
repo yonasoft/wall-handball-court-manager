@@ -9,10 +9,14 @@
             type="com.yonasoft.handballcourtmanager.viewmodel.MatchDetailViewModel" />
     </data>
 
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
 <androidx.constraintlayout.widget.ConstraintLayout
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/blue_3"
+    android:padding="20dp"
     >
 
     <com.google.android.material.textview.MaterialTextView
@@ -53,13 +57,13 @@
         android:id="@+id/tv_t1_p1"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
         android:text="Team One"
         android:textAlignment="center"
         android:textSize="32sp"
         app:layout_constraintEnd_toStartOf="@+id/guideline2"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tv_court"
-        />
+        app:layout_constraintTop_toBottomOf="@id/tv_court" />
 
     <com.google.android.material.textview.MaterialTextView
         android:id="@+id/tv_t1_p2"
@@ -76,6 +80,7 @@
         android:id="@+id/tv_t2_p1"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
         android:text="Team Two"
         android:textAlignment="center"
         android:textSize="32sp"
@@ -194,12 +199,11 @@
         android:id="@+id/btn_end_match"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginTop="40dp"
+        android:text="@string/end_match"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        android:text="@string/end_match"
-        android:layout_marginBottom="16dp"
-        />
+        app:layout_constraintTop_toBottomOf="@+id/btn_t2_sub" />
 </androidx.constraintlayout.widget.ConstraintLayout>
-
+    </ScrollView>
 </layout>
