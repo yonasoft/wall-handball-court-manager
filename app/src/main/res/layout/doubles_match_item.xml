@@ -8,17 +8,16 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginTop="8dp"
-    android:layout_marginStart="8dp"
-    android:layout_marginEnd="8dp"
+    android:layout_marginStart="4dp"
+    android:layout_marginEnd="4dp"
     android:background="@color/white"
     app:cardCornerRadius="4dp"
-
     >
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="8dp">
+        android:padding="4dp">
 
         <com.google.android.material.textview.MaterialTextView
             android:id="@+id/tv_court_number"
@@ -28,8 +27,6 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-
-
             />
 
         <com.google.android.material.textview.MaterialTextView
