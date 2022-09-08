@@ -76,7 +76,6 @@ class HelpFragment : Fragment() {
                 binding!!.resultsDesc.visibility = View.GONE
             }
         }
-
     }
 
     override fun onDestroy() {

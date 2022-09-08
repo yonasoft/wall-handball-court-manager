@@ -23,6 +23,7 @@ class ResultsFragment : Fragment() {
 
     private var binding: FragmentResultsBinding?=null
     private val viewModel: MatchesViewModel by viewModels()
+    private val adapter:MatchesAdapter by lazy {MatchesAdapter()}
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -78,7 +79,7 @@ class ResultsFragment : Fragment() {
         layoutManager.orientation = RecyclerView.VERTICAL
         binding!!.rcvResults.layoutManager = layoutManager
         viewModel.resultsList.observe(viewLifecycleOwner) {
-            binding!!.rcvResults.adapter = MatchesAdapter(it)
+            binding!!.rcvResults.adapter = adapter
         }
 
         ItemTouchHelper(object : ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.RIGHT) {

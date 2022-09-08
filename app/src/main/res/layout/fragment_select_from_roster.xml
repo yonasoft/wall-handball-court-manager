@@ -9,7 +9,7 @@
     <data>
         <variable
             name="viewModel"
-            type="com.yonasoft.handballcourtmanager.viewmodel.RosterSelectViewModel" />
+            type="com.yonasoft.handballcourtmanager.viewmodel.RosterViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -17,7 +17,8 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/blue_3"
-        android:padding="20dp"
+        android:paddingTop="16dp"
+        android:paddingBottom="16dp"
         >
 
         <com.google.android.material.textview.MaterialTextView

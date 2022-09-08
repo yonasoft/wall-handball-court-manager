@@ -35,9 +35,11 @@ class MainActivity : AppCompatActivity() {
 
     //Sets up navigation
     private fun setupNavigation() {
+
         val navHostFragment =
             supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
         val navController = navHostFragment.navController
+        setSupportActionBar(binding!!.toolbar)
         //Instantiate app ba
         appBarConfiguration = AppBarConfiguration(setOf(R.id.rosterFragment,R.id.matchesFragment,R.id.resultsFragment))
         //Navigation for tool bar

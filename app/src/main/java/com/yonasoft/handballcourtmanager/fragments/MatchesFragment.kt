@@ -12,19 +12,20 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.snackbar.Snackbar
 import com.yonasoft.handballcourtmanager.R
 import com.yonasoft.handballcourtmanager.adapter.MatchesAdapter
 import com.yonasoft.handballcourtmanager.databinding.FragmentCurrentMatchesBinding
 import com.yonasoft.handballcourtmanager.db.matchesdb.Match
 import com.yonasoft.handballcourtmanager.viewmodel.MatchesViewModel
-import com.google.android.material.snackbar.Snackbar
 
 
 //Matches fragment which list all current matches
-class MatchesFragment : Fragment() {
+class MatchesFragment : Fragment(){
 
     private var binding: FragmentCurrentMatchesBinding? = null
     private val viewModel: MatchesViewModel by viewModels()
+    private val adapter:MatchesAdapter by lazy {MatchesAdapter()}
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -84,7 +85,8 @@ class MatchesFragment : Fragment() {
         binding!!.rcvActiveMatches.layoutManager = layoutManager
         //Observer for match data
         viewModel.matchesList.observe(viewLifecycleOwner) {
-            binding!!.rcvActiveMatches.adapter = MatchesAdapter(it)
+            adapter.setData(it)
+            binding!!.rcvActiveMatches.adapter = adapter
         }
         //Below is the swipe to delete feature
         ItemTouchHelper(object : ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.RIGHT) {
@@ -140,6 +142,7 @@ class MatchesFragment : Fragment() {
             }
         snackBar.show()
     }
+
 
 
 }

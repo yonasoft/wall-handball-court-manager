@@ -33,6 +33,4 @@ interface PlayerDao {
 
     @Query("DELETE FROM players_in_queue WHERE is_winner=1")
     suspend fun deleteWinnerPlayers()
-
-
 }
