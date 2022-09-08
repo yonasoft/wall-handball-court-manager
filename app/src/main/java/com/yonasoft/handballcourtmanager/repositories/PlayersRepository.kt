@@ -10,7 +10,6 @@ import com.yonasoft.handballcourtmanager.db.playersdb.PlayerDatabase
 class PlayersRepository(context: Context) {
     private var playerDao: PlayerDao = PlayerDatabase.getInstance(context).playerDao
 
-
     companion object{
         //Create instance of repository when application starts
         private var INSTANCE: PlayersRepository? =null

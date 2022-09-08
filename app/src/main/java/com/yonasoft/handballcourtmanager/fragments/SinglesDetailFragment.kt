@@ -15,12 +15,13 @@ import androidx.navigation.fragment.navArgs
 import com.yonasoft.handballcourtmanager.R
 import com.yonasoft.handballcourtmanager.databinding.FragmentSinglesDetailBinding
 import com.yonasoft.handballcourtmanager.db.matchesdb.MatchType
+import com.yonasoft.handballcourtmanager.dialogs.EndMatchDialogFragment
 import com.yonasoft.handballcourtmanager.viewmodel.MatchDetailViewModel
 import com.yonasoft.handballcourtmanager.viewmodel.MatchDetailViewModelFactory
 
 class SinglesDetailFragment : Fragment() {
 
-    private lateinit var binding: FragmentSinglesDetailBinding
+    private var binding: FragmentSinglesDetailBinding?=null
     private val args: SinglesDetailFragmentArgs by navArgs()
     private val matchDetailViewModel: MatchDetailViewModel by viewModels {
         MatchDetailViewModelFactory(args.matchId)
@@ -33,9 +34,9 @@ class SinglesDetailFragment : Fragment() {
     ): View {
         binding =
             DataBindingUtil.inflate(inflater, R.layout.fragment_singles_detail, container, false)
-        val view = binding.root
+        val view = binding!!.root
 
-        binding.viewModel = matchDetailViewModel
+        binding!!.viewModel = matchDetailViewModel
 
         //Setup observers of the views
         setupObservers()
@@ -51,7 +52,7 @@ class SinglesDetailFragment : Fragment() {
 
 
     private fun setUpListeners() {
-        binding.apply {
+        binding!!.apply {
             //Add or change players when click which open an add player dialog
             tvT1.setOnClickListener {
                 changeOrAddPlayer("t1")
@@ -114,13 +115,13 @@ class SinglesDetailFragment : Fragment() {
                 isCursorVisible
                 setOnClickListener {
                     //Clears the court number for future editing
-                    binding.editTextNum.text!!.clear()
+                    binding!!.editTextNum.text!!.clear()
                 }
                 //When you press the check button aka enter? on the on-screen keyboard it will set the new edited text as the court number
-                setImeActionLabel(binding.editTextNum.text.toString(), KeyEvent.KEYCODE_ENTER)
+                setImeActionLabel(binding!!.editTextNum.text.toString(), KeyEvent.KEYCODE_ENTER)
                 //Changes court number when out of focus
                 setOnFocusChangeListener { _, _ ->
-                    matchDetailViewModel.updateCourtNum(binding.editTextNum.text.toString())
+                    matchDetailViewModel.updateCourtNum(binding!!.editTextNum.text.toString())
                     isCursorVisible=false
                 }
             }
@@ -128,8 +129,8 @@ class SinglesDetailFragment : Fragment() {
     }
     //Observers for updated data to be reflected in the views
     private fun setupObservers() {
-        binding.viewModel!!.match.observe(viewLifecycleOwner) {
-            binding.apply {
+        binding!!.viewModel!!.match.observe(viewLifecycleOwner) {
+            binding!!.apply {
                 editTextNum.setText(it.courtNumber)
                 tvT1.text = it.teamOnePlayer1
                 tvT2.text = it.teamTwoPlayer1
@@ -156,5 +157,10 @@ class SinglesDetailFragment : Fragment() {
             //Updates the players in tha match through the view model into database
             matchDetailViewModel.updateMatch()
         }
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        binding = null
     }
 }

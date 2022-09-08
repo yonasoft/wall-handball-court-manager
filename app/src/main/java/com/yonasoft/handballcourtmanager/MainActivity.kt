@@ -6,6 +6,7 @@ import android.view.MenuItem
 
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
+import androidx.navigation.NavController
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.*
@@ -15,30 +16,34 @@ import com.yonasoft.handballcourtmanager.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
 
-    private lateinit var binding:ActivityMainBinding
+    private var binding:ActivityMainBinding?=null
     private lateinit var appBarConfiguration: AppBarConfiguration
+    private lateinit var navController:NavController
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
+        //setup data binding
         binding = DataBindingUtil.setContentView(this,R.layout.activity_main)
         //Sets up navigation
         setupNavigation()
-
     }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        binding = null
+    }
+
     //Sets up navigation
-    @OptIn(NavigationUiSaveStateControl::class)
     private fun setupNavigation() {
-        //Action bar
-        setSupportActionBar(binding.toolbar)
         val navHostFragment =
             supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
         val navController = navHostFragment.navController
-        appBarConfiguration = AppBarConfiguration.Builder(R.id.rosterFragment,R.id.matchesFragment,R.id.resultsFragment).build()
+        //Instantiate app ba
+        appBarConfiguration = AppBarConfiguration(setOf(R.id.rosterFragment,R.id.matchesFragment,R.id.resultsFragment))
         //Navigation for tool bar
-        binding.toolbar.setupWithNavController(navController,appBarConfiguration)
+        binding!!.toolbar.setupWithNavController(navController,appBarConfiguration)
         //Navigation for bottom nav bar
-        NavigationUI.setupWithNavController(binding.bottomNav, navController, false)
+        binding!!.bottomNav.setupWithNavController(navController)
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -47,12 +52,11 @@ class MainActivity : AppCompatActivity() {
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        return  item.onNavDestinationSelected(findNavController(binding.navHostFragment.id))||super.onOptionsItemSelected(item)
+        return  item.onNavDestinationSelected(findNavController(binding!!.navHostFragment.id))||super.onOptionsItemSelected(item)
     }
 
     override fun onSupportNavigateUp(): Boolean {
-        val navController = findNavController(R.id.nav_host_fragment)
-        return navController.navigateUp(appBarConfiguration)
+        return navController.navigateUp()
                 || super.onSupportNavigateUp()
     }
 }

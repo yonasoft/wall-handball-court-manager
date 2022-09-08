@@ -12,16 +12,16 @@ import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.yonasoft.handballcourtmanager.R
-import com.yonasoft.handballcourtmanager.adapter.CompletedMatchesAdapter
 import com.yonasoft.handballcourtmanager.databinding.FragmentResultsBinding
 import com.yonasoft.handballcourtmanager.db.matchesdb.Match
 import com.yonasoft.handballcourtmanager.viewmodel.MatchesViewModel
 import com.google.android.material.snackbar.Snackbar
+import com.yonasoft.handballcourtmanager.adapter.MatchesAdapter
 
 class ResultsFragment : Fragment() {
 
 
-    private lateinit var binding: FragmentResultsBinding
+    private var binding: FragmentResultsBinding?=null
     private val viewModel: MatchesViewModel by viewModels()
 
     override fun onCreateView(
@@ -47,7 +47,7 @@ class ResultsFragment : Fragment() {
 
         setupRecyclerView()
 
-        return binding.root
+        return binding!!.root
     }
 
 
@@ -65,7 +65,7 @@ class ResultsFragment : Fragment() {
         }
 
         val snackBar =
-            Snackbar.make(binding.root, removedQueueText, Snackbar.LENGTH_LONG).setAction(
+            Snackbar.make(binding!!.root, removedQueueText, Snackbar.LENGTH_LONG).setAction(
                 "Undo"
             ) {
                 viewModel.addMatches(removedList)
@@ -76,9 +76,9 @@ class ResultsFragment : Fragment() {
     private fun setupRecyclerView() {
         val layoutManager = LinearLayoutManager(this.context)
         layoutManager.orientation = RecyclerView.VERTICAL
-        binding.rcvResults.layoutManager = layoutManager
+        binding!!.rcvResults.layoutManager = layoutManager
         viewModel.resultsList.observe(viewLifecycleOwner) {
-            binding.rcvResults.adapter = CompletedMatchesAdapter(it)
+            binding!!.rcvResults.adapter = MatchesAdapter(it)
         }
 
         ItemTouchHelper(object : ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.RIGHT) {
@@ -95,7 +95,7 @@ class ResultsFragment : Fragment() {
                 viewModel.removeMatch(removedMatch)
 
                 Snackbar.make(
-                    binding.root, "Result is being removed. press 'Undo' to stop!",
+                    binding!!.root, "Result is being removed. press 'Undo' to stop!",
                     Snackbar.LENGTH_LONG
                 ).setAction(
                     "Undo"
@@ -103,6 +103,11 @@ class ResultsFragment : Fragment() {
                     viewModel.addMatch(removedMatch)
                 }.show()
             }
-        }).attachToRecyclerView(binding.rcvResults)
+        }).attachToRecyclerView(binding!!.rcvResults)
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        binding = null
     }
 }

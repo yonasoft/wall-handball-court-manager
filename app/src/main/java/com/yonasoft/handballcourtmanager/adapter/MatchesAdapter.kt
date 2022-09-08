@@ -1,4 +1,3 @@
-
 package com.yonasoft.handballcourtmanager.adapter
 
 import android.view.LayoutInflater
@@ -16,49 +15,54 @@ import com.yonasoft.handballcourtmanager.fragments.MatchesFragmentDirections
 
 //Match view holder for singles
 class SinglesMatchesHolder(
-    val binding:SinglesMatchItemBinding
-):RecyclerView.ViewHolder(binding.root){
+    val binding: SinglesMatchItemBinding
+) : RecyclerView.ViewHolder(binding.root) {
 
-    fun bind(match:Match){
+    fun bind(match: Match) {
         binding.tvCourtNumber.text = match.courtNumber
         binding.teamOne.text = match.teamOnePlayer1
         binding.teamTwo.text = match.teamTwoPlayer1
         binding.t1Score.text = match.teamOneScore.toString()
         binding.t2Score.text = match.teamTwoScore.toString()
         //Will send to the detail screen of the match when clicked
-        binding.root.setOnClickListener{
-            binding.root.findNavController().navigate(MatchesFragmentDirections.
-            actionMatchesFragmentToSinglesDetailFragment(match.id))
+        if (!match.isCompleted) {binding.root.setOnClickListener {
+
+                binding.root.findNavController().navigate(
+                    MatchesFragmentDirections.actionMatchesFragmentToSinglesDetailFragment(match.id)
+                )
+            }
         }
     }
 }
 
 //Match view holder for doubles
 class DoublesMatchesHolder(
-    val binding:DoublesMatchItemBinding
-):RecyclerView.ViewHolder(binding.root){
-    fun bind(match:Match){
+    val binding: DoublesMatchItemBinding
+) : RecyclerView.ViewHolder(binding.root) {
+    fun bind(match: Match) {
         binding.tvCourtNumber.text = match.courtNumber
-        binding.teamOneP1.text= match.teamOnePlayer1
-        binding.teamOneP2.text= match.teamOnePlayer2
-        binding.teamTwoP1.text= match.teamTwoPlayer1
-        binding.teamTwoP2.text= match.teamTwoPlayer2
+        binding.teamOneP1.text = match.teamOnePlayer1
+        binding.teamOneP2.text = match.teamOnePlayer2
+        binding.teamTwoP1.text = match.teamTwoPlayer1
+        binding.teamTwoP2.text = match.teamTwoPlayer2
         binding.t1Score.text = match.teamOneScore.toString()
         binding.t2Score.text = match.teamTwoScore.toString()
         //Will send to the detail screen of the match when clicked
-        binding.root.setOnClickListener{
-            binding.root.findNavController().navigate(MatchesFragmentDirections.
-            actionMatchesFragmentToFragmentDoublesDetail(match.id))
+        if (!match.isCompleted) {
+            binding.root.setOnClickListener {
+                binding.root.findNavController().navigate(
+                    MatchesFragmentDirections.actionMatchesFragmentToFragmentDoublesDetail(match.id)
+                )
+            }
         }
-
     }
 }
 
 //Match view holder for triangle
 class TriangleMatchesHolder(
-    val binding:TriangleMatchItemBinding
-):RecyclerView.ViewHolder(binding.root){
-    fun bind(match:Match){
+    val binding: TriangleMatchItemBinding
+) : RecyclerView.ViewHolder(binding.root) {
+    fun bind(match: Match) {
         binding.tvCourtNumber.text = match.courtNumber
         binding.teamOne.text = match.teamOnePlayer1
         binding.teamTwo.text = match.teamTwoPlayer1
@@ -67,22 +71,25 @@ class TriangleMatchesHolder(
         binding.t2Score.text = match.teamTwoScore.toString()
         binding.t3Score.text = match.teamThreeScore.toString()
         //Will send to the detail screen of the match when clicked
-        binding.root.setOnClickListener{
-            binding.root.findNavController().navigate(MatchesFragmentDirections.
-            actionMatchesFragmentToFragmentTriangleDetail(match.id))
+        if(!match.isCompleted) {
+            binding.root.setOnClickListener {
+                binding.root.findNavController().navigate(
+                    MatchesFragmentDirections.actionMatchesFragmentToFragmentTriangleDetail(match.id)
+                )
+            }
         }
-
     }
 }
 
-class ActiveMatchesAdapter(private val matches: List<Match>):RecyclerView.Adapter<RecyclerView.ViewHolder>(){
+class MatchesAdapter(private val matches: List<Match>) :
+    RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     //Create view holder based the layout returned from getItemViewType()
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         val inflater = LayoutInflater.from(parent.context)
-        val bindingSingles =  SinglesMatchItemBinding.inflate(inflater,parent,false)
-        val bindingDoubles =  DoublesMatchItemBinding.inflate(inflater,parent,false)
-        val bindingTriangle =  TriangleMatchItemBinding.inflate(inflater,parent,false)
+        val bindingSingles = SinglesMatchItemBinding.inflate(inflater, parent, false)
+        val bindingDoubles = DoublesMatchItemBinding.inflate(inflater, parent, false)
+        val bindingTriangle = TriangleMatchItemBinding.inflate(inflater, parent, false)
         return when (viewType) {
             R.layout.singles_match_item -> SinglesMatchesHolder(bindingSingles)
             R.layout.doubles_match_item -> DoublesMatchesHolder(bindingDoubles)
@@ -90,11 +97,12 @@ class ActiveMatchesAdapter(private val matches: List<Match>):RecyclerView.Adapte
             else -> throw RuntimeException("View holder type exception")
         }
     }
+
     //bind view holder based on layout
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-        val match  = matches[position]
-        when(holder.itemViewType){
-            R.layout.singles_match_item  -> (holder as SinglesMatchesHolder).bind(match)
+        val match = matches[position]
+        when (holder.itemViewType) {
+            R.layout.singles_match_item -> (holder as SinglesMatchesHolder).bind(match)
             R.layout.doubles_match_item -> (holder as DoublesMatchesHolder).bind(match)
             R.layout.triangle_match_item -> (holder as TriangleMatchesHolder).bind(match)
         }
@@ -105,9 +113,9 @@ class ActiveMatchesAdapter(private val matches: List<Match>):RecyclerView.Adapte
         return matches.size
     }
 
-    //Check the match type and return a layout
+    //Check the match type and return a layout type
     override fun getItemViewType(position: Int): Int {
-        return when(matches[position].matchType){
+        return when (matches[position].matchType) {
             MatchType.SINGLES -> R.layout.singles_match_item
             MatchType.DOUBLES -> R.layout.doubles_match_item
             MatchType.TRIANGLE -> R.layout.triangle_match_item

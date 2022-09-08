@@ -2,11 +2,11 @@
   "formatVersion": 1,
   "database": {
     "version": 3,
-    "identityHash": "1ced9a18a3e855ee86fd275181cb7772",
+    "identityHash": "01efc62ba04e0f652e7cc278b23b5c32",
     "entities": [
       {
         "tableName": "matches",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` BLOB NOT NULL, `match_type` TEXT NOT NULL, `court_number` TEXT NOT NULL, `t1_score` INTEGER NOT NULL, `t2_score` INTEGER NOT NULL, `t3_score` INTEGER NOT NULL, `t1_p1` TEXT NOT NULL, `t1_p2` TEXT NOT NULL, `t2_p1` TEXT NOT NULL, `t2_p2` TEXT NOT NULL, `t3_p1` TEXT NOT NULL, `is_completed` INTEGER NOT NULL, `winner` TEXT NOT NULL, `winner2` TEXT NOT NULL, PRIMARY KEY(`id`))",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` BLOB NOT NULL, `match_type` TEXT NOT NULL, `court_number` TEXT NOT NULL, `t1_score` INTEGER NOT NULL, `t2_score` INTEGER NOT NULL, `t3_score` INTEGER NOT NULL, `t1_p1` TEXT NOT NULL, `t1_p2` TEXT NOT NULL, `t2_p1` TEXT NOT NULL, `t2_p2` TEXT NOT NULL, `t3_p1` TEXT NOT NULL, `is_completed` INTEGER NOT NULL, PRIMARY KEY(`id`))",
         "fields": [
           {
             "fieldPath": "id",
@@ -79,18 +79,6 @@
             "columnName": "is_completed",
             "affinity": "INTEGER",
             "notNull": true
-          },
-          {
-            "fieldPath": "winner1",
-            "columnName": "winner",
-            "affinity": "TEXT",
-            "notNull": true
-          },
-          {
-            "fieldPath": "winner2",
-            "columnName": "winner2",
-            "affinity": "TEXT",
-            "notNull": true
           }
         ],
         "primaryKey": {
@@ -106,7 +94,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '1ced9a18a3e855ee86fd275181cb7772')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '01efc62ba04e0f652e7cc278b23b5c32')"
     ]
   }
 }

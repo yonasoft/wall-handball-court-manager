@@ -1,4 +1,4 @@
-package com.yonasoft.handballcourtmanager.fragments
+package com.yonasoft.handballcourtmanager.dialogs
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -15,7 +15,7 @@ import com.yonasoft.handballcourtmanager.viewmodel.MatchesViewModel
 
 class CreateMatchDialogFragment:DialogFragment(){
 
-    lateinit var binding: FragmentCreateMatchDialogBinding
+    private var binding: FragmentCreateMatchDialogBinding?=null
     private val viewModel:MatchesViewModel by viewModels()
 
     override fun onStart() {
@@ -31,31 +31,36 @@ class CreateMatchDialogFragment:DialogFragment(){
 
         binding = DataBindingUtil.inflate(layoutInflater,
             R.layout.fragment_create_match_dialog,container,false)
-        val view=binding.root
+        val view=binding!!.root
 
-        binding.viewModel = viewModel
+        binding!!.viewModel = viewModel
 
         //Creates spinner items aka the numbers that will show in the spinner
         val spinnerItems = List(33){ i ->i }
         val arrayAdapter:ArrayAdapter<Int> = ArrayAdapter(this.requireContext(),android.R.layout.simple_spinner_dropdown_item,spinnerItems)
 
         //Adapter that applies spinner for each individual spinner for each match type
-        binding.spinnerSingles.adapter = arrayAdapter
-        binding.spinnerDoubles.adapter = arrayAdapter
-        binding.spinnerTriangles.adapter = arrayAdapter
+        binding!!.spinnerSingles.adapter = arrayAdapter
+        binding!!.spinnerDoubles.adapter = arrayAdapter
+        binding!!.spinnerTriangles.adapter = arrayAdapter
 
         //Creates x number of matches based on the what is selected in the spinner for each.
         // Each match type has it's own spinner so number of matches can be different for each type
         //Dismisses dialog when done
-        binding.btnOk.setOnClickListener{
-            viewModel.numOfSinglesToAdd.value = binding.spinnerSingles.selectedItem as Int
-            viewModel.numOfDoublesToAdd.value = binding.spinnerDoubles.selectedItem as Int
-            viewModel.numOfTrianglesToAdd.value = binding.spinnerTriangles.selectedItem as Int
+        binding!!.btnOk.setOnClickListener{
+            viewModel.numOfSinglesToAdd.value = binding!!.spinnerSingles.selectedItem as Int
+            viewModel.numOfDoublesToAdd.value = binding!!.spinnerDoubles.selectedItem as Int
+            viewModel.numOfTrianglesToAdd.value = binding!!.spinnerTriangles.selectedItem as Int
             viewModel.addMatches()
             dismiss()
         }
 
         return view
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        binding = null
     }
 
 

@@ -1,4 +1,4 @@
-package com.yonasoft.handballcourtmanager.fragments
+package com.yonasoft.handballcourtmanager.dialogs
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -15,7 +15,7 @@ import com.yonasoft.handballcourtmanager.databinding.FragmentEndMatchDialogBindi
 //Confirmation dialog when end match is pressed in a detail dialog
 class EndMatchDialogFragment: DialogFragment() {
 
-    private lateinit var binding:FragmentEndMatchDialogBinding
+    private var binding:FragmentEndMatchDialogBinding?=null
 
     companion object{
         const val REQUEST_KEY_END = "request_key"
@@ -29,7 +29,7 @@ class EndMatchDialogFragment: DialogFragment() {
     ): View {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_end_match_dialog, container, false)
 
-        return binding.root
+        return binding!!.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -40,7 +40,7 @@ class EndMatchDialogFragment: DialogFragment() {
 
     private fun setupListeners() {
         //Function of the yes buttons
-        binding.btnYes.setOnClickListener {
+        binding!!.btnYes.setOnClickListener {
             //Send result of true to end the match to the detail fragment that opened this dialog
             setFragmentResult(
                 REQUEST_KEY_END,
@@ -49,7 +49,7 @@ class EndMatchDialogFragment: DialogFragment() {
             //End dialog
             dismiss()
         }
-        binding.btnNo.setOnClickListener {
+        binding!!.btnNo.setOnClickListener {
             //Send result of false to end the match to the detail fragment that opened this dialog
             setFragmentResult(
                 REQUEST_KEY_END,
@@ -58,5 +58,10 @@ class EndMatchDialogFragment: DialogFragment() {
             //End dialog
             dismiss()
         }
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        binding = null
     }
 }

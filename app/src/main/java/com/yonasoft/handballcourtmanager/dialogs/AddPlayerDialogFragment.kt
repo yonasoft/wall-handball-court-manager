@@ -1,4 +1,4 @@
-package com.yonasoft.handballcourtmanager.fragments
+package com.yonasoft.handballcourtmanager.dialogs
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -15,7 +15,7 @@ import com.yonasoft.handballcourtmanager.viewmodel.RosterViewModel
 
 class AddPlayerDialogFragment : DialogFragment() {
 
-    lateinit var binding: FragmentAddPlayerDialogBinding
+    private var binding: FragmentAddPlayerDialogBinding?=null
     private val viewModel: RosterViewModel by viewModels()
 
     override fun onStart() {
@@ -37,15 +37,20 @@ class AddPlayerDialogFragment : DialogFragment() {
             layoutInflater,
             R.layout.fragment_add_player_dialog, container, false
         )
-        val view = binding.root
+        val view = binding!!.root
 
-        binding.viewModel = viewModel
-        binding.lifecycleOwner = this
+        binding!!.viewModel = viewModel
+        binding!!.lifecycleOwner = this
         //Adds the player entered into queue
-        binding.addPlayerButton.setOnClickListener {
+        binding!!.addPlayerButton.setOnClickListener {
             viewModel.addPlayer()
             dismiss()
         }
         return view
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        binding = null
     }
 }

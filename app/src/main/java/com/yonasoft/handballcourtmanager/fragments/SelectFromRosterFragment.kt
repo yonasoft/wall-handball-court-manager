@@ -22,7 +22,7 @@ import com.yonasoft.handballcourtmanager.viewmodel.RosterSelectViewModel
 //Fragment when selecting player to add the match
 class SelectFromRosterFragment:Fragment() {
 
-    private lateinit var binding:FragmentSelectFromRosterBinding
+    private var binding:FragmentSelectFromRosterBinding?=null
 
     companion object{
         //Player info to send back the detail fragment
@@ -38,12 +38,12 @@ class SelectFromRosterFragment:Fragment() {
         savedInstanceState: Bundle?
     ): View {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_select_from_roster,container,false)
-        val view = binding.root
-        binding.viewModel = viewModel
+        val view = binding!!.root
+        binding!!.viewModel = viewModel
         //Regular queue that is displayed
-        setupRecyclerView(binding.queueRcv, viewModel.regularQueue)
+        setupRecyclerView(binding!!.queueRcv, viewModel.regularQueue)
         //Winners queue that is displayed
-        setupRecyclerView(binding.winnersRcv,viewModel.winnerQueue)
+        setupRecyclerView(binding!!.winnersRcv,viewModel.winnerQueue)
 
         return view
     }
@@ -51,7 +51,7 @@ class SelectFromRosterFragment:Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         // Add player by name by pressing add and it will add text input as the player
-        binding.btnAdd.setOnClickListener{
+        binding!!.btnAdd.setOnClickListener{
             //Sends player name back to the previous fragment
             val nameToAdd = viewModel.nameToAdd
             setFragmentResult(REQUEST_KEY_PLAYER,
@@ -83,5 +83,10 @@ class SelectFromRosterFragment:Fragment() {
                 }
             })
         }
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        binding = null
     }
 }

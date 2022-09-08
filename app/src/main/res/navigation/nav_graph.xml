@@ -56,7 +56,7 @@
 
     <dialog
         android:id="@+id/addPlayerDialogFragment"
-        android:name="com.yonasoft.handballcourtmanager.fragments.AddPlayerDialogFragment"
+        android:name="com.yonasoft.handballcourtmanager.dialogs.AddPlayerDialogFragment"
         android:label="Add Player" />
     <fragment
         android:id="@+id/helpFragment"
@@ -64,7 +64,7 @@
         android:label="Help" />
     <dialog
         android:id="@+id/createMatchDialogFragment"
-        android:name="com.yonasoft.handballcourtmanager.fragments.CreateMatchDialogFragment"
+        android:name="com.yonasoft.handballcourtmanager.dialogs.CreateMatchDialogFragment"
         android:label="Create Matches" />
     <fragment
         android:id="@+id/fragmentDoublesDetail"
@@ -142,11 +142,11 @@
     </fragment>
     <dialog
         android:id="@+id/endMatchDialogFragment"
-        android:name="com.yonasoft.handballcourtmanager.fragments.EndMatchDialogFragment"
+        android:name="com.yonasoft.handballcourtmanager.dialogs.EndMatchDialogFragment"
         android:label="End Match?" />
     <dialog
         android:id="@+id/returnToWinnersDialogFragment"
-        android:name="com.yonasoft.handballcourtmanager.fragments.ReturnToWinnersDialogFragment"
+        android:name="com.yonasoft.handballcourtmanager.dialogs.ReturnToWinnersDialogFragment"
         android:label="Return players to winner's queue" >
 
         <argument

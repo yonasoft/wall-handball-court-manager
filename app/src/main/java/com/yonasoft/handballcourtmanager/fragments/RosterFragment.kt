@@ -23,7 +23,7 @@ import com.google.android.material.snackbar.Snackbar
 //List of all the players in queue
 class RosterFragment : Fragment() {
 
-    lateinit var binding: FragmentRosterBinding
+    private var binding: FragmentRosterBinding?=null
     private val viewModel: RosterViewModel by viewModels()
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -34,12 +34,12 @@ class RosterFragment : Fragment() {
             layoutInflater,
             R.layout.fragment_roster, container, false
         )
-        val view = binding.root
-        binding.viewModel = viewModel
+        val view = binding!!.root
+        binding!!.viewModel = viewModel
         //Recycler view for regular queue
-        setupRecyclerView(binding.queueRcv, viewModel.regularQueue)
+        setupRecyclerView(binding!!.queueRcv, viewModel.regularQueue)
         //Recycler view for winner's queue
-        setupRecyclerView(binding.winnersRcv,viewModel.winnerQueue)
+        setupRecyclerView(binding!!.winnersRcv,viewModel.winnerQueue)
 
         val menuHost: MenuHost =requireActivity()
         menuHost.addMenuProvider(object: MenuProvider {
@@ -55,7 +55,7 @@ class RosterFragment : Fragment() {
         )
 
         // OnclickListener for opening dialog to add player to regular queue
-        binding.fabAddPlayers.setOnClickListener {
+        binding!!.fabAddPlayers.setOnClickListener {
             findNavController().navigate(
                 R.id.action_rosterFragment_to_addPlayerDialogFragment
             )
@@ -91,7 +91,7 @@ class RosterFragment : Fragment() {
                 viewModel.deletePlayer(removedPlayer)
 
                 Snackbar.make(
-                    binding.root,
+                    binding!!.root,
                     removedPlayer.name + " is being removed. press 'Undo' to stop!",
                     Snackbar.LENGTH_LONG
                 ).setAction(
@@ -133,11 +133,16 @@ class RosterFragment : Fragment() {
         }
         //Snack bar message when a queue is cleared
         val snackBar =
-            Snackbar.make(binding.root, removedQueueText, Snackbar.LENGTH_LONG).setAction(
+            Snackbar.make(binding!!.root, removedQueueText, Snackbar.LENGTH_LONG).setAction(
                 "Undo"
             ) {
                 viewModel.addAllPlayers(removedList)
             }
         snackBar.show()
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        binding = null
     }
 }

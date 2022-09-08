@@ -15,6 +15,7 @@ import androidx.navigation.fragment.navArgs
 import com.yonasoft.handballcourtmanager.R
 import com.yonasoft.handballcourtmanager.databinding.FragmentDoublesDetailBinding
 import com.yonasoft.handballcourtmanager.db.matchesdb.MatchType
+import com.yonasoft.handballcourtmanager.dialogs.EndMatchDialogFragment
 
 import com.yonasoft.handballcourtmanager.viewmodel.MatchDetailViewModel
 import com.yonasoft.handballcourtmanager.viewmodel.MatchDetailViewModelFactory
@@ -175,6 +176,11 @@ class DoublesDetailFragment : Fragment() {
             //Updates the players in tha match through the view model into database
             matchDetailViewModel.updateMatch()
         }
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        binding = null
     }
 
 }
