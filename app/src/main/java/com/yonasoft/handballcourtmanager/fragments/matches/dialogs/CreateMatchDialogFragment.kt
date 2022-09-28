@@ -1,4 +1,4 @@
-package com.yonasoft.handballcourtmanager.dialogs
+package com.yonasoft.handballcourtmanager.fragments.matches.dialogs
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -11,12 +11,12 @@ import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.viewModels
 import com.yonasoft.handballcourtmanager.R
 import com.yonasoft.handballcourtmanager.databinding.FragmentCreateMatchDialogBinding
-import com.yonasoft.handballcourtmanager.viewmodel.MatchesViewModel
+import com.yonasoft.handballcourtmanager.fragments.matches.viewmodel.MatchesViewModel
 
 class CreateMatchDialogFragment:DialogFragment(){
 
     private var binding: FragmentCreateMatchDialogBinding?=null
-    private val viewModel:MatchesViewModel by viewModels()
+    private val viewModel: MatchesViewModel by viewModels()
 
     override fun onStart() {
         super.onStart()

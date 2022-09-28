@@ -1,4 +1,4 @@
-package com.yonasoft.handballcourtmanager.fragments
+package com.yonasoft.handballcourtmanager.fragments.matches
 
 import android.os.Bundle
 import android.view.*
@@ -17,7 +17,7 @@ import com.yonasoft.handballcourtmanager.R
 import com.yonasoft.handballcourtmanager.adapter.MatchesAdapter
 import com.yonasoft.handballcourtmanager.databinding.FragmentCurrentMatchesBinding
 import com.yonasoft.handballcourtmanager.db.matchesdb.Match
-import com.yonasoft.handballcourtmanager.viewmodel.MatchesViewModel
+import com.yonasoft.handballcourtmanager.fragments.matches.viewmodel.MatchesViewModel
 
 
 //Matches fragment which list all current matches

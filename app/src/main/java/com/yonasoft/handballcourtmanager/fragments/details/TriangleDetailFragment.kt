@@ -1,4 +1,4 @@
-package com.yonasoft.handballcourtmanager.fragments
+package com.yonasoft.handballcourtmanager.fragments.details
 
 import android.os.Bundle
 import android.view.KeyEvent
@@ -15,10 +15,10 @@ import androidx.navigation.fragment.navArgs
 import com.yonasoft.handballcourtmanager.R
 import com.yonasoft.handballcourtmanager.databinding.FragmentTriangleDetailBinding
 import com.yonasoft.handballcourtmanager.db.matchesdb.MatchType
-import com.yonasoft.handballcourtmanager.dialogs.EndMatchDialogFragment
+import com.yonasoft.handballcourtmanager.fragments.details.dialogs.EndMatchDialogFragment
 
-import com.yonasoft.handballcourtmanager.viewmodel.MatchDetailViewModel
-import com.yonasoft.handballcourtmanager.viewmodel.MatchDetailViewModelFactory
+import com.yonasoft.handballcourtmanager.fragments.details.viewmodel.MatchDetailViewModel
+import com.yonasoft.handballcourtmanager.fragments.details.viewmodel.MatchDetailViewModelFactory
 
 class TriangleDetailFragment : Fragment() {
 
@@ -85,7 +85,7 @@ class TriangleDetailFragment : Fragment() {
             btnEndMatch.setOnClickListener {
                 val match = matchDetailViewModel.match.value!!
                 //Makes sure all the textview for the players are filled in
-                if (match.teamOnePlayer1 != "TBA" && match.teamTwoPlayer1 != "TBA" && match.teamThreePlayer != "TBA") {
+                if (match.teams[1]!![0] != "TBA" && match.teams[2]!![0] != "TBA" && match.teams[3]!![0] != "TBA") {
                     //Navigate to dialog to return to winner's queue with an array of the players in this match, and the match type
                     findNavController().navigate(
                         TriangleDetailFragmentDirections.actionFragmentTriangleDetailToEndMatchDialogFragment()
@@ -101,11 +101,11 @@ class TriangleDetailFragment : Fragment() {
                             findNavController().navigate(
                                 TriangleDetailFragmentDirections.actionFragmentTriangleDetailToReturnToWinnersDialogFragment(
                                     arrayOf(
-                                        match.teamOnePlayer1,
-                                        match.teamOnePlayer2,
-                                        match.teamTwoPlayer1,
-                                        match.teamTwoPlayer2,
-                                        match.teamThreePlayer
+                                        match.teams[1]!![0],
+                                        match.teams[1]!![1],
+                                        match.teams[2]!![0],
+                                        match.teams[2]!![1],
+                                        match.teams[3]!![0]
                                     ),
                                     MatchType.TRIANGLE.name
                                 )
@@ -143,12 +143,12 @@ class TriangleDetailFragment : Fragment() {
         binding!!.viewModel!!.match.observe(viewLifecycleOwner) {
             binding!!.apply {
                 editTextNum.setText(it.courtNumber)
-                tvT1.text = it.teamOnePlayer1
-                tvT2.text = it.teamTwoPlayer1
-                tvT3.text = it.teamThreePlayer
-                tvT1Score.text = it.teamOneScore.toString()
-                tvT2Score.text = it.teamTwoScore.toString()
-                tvT3Score.text = it.teamThreeScore.toString()
+                tvT1.text = it.teams[1]!![0]
+                tvT2.text = it.teams[2]!![0]
+                tvT3.text = it.teams[3]!![0]
+                tvT1Score.text = it.scores[1].toString()
+                tvT2Score.text = it.scores[2].toString()
+                tvT3Score.text = it.scores[3].toString()
             }
         }
     }
@@ -162,9 +162,9 @@ class TriangleDetailFragment : Fragment() {
         setFragmentResultListener(SelectFromRosterFragment.REQUEST_KEY_PLAYER) { _, bundle ->
             val result = bundle.getString(SelectFromRosterFragment.BUNDLE_KEY_PLAYER)
             when (playerAndTeam) {
-                "t1" -> matchDetailViewModel.match.value!!.teamOnePlayer1 = result!!
-                "t2" -> matchDetailViewModel.match.value!!.teamTwoPlayer1 = result!!
-                "t3" -> matchDetailViewModel.match.value!!.teamThreePlayer = result!!
+                "t1" -> matchDetailViewModel.match.value!!.teams[1]!![0]= result!!
+                "t2" -> matchDetailViewModel.match.value!!.teams[2]!![0] = result!!
+                "t3" -> matchDetailViewModel.match.value!!.teams[3]!![0] = result!!
             }
             //Updates the players in tha match through the view model into database
             matchDetailViewModel.updateMatch()

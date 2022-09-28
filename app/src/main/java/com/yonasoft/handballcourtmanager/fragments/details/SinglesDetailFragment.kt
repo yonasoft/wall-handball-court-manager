@@ -1,4 +1,4 @@
-package com.yonasoft.handballcourtmanager.fragments
+package com.yonasoft.handballcourtmanager.fragments.details
 
 import android.os.Bundle
 import android.view.KeyEvent
@@ -15,9 +15,9 @@ import androidx.navigation.fragment.navArgs
 import com.yonasoft.handballcourtmanager.R
 import com.yonasoft.handballcourtmanager.databinding.FragmentSinglesDetailBinding
 import com.yonasoft.handballcourtmanager.db.matchesdb.MatchType
-import com.yonasoft.handballcourtmanager.dialogs.EndMatchDialogFragment
-import com.yonasoft.handballcourtmanager.viewmodel.MatchDetailViewModel
-import com.yonasoft.handballcourtmanager.viewmodel.MatchDetailViewModelFactory
+import com.yonasoft.handballcourtmanager.fragments.details.dialogs.EndMatchDialogFragment
+import com.yonasoft.handballcourtmanager.fragments.details.viewmodel.MatchDetailViewModel
+import com.yonasoft.handballcourtmanager.fragments.details.viewmodel.MatchDetailViewModelFactory
 
 class SinglesDetailFragment : Fragment() {
 
@@ -77,7 +77,7 @@ class SinglesDetailFragment : Fragment() {
             btnEndMatch.setOnClickListener {
                 val match = matchDetailViewModel.match.value!!
                 //Makes sure all the textview for the players are filled in
-                if (match.teamOnePlayer1 != "TBA" && match.teamTwoPlayer1 != "TBA") {
+                if (match.teams[1]!![0] != "TBA" && match.teams[2]!![0] != "TBA") {
                     findNavController().navigate(SinglesDetailFragmentDirections.actionSinglesDetailFragmentToEndMatchDialogFragment())
                     //Set listener to determine the result of the dialog.
                     setFragmentResultListener(EndMatchDialogFragment.REQUEST_KEY_END) { _, bundle ->
@@ -90,11 +90,11 @@ class SinglesDetailFragment : Fragment() {
                             findNavController().navigate(
                                 SinglesDetailFragmentDirections.actionSinglesDetailFragmentToReturnToWinnersDialogFragment(
                                     arrayOf(
-                                        match.teamOnePlayer1,
-                                        match.teamOnePlayer2,
-                                        match.teamTwoPlayer1,
-                                        match.teamTwoPlayer2,
-                                        match.teamThreePlayer
+                                        match.teams[1]!![0],
+                                        match.teams[1]!![1],
+                                        match.teams[2]!![0],
+                                        match.teams[2]!![1],
+                                        match.teams[3]!![0]
                                     ),
                                     MatchType.SINGLES.name
                                 )
@@ -132,10 +132,10 @@ class SinglesDetailFragment : Fragment() {
         binding!!.viewModel!!.match.observe(viewLifecycleOwner) {
             binding!!.apply {
                 editTextNum.setText(it.courtNumber)
-                tvT1.text = it.teamOnePlayer1
-                tvT2.text = it.teamTwoPlayer1
-                tvT1Score.text = it.teamOneScore.toString()
-                tvT2Score.text = it.teamTwoScore.toString()
+                tvT1.text = it.teams[1]!![0]
+                tvT2.text = it.teams[2]!![0]
+                tvT1Score.text = it.scores[1].toString()
+                tvT2Score.text = it.scores[2].toString()
             }
         }
     }
@@ -151,8 +151,8 @@ class SinglesDetailFragment : Fragment() {
         setFragmentResultListener(SelectFromRosterFragment.REQUEST_KEY_PLAYER) { _, bundle ->
             val result = bundle.getString(SelectFromRosterFragment.BUNDLE_KEY_PLAYER)
             when (playerAndTeam) {
-                "t1" -> matchDetailViewModel.match.value!!.teamOnePlayer1 = result!!
-                "t2" -> matchDetailViewModel.match.value!!.teamTwoPlayer1 = result!!
+                "t1" -> matchDetailViewModel.match.value!!.teams[1]!![0]= result!!
+                "t2" -> matchDetailViewModel.match.value!!.teams[2]!![0] = result!!
             }
             //Updates the players in tha match through the view model into database
             matchDetailViewModel.updateMatch()

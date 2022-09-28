@@ -1,4 +1,4 @@
-package com.yonasoft.handballcourtmanager.fragments
+package com.yonasoft.handballcourtmanager.fragments.help
 
 import android.os.Bundle
 import android.view.LayoutInflater

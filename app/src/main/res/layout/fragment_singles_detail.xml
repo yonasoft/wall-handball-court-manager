@@ -8,7 +8,7 @@
 
         <variable
             name="viewModel"
-            type="com.yonasoft.handballcourtmanager.viewmodel.MatchDetailViewModel" />
+            type="com.yonasoft.handballcourtmanager.fragments.details.viewmodel.MatchDetailViewModel" />
     </data>
 
     <ScrollView

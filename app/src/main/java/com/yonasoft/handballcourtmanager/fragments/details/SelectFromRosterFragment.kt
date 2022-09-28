@@ -1,4 +1,4 @@
-package com.yonasoft.handballcourtmanager.fragments
+package com.yonasoft.handballcourtmanager.fragments.details
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -17,7 +17,7 @@ import com.yonasoft.handballcourtmanager.R
 import com.yonasoft.handballcourtmanager.adapter.PlayerSelectAdapter
 import com.yonasoft.handballcourtmanager.databinding.FragmentSelectFromRosterBinding
 import com.yonasoft.handballcourtmanager.db.playersdb.Player
-import com.yonasoft.handballcourtmanager.viewmodel.RosterViewModel
+import com.yonasoft.handballcourtmanager.fragments.roster.viewmodel.RosterViewModel
 
 //Fragment when selecting player to add the match
 class SelectFromRosterFragment:Fragment() {
@@ -30,7 +30,7 @@ class SelectFromRosterFragment:Fragment() {
         const val BUNDLE_KEY_PLAYER = "bundle_key_player"
     }
 
-    private val viewModel:RosterViewModel by viewModels()
+    private val viewModel: RosterViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -54,7 +54,8 @@ class SelectFromRosterFragment:Fragment() {
         binding!!.btnAdd.setOnClickListener{
             //Sends player name back to the previous fragment
             val nameToAdd = viewModel.nameToAdd
-            setFragmentResult(REQUEST_KEY_PLAYER,
+            setFragmentResult(
+                REQUEST_KEY_PLAYER,
             bundleOf(BUNDLE_KEY_PLAYER to nameToAdd.value),
             )
             //navigates back to previous fragment
@@ -75,7 +76,8 @@ class SelectFromRosterFragment:Fragment() {
             adapter.setOnItemClickListener(object : PlayerSelectAdapter.OnItemClickListener{
                 override fun onItemClick(position: Int) {
                     val playerToAdd = queue.value!![position]
-                    setFragmentResult(REQUEST_KEY_PLAYER,
+                    setFragmentResult(
+                        REQUEST_KEY_PLAYER,
                         bundleOf(BUNDLE_KEY_PLAYER to playerToAdd.name),
                     )
                     viewModel.deletePlayer(playerToAdd)

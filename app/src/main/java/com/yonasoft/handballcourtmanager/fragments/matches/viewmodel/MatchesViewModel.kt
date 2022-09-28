@@ -1,4 +1,4 @@
-package com.yonasoft.handballcourtmanager.viewmodel
+package com.yonasoft.handballcourtmanager.fragments.matches.viewmodel
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData

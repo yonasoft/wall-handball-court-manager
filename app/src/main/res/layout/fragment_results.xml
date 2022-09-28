@@ -8,7 +8,7 @@
 
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".fragments.ResultsFragment"
+    tools:context=".fragments.results.ResultsFragment"
     android:background="@color/blue_3"
     android:paddingTop="16dp"
     android:paddingBottom="16dp"

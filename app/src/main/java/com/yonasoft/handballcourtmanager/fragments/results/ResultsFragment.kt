@@ -1,4 +1,4 @@
-package com.yonasoft.handballcourtmanager.fragments
+package com.yonasoft.handballcourtmanager.fragments.results
 
 import android.os.Bundle
 import android.view.*
@@ -14,7 +14,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.yonasoft.handballcourtmanager.R
 import com.yonasoft.handballcourtmanager.databinding.FragmentResultsBinding
 import com.yonasoft.handballcourtmanager.db.matchesdb.Match
-import com.yonasoft.handballcourtmanager.viewmodel.MatchesViewModel
+import com.yonasoft.handballcourtmanager.fragments.matches.viewmodel.MatchesViewModel
 import com.google.android.material.snackbar.Snackbar
 import com.yonasoft.handballcourtmanager.adapter.MatchesAdapter
 
@@ -79,6 +79,7 @@ class ResultsFragment : Fragment() {
         layoutManager.orientation = RecyclerView.VERTICAL
         binding!!.rcvResults.layoutManager = layoutManager
         viewModel.resultsList.observe(viewLifecycleOwner) {
+            adapter.setData(it)
             binding!!.rcvResults.adapter = adapter
         }
 

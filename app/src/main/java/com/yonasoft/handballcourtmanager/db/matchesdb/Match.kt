@@ -4,6 +4,7 @@ import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import java.util.*
+import kotlin.collections.HashMap
 
 @Entity(tableName = "matches")
 data class Match(
@@ -14,22 +15,10 @@ data class Match(
     val matchType:MatchType,
     @ColumnInfo(name="court_number")
     var courtNumber: String = "N/A",
-    @ColumnInfo(name="t1_score")
-    var teamOneScore: Int = 0,
-    @ColumnInfo(name="t2_score")
-    var teamTwoScore: Int = 0,
-    @ColumnInfo(name="t3_score")
-    var teamThreeScore: Int = 0,
-    @ColumnInfo(name="t1_p1")
-    var teamOnePlayer1: String ="TBA",
-    @ColumnInfo(name="t1_p2")
-    var teamOnePlayer2: String ="TBA",
-    @ColumnInfo(name="t2_p1")
-    var teamTwoPlayer1: String ="TBA",
-    @ColumnInfo(name="t2_p2")
-    var teamTwoPlayer2: String ="TBA",
-    @ColumnInfo(name="t3_p1")
-    var teamThreePlayer: String ="TBA",
+    @ColumnInfo(name="scores")
+    var scores:HashMap<Int,Int> = hashMapOf(1 to 0, 2 to 0, 3 to 0),
+    @ColumnInfo(name="players")
+    var teams:HashMap<Int,Array<String>> = hashMapOf(1 to arrayOf("TBA","TBA"),2 to arrayOf("TBA","TBA"), 3 to arrayOf("TBA")),
     @ColumnInfo(name="is_completed")
     var isCompleted:Boolean=false,
 

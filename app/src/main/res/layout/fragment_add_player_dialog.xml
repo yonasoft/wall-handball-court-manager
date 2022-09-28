@@ -8,7 +8,7 @@
     <data>
         <variable
             name="viewModel"
-            type="com.yonasoft.handballcourtmanager.viewmodel.RosterViewModel"/>
+            type="com.yonasoft.handballcourtmanager.fragments.roster.viewmodel.RosterViewModel"/>
     </data>
 
 
@@ -24,7 +24,6 @@
 
         <com.google.android.material.textview.MaterialTextView
             android:id="@+id/materialTextView"
-            style="@style/TextAppearance.AppCompat.Large"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"

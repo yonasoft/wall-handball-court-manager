@@ -10,11 +10,7 @@ import com.yonasoft.handballcourtmanager.databinding.SinglesMatchItemBinding
 import com.yonasoft.handballcourtmanager.databinding.TriangleMatchItemBinding
 import com.yonasoft.handballcourtmanager.db.matchesdb.Match
 import com.yonasoft.handballcourtmanager.db.matchesdb.MatchType
-import com.yonasoft.handballcourtmanager.fragments.MatchesFragmentDirections
-
-
-//Match view holder for singles
-
+import com.yonasoft.handballcourtmanager.fragments.matches.MatchesFragmentDirections
 
 class MatchesAdapter :
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {
@@ -43,7 +39,6 @@ class MatchesAdapter :
             R.layout.doubles_match_item -> (holder as DoublesMatchesHolder).bind(match)
             R.layout.triangle_match_item -> (holder as TriangleMatchesHolder).bind(match)
         }
-
     }
 
     override fun getItemCount(): Int {
@@ -63,16 +58,17 @@ class MatchesAdapter :
         this.dataList = data
     }
 
+    //Match view holder for singles
     class SinglesMatchesHolder(
         val binding: SinglesMatchItemBinding
     ) : RecyclerView.ViewHolder(binding.root) {
 
         fun bind(match: Match) {
             binding.tvCourtNumber.text = match.courtNumber
-            binding.teamOne.text = match.teamOnePlayer1
-            binding.teamTwo.text = match.teamTwoPlayer1
-            binding.t1Score.text = match.teamOneScore.toString()
-            binding.t2Score.text = match.teamTwoScore.toString()
+            binding.teamOne.text = match.teams[1]!![0]
+            binding.teamTwo.text = match.teams[2]!![0]
+            binding.t1Score.text = match.scores[1].toString()
+            binding.t2Score.text = match.scores[2].toString()
             //Will send to the detail screen of the match when clicked
             if (!match.isCompleted) {binding.root.setOnClickListener {
 
@@ -90,12 +86,12 @@ class MatchesAdapter :
     ) : RecyclerView.ViewHolder(binding.root) {
         fun bind(match: Match) {
             binding.tvCourtNumber.text = match.courtNumber
-            binding.teamOneP1.text = match.teamOnePlayer1
-            binding.teamOneP2.text = match.teamOnePlayer2
-            binding.teamTwoP1.text = match.teamTwoPlayer1
-            binding.teamTwoP2.text = match.teamTwoPlayer2
-            binding.t1Score.text = match.teamOneScore.toString()
-            binding.t2Score.text = match.teamTwoScore.toString()
+            binding.teamOneP1.text = match.teams[1]!![0]
+            binding.teamOneP2.text = match.teams[1]!![1]
+            binding.teamTwoP1.text = match.teams[2]!![0]
+            binding.teamTwoP2.text = match.teams[2]!![1]
+            binding.t1Score.text = match.scores[1].toString()
+            binding.t2Score.text = match.scores[2].toString()
             //Will send to the detail screen of the match when clicked
             if (!match.isCompleted) {
                 binding.root.setOnClickListener {
@@ -113,12 +109,12 @@ class MatchesAdapter :
     ) : RecyclerView.ViewHolder(binding.root) {
         fun bind(match: Match) {
             binding.tvCourtNumber.text = match.courtNumber
-            binding.teamOne.text = match.teamOnePlayer1
-            binding.teamTwo.text = match.teamTwoPlayer1
-            binding.teamThree.text = match.teamThreePlayer
-            binding.t1Score.text = match.teamOneScore.toString()
-            binding.t2Score.text = match.teamTwoScore.toString()
-            binding.t3Score.text = match.teamThreeScore.toString()
+            binding.teamOne.text = match.teams[1]!![0]
+            binding.teamTwo.text = match.teams[2]!![0]
+            binding.teamThree.text = match.teams[3]!![0]
+            binding.t1Score.text = match.scores[1].toString()
+            binding.t2Score.text = match.scores[2].toString()
+            binding.t3Score.text = match.scores[3].toString()
             //Will send to the detail screen of the match when clicked
             if(!match.isCompleted) {
                 binding.root.setOnClickListener {

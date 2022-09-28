@@ -7,7 +7,7 @@
 
         <variable
             name="viewModel"
-            type="com.yonasoft.handballcourtmanager.viewmodel.MatchesViewModel" />
+            type="com.yonasoft.handballcourtmanager.fragments.matches.viewmodel.MatchesViewModel" />
     </data>
 
 

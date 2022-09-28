@@ -4,12 +4,12 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context=".fragments.RosterFragment"
+    tools:context=".fragments.roster.RosterFragment"
     >
     <data>
         <variable
             name="viewModel"
-            type="com.yonasoft.handballcourtmanager.viewmodel.RosterViewModel" />
+            type="com.yonasoft.handballcourtmanager.fragments.roster.viewmodel.RosterViewModel" />
     </data>
 
 <androidx.constraintlayout.widget.ConstraintLayout

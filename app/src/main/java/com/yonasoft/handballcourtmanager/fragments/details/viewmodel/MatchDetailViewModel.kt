@@ -1,4 +1,4 @@
-package com.yonasoft.handballcourtmanager.viewmodel
+package com.yonasoft.handballcourtmanager.fragments.details.viewmodel
 
 
 import androidx.lifecycle.LiveData
@@ -23,9 +23,9 @@ class MatchDetailViewModel(matchId: UUID) : ViewModel() {
     //Add point based on team as parameter represented as string
     fun addPoints(team:String){
         when(team){
-            "t1" -> match.value!!.teamOneScore++
-            "t2" -> match.value!!.teamTwoScore++
-            "t3" -> match.value!!.teamThreeScore++
+            "t1" -> match.value!!.scores[1] = match.value!!.scores[1]!! + 1
+            "t2" -> match.value!!.scores[2] = match.value!!.scores[2]!! + 1
+            "t3" -> match.value!!.scores[3] = match.value!!.scores[3]!! + 1
         }
         //Updates match after change
         updateMatch()
@@ -33,9 +33,9 @@ class MatchDetailViewModel(matchId: UUID) : ViewModel() {
     //Deducts point based on team as parameter represented as string
     fun deductPoints(team:String){
         when(team){
-            "t1" -> if(match.value!!.teamOneScore>-1) match.value!!.teamOneScore--
-            "t2" -> if(match.value!!.teamTwoScore>-1) match.value!!.teamTwoScore--
-            "t3" -> if(match.value!!.teamThreeScore>-1) match.value!!.teamThreeScore--
+            "t1" -> if(match.value!!.scores[1]!!>-1) match.value!!.scores[1]!! - 1
+            "t2" -> if(match.value!!.scores[2]!!>-1) match.value!!.scores[2]!! - 1
+            "t3" -> if(match.value!!.scores[3]!!>-1) match.value!!.scores[3]!! - 1
         }
         //Updates match after change
         updateMatch()

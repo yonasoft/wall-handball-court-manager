@@ -1,4 +1,4 @@
-package com.yonasoft.handballcourtmanager.fragments
+package com.yonasoft.handballcourtmanager.fragments.roster
 
 import android.os.Bundle
 import android.view.*
@@ -17,7 +17,7 @@ import com.yonasoft.handballcourtmanager.R
 import com.yonasoft.handballcourtmanager.adapter.QueueAdapter
 import com.yonasoft.handballcourtmanager.databinding.FragmentRosterBinding
 import com.yonasoft.handballcourtmanager.db.playersdb.Player
-import com.yonasoft.handballcourtmanager.viewmodel.RosterViewModel
+import com.yonasoft.handballcourtmanager.fragments.roster.viewmodel.RosterViewModel
 import com.google.android.material.snackbar.Snackbar
 
 //List of all the players in queue

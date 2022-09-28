@@ -1,4 +1,4 @@
-package com.yonasoft.handballcourtmanager.dialogs
+package com.yonasoft.handballcourtmanager.fragments.roster.dialog
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -10,7 +10,7 @@ import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.viewModels
 import com.yonasoft.handballcourtmanager.R
 import com.yonasoft.handballcourtmanager.databinding.FragmentAddPlayerDialogBinding
-import com.yonasoft.handballcourtmanager.viewmodel.RosterViewModel
+import com.yonasoft.handballcourtmanager.fragments.roster.viewmodel.RosterViewModel
 
 
 class AddPlayerDialogFragment : DialogFragment() {
