@@ -182,5 +182,4 @@ class DoublesDetailFragment : Fragment() {
         super.onDestroy()
         binding = null
     }
-
 }

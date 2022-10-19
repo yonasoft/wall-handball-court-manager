@@ -17,7 +17,7 @@ class MatchesAdapter :
 
     private var dataList = emptyList<Match>()
 
-    //Create view holder based the layout returned from getItemViewType()
+    //Inflates view holder based the layout returned from getItemViewType()
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         val inflater = LayoutInflater.from(parent.context)
         val bindingSingles = SinglesMatchItemBinding.inflate(inflater, parent, false)
@@ -31,7 +31,7 @@ class MatchesAdapter :
         }
     }
 
-    //bind view holder based on layout
+    //bind view holder based on layout given
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         val match = dataList[position]
         when (holder.itemViewType) {
@@ -45,7 +45,7 @@ class MatchesAdapter :
         return dataList.size
     }
 
-    //Check the match type and return a layout type
+    //Return a layout type for the that specific match
     override fun getItemViewType(position: Int): Int {
         return when (dataList[position].matchType) {
             MatchType.SINGLES -> R.layout.singles_match_item

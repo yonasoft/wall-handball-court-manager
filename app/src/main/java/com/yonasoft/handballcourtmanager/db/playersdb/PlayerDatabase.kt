@@ -24,10 +24,8 @@ abstract class PlayerDatabase: RoomDatabase() {
                         "player_database"
                     ).build()
                     INSTANCE = instance
-
                 }
                 return instance
-
             }
 
         }

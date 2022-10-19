@@ -3,12 +3,13 @@ package com.yonasoft.handballcourtmanager
 import android.app.Application
 import com.yonasoft.handballcourtmanager.repositories.MatchesRepository
 import com.yonasoft.handballcourtmanager.repositories.PlayersRepository
+import dagger.hilt.android.HiltAndroidApp
 
-//Application context
+
+@HiltAndroidApp
 class HandballApplication:Application() {
     override fun onCreate() {
         super.onCreate()
-        //Initializes repositories
         PlayersRepository.initialize(this)
         MatchesRepository.initialize(this)
     }

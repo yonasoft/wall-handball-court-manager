@@ -1,0 +1,194 @@
+Index: app/schemas/com.yonasoft.handballcourtmanager.db.matchesdb.MatchesDatabase/3.json
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/schemas/com.yonasoft.handballcourtmanager.db.matchesdb.MatchesDatabase/3.json b/app/schemas/com.yonasoft.handballcourtmanager.db.matchesdb.MatchesDatabase/3.json
+--- a/app/schemas/com.yonasoft.handballcourtmanager.db.matchesdb.MatchesDatabase/3.json	(revision e5d175e1667c307be4fe30f3520fad4f6f4c529a)
++++ b/app/schemas/com.yonasoft.handballcourtmanager.db.matchesdb.MatchesDatabase/3.json	(date 1661707810982)
+@@ -2,11 +2,11 @@
+   "formatVersion": 1,
+   "database": {
+     "version": 3,
+-    "identityHash": "1ced9a18a3e855ee86fd275181cb7772",
++    "identityHash": "01efc62ba04e0f652e7cc278b23b5c32",
+     "entities": [
+       {
+         "tableName": "matches",
+-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` BLOB NOT NULL, `match_type` TEXT NOT NULL, `court_number` TEXT NOT NULL, `t1_score` INTEGER NOT NULL, `t2_score` INTEGER NOT NULL, `t3_score` INTEGER NOT NULL, `t1_p1` TEXT NOT NULL, `t1_p2` TEXT NOT NULL, `t2_p1` TEXT NOT NULL, `t2_p2` TEXT NOT NULL, `t3_p1` TEXT NOT NULL, `is_completed` INTEGER NOT NULL, `winner` TEXT NOT NULL, `winner2` TEXT NOT NULL, PRIMARY KEY(`id`))",
++        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` BLOB NOT NULL, `match_type` TEXT NOT NULL, `court_number` TEXT NOT NULL, `t1_score` INTEGER NOT NULL, `t2_score` INTEGER NOT NULL, `t3_score` INTEGER NOT NULL, `t1_p1` TEXT NOT NULL, `t1_p2` TEXT NOT NULL, `t2_p1` TEXT NOT NULL, `t2_p2` TEXT NOT NULL, `t3_p1` TEXT NOT NULL, `is_completed` INTEGER NOT NULL, PRIMARY KEY(`id`))",
+         "fields": [
+           {
+             "fieldPath": "id",
+@@ -79,18 +79,6 @@
+             "columnName": "is_completed",
+             "affinity": "INTEGER",
+             "notNull": true
+-          },
+-          {
+-            "fieldPath": "winner1",
+-            "columnName": "winner",
+-            "affinity": "TEXT",
+-            "notNull": true
+-          },
+-          {
+-            "fieldPath": "winner2",
+-            "columnName": "winner2",
+-            "affinity": "TEXT",
+-            "notNull": true
+           }
+         ],
+         "primaryKey": {
+@@ -106,7 +94,7 @@
+     "views": [],
+     "setupQueries": [
+       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
+-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '1ced9a18a3e855ee86fd275181cb7772')"
++      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '01efc62ba04e0f652e7cc278b23b5c32')"
+     ]
+   }
+ }
+\ No newline at end of file
+Index: app/src/main/java/com/yonasoft/handballcourtmanager/db/matchesdb/Match.kt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/java/com/yonasoft/handballcourtmanager/db/matchesdb/Match.kt b/app/src/main/java/com/yonasoft/handballcourtmanager/db/matchesdb/Match.kt
+--- a/app/src/main/java/com/yonasoft/handballcourtmanager/db/matchesdb/Match.kt	(revision e5d175e1667c307be4fe30f3520fad4f6f4c529a)
++++ b/app/src/main/java/com/yonasoft/handballcourtmanager/db/matchesdb/Match.kt	(date 1661708625600)
+@@ -21,22 +21,16 @@
+     @ColumnInfo(name="t3_score")
+     var teamThreeScore: Int = 0,
+     @ColumnInfo(name="t1_p1")
+-    var teamOnePlayer1: String="TBA",
++    var teamOnePlayer1: String ="TBA",
+     @ColumnInfo(name="t1_p2")
+-    var teamOnePlayer2:String="TBA",
++    var teamOnePlayer2: String ="TBA",
+     @ColumnInfo(name="t2_p1")
+-    var teamTwoPlayer1:String="TBA",
++    var teamTwoPlayer1: String ="TBA",
+     @ColumnInfo(name="t2_p2")
+-    var teamTwoPlayer2:String="TBA",
++    var teamTwoPlayer2: String ="TBA",
+     @ColumnInfo(name="t3_p1")
+-    var teamThreePlayer:String="TBA",
++    var teamThreePlayer: String ="TBA",
+     @ColumnInfo(name="is_completed")
+     var isCompleted:Boolean=false,
+-    //Below is not used; ignore.
+-    @ColumnInfo(name="winner")
+-    var winner1: String=" ",
+-    @ColumnInfo(name="winner2")
+-    var winner2: String=" ",
+-
+ 
+     )
+\ No newline at end of file
+Index: app/src/main/java/com/yonasoft/handballcourtmanager/db/matchesdb/MatchesDatabase.kt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/java/com/yonasoft/handballcourtmanager/db/matchesdb/MatchesDatabase.kt b/app/src/main/java/com/yonasoft/handballcourtmanager/db/matchesdb/MatchesDatabase.kt
+--- a/app/src/main/java/com/yonasoft/handballcourtmanager/db/matchesdb/MatchesDatabase.kt	(revision e5d175e1667c307be4fe30f3520fad4f6f4c529a)
++++ b/app/src/main/java/com/yonasoft/handballcourtmanager/db/matchesdb/MatchesDatabase.kt	(date 1661708472036)
+@@ -5,6 +5,7 @@
+ import androidx.room.Room
+ import androidx.room.RoomDatabase
+ import androidx.room.TypeConverters
++import com.yonasoft.handballcourtmanager.db.converter.Converter
+ 
+ 
+ @Database(entities = [Match::class], version = 3, exportSchema = true)
+Index: app/src/main/java/com/yonasoft/handballcourtmanager/db/matchesdb/Converter.kt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/java/com/yonasoft/handballcourtmanager/db/matchesdb/Converter.kt b/app/src/main/java/com/yonasoft/handballcourtmanager/db/converter/Converter.kt
+rename from app/src/main/java/com/yonasoft/handballcourtmanager/db/matchesdb/Converter.kt
+rename to app/src/main/java/com/yonasoft/handballcourtmanager/db/converter/Converter.kt
+--- a/app/src/main/java/com/yonasoft/handballcourtmanager/db/matchesdb/Converter.kt	(revision e5d175e1667c307be4fe30f3520fad4f6f4c529a)
++++ b/app/src/main/java/com/yonasoft/handballcourtmanager/db/converter/Converter.kt	(date 1661708625596)
+@@ -1,6 +1,9 @@
+-package com.yonasoft.handballcourtmanager.db.matchesdb
++package com.yonasoft.handballcourtmanager.db.converter
+ 
+ import androidx.room.TypeConverter
++import com.yonasoft.handballcourtmanager.db.matchesdb.MatchType
++import com.yonasoft.handballcourtmanager.db.playersdb.Player
++import java.util.*
+ 
+ class Converter {
+ 
+@@ -10,7 +13,7 @@
+     }
+ 
+     @TypeConverter
+-    fun toMatchType(matchType: String):MatchType{
++    fun toMatchType(matchType: String): MatchType {
+         return MatchType.valueOf(matchType)
+     }
+ 
+Index: app/schemas/com.yonasoft.handballcourtmanager.db.playersdb.PlayerDatabase/1.json
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/schemas/com.yonasoft.handballcourtmanager.db.playersdb.PlayerDatabase/1.json b/app/schemas/com.yonasoft.handballcourtmanager.db.playersdb.PlayerDatabase/1.json
+--- a/app/schemas/com.yonasoft.handballcourtmanager.db.playersdb.PlayerDatabase/1.json	(revision e5d175e1667c307be4fe30f3520fad4f6f4c529a)
++++ b/app/schemas/com.yonasoft.handballcourtmanager.db.playersdb.PlayerDatabase/1.json	(date 1661708641736)
+@@ -2,16 +2,16 @@
+   "formatVersion": 1,
+   "database": {
+     "version": 1,
+-    "identityHash": "fb2ae182ccb61fb37fe9803370d50965",
++    "identityHash": "47183dd46f6d556ea0eaeb78a89c48bf",
+     "entities": [
+       {
+         "tableName": "players_in_queue",
+-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `player_name` TEXT NOT NULL, `is_winner` INTEGER NOT NULL)",
++        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` BLOB PRIMARY KEY AUTOINCREMENT NOT NULL, `player_name` TEXT NOT NULL, `is_winner` INTEGER NOT NULL)",
+         "fields": [
+           {
+             "fieldPath": "id",
+             "columnName": "id",
+-            "affinity": "INTEGER",
++            "affinity": "BLOB",
+             "notNull": true
+           },
+           {
+@@ -40,7 +40,7 @@
+     "views": [],
+     "setupQueries": [
+       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
+-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'fb2ae182ccb61fb37fe9803370d50965')"
++      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '47183dd46f6d556ea0eaeb78a89c48bf')"
+     ]
+   }
+ }
+\ No newline at end of file
+Index: app/src/main/java/com/yonasoft/handballcourtmanager/db/playersdb/Player.kt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/java/com/yonasoft/handballcourtmanager/db/playersdb/Player.kt b/app/src/main/java/com/yonasoft/handballcourtmanager/db/playersdb/Player.kt
+--- a/app/src/main/java/com/yonasoft/handballcourtmanager/db/playersdb/Player.kt	(revision e5d175e1667c307be4fe30f3520fad4f6f4c529a)
++++ b/app/src/main/java/com/yonasoft/handballcourtmanager/db/playersdb/Player.kt	(date 1661708472020)
+@@ -3,11 +3,12 @@
+ import androidx.room.ColumnInfo
+ import androidx.room.Entity
+ import androidx.room.PrimaryKey
++import java.util.*
+ 
+ @Entity(tableName = "players_in_queue")
+ data class Player(
+     @PrimaryKey(autoGenerate = true)
+-    val id:Int,
++    val id: UUID,
+     @ColumnInfo(name = "player_name")
+     var name:String,
+     //If is winner then it be in the winner's

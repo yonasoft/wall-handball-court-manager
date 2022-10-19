@@ -7,6 +7,7 @@ import com.yonasoft.handballcourtmanager.db.matchesdb.MatchType
 import com.yonasoft.handballcourtmanager.db.playersdb.Player
 import java.util.*
 
+//Converter for data types that cannot be inserted into Room
 class Converter {
 
     @TypeConverter

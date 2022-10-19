@@ -8,8 +8,8 @@ import com.yonasoft.handballcourtmanager.R
 import com.yonasoft.handballcourtmanager.databinding.PlayerQueueItemBinding
 import com.yonasoft.handballcourtmanager.db.playersdb.Player
 
-//Recycler view adapter for players in the player selection when selecting player for the that match
-//The clicked item will be passed to the name of the player of that match if it is not a completed match
+//Recycler view adapter for SelectFromRosterFragment that lists the roster
+//The clicked item(a player) will be passed to a bundle in SelectFromRosterFragment
 class PlayerSelectAdapter(private val queue: List<Player>) :
     RecyclerView.Adapter<PlayerSelectAdapter.ViewHolder>() {
 
