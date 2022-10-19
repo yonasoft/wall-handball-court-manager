@@ -7,19 +7,22 @@ import androidx.lifecycle.viewModelScope
 import com.yonasoft.handballcourtmanager.repositories.MatchesRepository
 import com.yonasoft.handballcourtmanager.db.matchesdb.Match
 import com.yonasoft.handballcourtmanager.db.matchesdb.MatchType
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import java.util.*
+import javax.inject.Inject
 
-class MatchesViewModel:ViewModel() {
+@HiltViewModel
+class MatchesViewModel @Inject constructor(private val matchesRepository: MatchesRepository):ViewModel() {
     //Values for number of matches to add in add match dialog
     val numOfSinglesToAdd = MutableLiveData(0)
     val numOfDoublesToAdd = MutableLiveData(0)
     val numOfTrianglesToAdd = MutableLiveData(0)
     //Current matches from database
-    val matchesList: LiveData<List<Match>> = MatchesRepository.get().getAllCurrentMatches()
-    val resultsList: LiveData<List<Match>> = MatchesRepository.get().getAllCompletedMatches()
+    val matchesList: LiveData<List<Match>> = matchesRepository.getAllCurrentMatches()
+    val resultsList: LiveData<List<Match>> = matchesRepository.getAllCompletedMatches()
     //Adds matches based on parameters passed
     fun addMatches(
         singles: Int = numOfSinglesToAdd.value!!,
@@ -40,7 +43,7 @@ class MatchesViewModel:ViewModel() {
     fun addMatch(match: Match) {
         viewModelScope.launch {
             withContext(Dispatchers.IO) {
-                MatchesRepository.get().addMatch(match)
+                matchesRepository.addMatch(match)
             }
         }
     }
@@ -48,7 +51,7 @@ class MatchesViewModel:ViewModel() {
     fun addMatches(matches: List<Match>) {
         viewModelScope.launch {
             withContext(Dispatchers.IO) {
-                MatchesRepository.get().addAllMatch(matches)
+                matchesRepository.addAllMatch(matches)
             }
         }
     }
@@ -58,7 +61,7 @@ class MatchesViewModel:ViewModel() {
         ) {
         viewModelScope.launch {
             withContext(Dispatchers.IO) {
-                MatchesRepository.get().addMatch(
+                matchesRepository.addMatch(
                     Match(UUID.randomUUID(),matchType, courtNumber = "N/A")
                 )
             }
@@ -69,7 +72,7 @@ class MatchesViewModel:ViewModel() {
     fun removeMatch(match:Match){
         viewModelScope.launch {
             withContext(Dispatchers.IO) {
-                MatchesRepository.get().removeMatch(match)
+                matchesRepository.removeMatch(match)
             }
         }
     }
@@ -77,7 +80,7 @@ class MatchesViewModel:ViewModel() {
     fun removeAllCurrentMatches(){
         viewModelScope.launch {
             withContext(Dispatchers.IO) {
-                MatchesRepository.get().removeAllCurrentMatches()
+                matchesRepository.removeAllCurrentMatches()
             }
         }
     }
@@ -85,7 +88,7 @@ class MatchesViewModel:ViewModel() {
     fun removeAllResults(){
         viewModelScope.launch {
             withContext(Dispatchers.IO) {
-                MatchesRepository.get().removeAllCompletedMatches()
+                matchesRepository.removeAllCompletedMatches()
             }
         }
     }

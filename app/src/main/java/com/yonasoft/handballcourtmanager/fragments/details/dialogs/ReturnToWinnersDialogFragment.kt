@@ -18,8 +18,9 @@ import com.yonasoft.handballcourtmanager.fragments.details.DoublesDetailFragment
 import com.yonasoft.handballcourtmanager.fragments.details.SinglesDetailFragmentDirections
 import com.yonasoft.handballcourtmanager.fragments.details.TriangleDetailFragmentDirections
 import com.yonasoft.handballcourtmanager.fragments.roster.viewmodel.RosterViewModel
+import dagger.hilt.android.AndroidEntryPoint
 
-
+@AndroidEntryPoint
 class ReturnToWinnersDialogFragment : DialogFragment() {
 
     private var binding: FragmentReturnToQueueDialogBinding?=null

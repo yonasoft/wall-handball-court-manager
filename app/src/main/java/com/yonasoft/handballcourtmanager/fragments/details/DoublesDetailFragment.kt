@@ -10,25 +10,25 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.setFragmentResultListener
 import androidx.fragment.app.viewModels
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.yonasoft.handballcourtmanager.R
 import com.yonasoft.handballcourtmanager.databinding.FragmentDoublesDetailBinding
 import com.yonasoft.handballcourtmanager.db.matchesdb.MatchType
 import com.yonasoft.handballcourtmanager.fragments.details.dialogs.EndMatchDialogFragment
-
 import com.yonasoft.handballcourtmanager.fragments.details.viewmodel.MatchDetailViewModel
-import com.yonasoft.handballcourtmanager.fragments.details.viewmodel.MatchDetailViewModelFactory
+
+import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
 //Doubles detail fragment when a doubles match is pressed in the matches fragment
+@AndroidEntryPoint
 class DoublesDetailFragment : Fragment() {
 
     private var binding: FragmentDoublesDetailBinding? = null
     private val args: DoublesDetailFragmentArgs by navArgs()
-    private val matchDetailViewModel: MatchDetailViewModel by viewModels {
-        MatchDetailViewModelFactory(args.matchId)
-    }
-
+    private val matchDetailViewModel:MatchDetailViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -39,6 +39,7 @@ class DoublesDetailFragment : Fragment() {
             DataBindingUtil.inflate(inflater, R.layout.fragment_doubles_detail, container, false)
         val view = binding!!.root
         binding!!.viewModel = matchDetailViewModel
+        matchDetailViewModel
         setupObservers()
 
         return view

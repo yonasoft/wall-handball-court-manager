@@ -14,8 +14,10 @@ import androidx.navigation.fragment.navArgs
 import com.yonasoft.handballcourtmanager.R
 import com.yonasoft.handballcourtmanager.databinding.FragmentReturnToQueueDialogBinding
 import com.yonasoft.handballcourtmanager.fragments.roster.viewmodel.RosterViewModel
+import dagger.hilt.android.AndroidEntryPoint
 
 //Dialog that appears after the user presses yes to ending a match
+@AndroidEntryPoint
 class ReturnToRegularQueueFragmentDialogFragment:DialogFragment() {
 
     private var binding:FragmentReturnToQueueDialogBinding?=null

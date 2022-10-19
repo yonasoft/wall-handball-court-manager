@@ -2,24 +2,26 @@ package com.yonasoft.handballcourtmanager.fragments.details.viewmodel
 
 
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
-import com.yonasoft.handballcourtmanager.repositories.MatchesRepository
 import com.yonasoft.handballcourtmanager.db.matchesdb.Match
+import com.yonasoft.handballcourtmanager.repositories.MatchesRepository
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import java.util.*
+import javax.inject.Inject
 
-class MatchDetailViewModel(matchId: UUID) : ViewModel() {
+@HiltViewModel
+class MatchDetailViewModel @Inject constructor(private val matchesRepository: MatchesRepository, savedStateHandle: SavedStateHandle) : ViewModel() {
 
-    var match:LiveData<Match>
+    lateinit var match:LiveData<Match>
+    init {
+        match = matchesRepository.getMatch(savedStateHandle["matchId"]!!)
+    }
 
-        init{
-            //Initialized the match property from the database to the view model
-            match=MatchesRepository.get().getMatch(matchId)
-        }
+
     //Add point based on team as parameter represented as string
     fun addPoints(team:String){
         when(team){
@@ -56,7 +58,7 @@ class MatchDetailViewModel(matchId: UUID) : ViewModel() {
     fun updateMatch(match: Match= this.match.value!!) {
         viewModelScope.launch {
             withContext(Dispatchers.IO) {
-                MatchesRepository.get().updateMatch(match)
+                matchesRepository.updateMatch(match)
             }
         }
 
@@ -64,11 +66,4 @@ class MatchDetailViewModel(matchId: UUID) : ViewModel() {
 
 }
 
-@Suppress("UNCHECKED_CAST")
-class MatchDetailViewModelFactory(
-    private val matchId: UUID
-) : ViewModelProvider.Factory {
-    override fun <T : ViewModel> create(modelClass: Class<T>): T {
-        return MatchDetailViewModel(matchId) as T
-    }
-}
+

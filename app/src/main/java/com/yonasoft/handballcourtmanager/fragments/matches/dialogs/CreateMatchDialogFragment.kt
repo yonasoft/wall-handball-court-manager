@@ -12,7 +12,9 @@ import androidx.fragment.app.viewModels
 import com.yonasoft.handballcourtmanager.R
 import com.yonasoft.handballcourtmanager.databinding.FragmentCreateMatchDialogBinding
 import com.yonasoft.handballcourtmanager.fragments.matches.viewmodel.MatchesViewModel
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class CreateMatchDialogFragment:DialogFragment(){
 
     private var binding: FragmentCreateMatchDialogBinding?=null

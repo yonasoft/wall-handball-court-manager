@@ -1,32 +1,15 @@
 package com.yonasoft.handballcourtmanager.repositories
 
-import android.content.Context
 import androidx.lifecycle.LiveData
 import com.yonasoft.handballcourtmanager.db.matchesdb.Match
 import com.yonasoft.handballcourtmanager.db.matchesdb.MatchesDao
-import com.yonasoft.handballcourtmanager.db.matchesdb.MatchesDatabase
 import java.util.*
+import javax.inject.Inject
 
 
 //Repository to retrieve data database
-class MatchesRepository(context: Context) {
-    private val matchesDao: MatchesDao = MatchesDatabase.getInstance(context).matchesDao
+class MatchesRepository @Inject constructor(private  val matchesDao: MatchesDao) {
 
-    companion object{
-        //Create instance of repository when application starts
-        private var INSTANCE: MatchesRepository?=null
-        //Initialize repository
-        fun initialize(context: Context){
-            if(INSTANCE ==null){
-                INSTANCE = MatchesRepository(context)
-            }
-        }
-        //Get repository
-        fun get(): MatchesRepository {
-            return INSTANCE ?:
-            throw IllegalStateException("Repository must be initialized")
-        }
-    }
     //Add match
     suspend fun addMatch(match: Match){
         matchesDao.addMatch(match)

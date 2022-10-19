@@ -19,8 +19,10 @@ import com.yonasoft.handballcourtmanager.databinding.FragmentRosterBinding
 import com.yonasoft.handballcourtmanager.db.playersdb.Player
 import com.yonasoft.handballcourtmanager.fragments.roster.viewmodel.RosterViewModel
 import com.google.android.material.snackbar.Snackbar
+import dagger.hilt.android.AndroidEntryPoint
 
 //List of all the players in queue
+@AndroidEntryPoint
 class RosterFragment : Fragment() {
 
     private var binding: FragmentRosterBinding?=null

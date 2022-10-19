@@ -11,9 +11,10 @@ import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.*
 import com.yonasoft.handballcourtmanager.databinding.ActivityMainBinding
+import dagger.hilt.android.AndroidEntryPoint
 
 //Change colors for results, matches, players, and list items.
-
+@AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
 
     private var binding:ActivityMainBinding?=null

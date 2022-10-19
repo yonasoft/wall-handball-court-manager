@@ -17,15 +17,14 @@ import com.yonasoft.handballcourtmanager.databinding.FragmentSinglesDetailBindin
 import com.yonasoft.handballcourtmanager.db.matchesdb.MatchType
 import com.yonasoft.handballcourtmanager.fragments.details.dialogs.EndMatchDialogFragment
 import com.yonasoft.handballcourtmanager.fragments.details.viewmodel.MatchDetailViewModel
-import com.yonasoft.handballcourtmanager.fragments.details.viewmodel.MatchDetailViewModelFactory
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class SinglesDetailFragment : Fragment() {
 
     private var binding: FragmentSinglesDetailBinding?=null
     private val args: SinglesDetailFragmentArgs by navArgs()
-    private val matchDetailViewModel: MatchDetailViewModel by viewModels {
-        MatchDetailViewModelFactory(args.matchId)
-    }
+    private val matchDetailViewModel by viewModels<MatchDetailViewModel>()
 
     override fun onCreateView(
         inflater: LayoutInflater,

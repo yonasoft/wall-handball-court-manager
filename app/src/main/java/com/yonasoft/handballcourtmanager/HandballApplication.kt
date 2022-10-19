@@ -8,9 +8,5 @@ import dagger.hilt.android.HiltAndroidApp
 
 @HiltAndroidApp
 class HandballApplication:Application() {
-    override fun onCreate() {
-        super.onCreate()
-        PlayersRepository.initialize(this)
-        MatchesRepository.initialize(this)
-    }
+
 }

@@ -6,24 +6,27 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.yonasoft.handballcourtmanager.db.playersdb.Player
 import com.yonasoft.handballcourtmanager.repositories.PlayersRepository
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import javax.inject.Inject
 
 //ViewModel for the Roster List Fragment
-class RosterViewModel : ViewModel() {
+@HiltViewModel
+class RosterViewModel @Inject constructor(private val playersRepository: PlayersRepository) : ViewModel() {
 
     val nameToAdd = MutableLiveData<String>()
     //Matches in regular queue
-    val regularQueue: LiveData<List<Player>> = PlayersRepository.get().getRegularRoster()
+    val regularQueue: LiveData<List<Player>> = playersRepository.getRegularRoster()
     //Matches in winners queue
-    val winnerQueue: LiveData<List<Player>> = PlayersRepository.get().getWinnersRoster()
+    val winnerQueue: LiveData<List<Player>> = playersRepository.getWinnersRoster()
 
     //Add  new player with string
     fun addPlayer(name: String = this.nameToAdd.value!!) {
         viewModelScope.launch {
             withContext(Dispatchers.IO) {
-                PlayersRepository.get().addPlayer(Player(id = 0, name = name))
+                playersRepository.addPlayer(Player(id = 0, name = name))
             }
         }
     }
@@ -31,7 +34,7 @@ class RosterViewModel : ViewModel() {
     fun addPlayer(player: Player) {
         viewModelScope.launch {
             withContext(Dispatchers.IO) {
-                PlayersRepository.get().addPlayer(player)
+                playersRepository.addPlayer(player)
             }
         }
     }
@@ -39,7 +42,7 @@ class RosterViewModel : ViewModel() {
     fun addAllPlayers(players: List<Player>) {
         viewModelScope.launch {
             withContext(Dispatchers.IO) {
-                PlayersRepository.get().addAllPlayers(players)
+                playersRepository.addAllPlayers(players)
             }
         }
 
@@ -55,14 +58,13 @@ class RosterViewModel : ViewModel() {
                 addAllPlayers(playersAsClass)
             }
         }
-
     }
 
     //Delete player from database
     fun deletePlayer(player: Player) {
         viewModelScope.launch {
             withContext(Dispatchers.IO) {
-                PlayersRepository.get().deletePlayer(player)
+                playersRepository.deletePlayer(player)
             }
         }
     }
@@ -70,7 +72,7 @@ class RosterViewModel : ViewModel() {
     fun deleteAllPlayers() {
         viewModelScope.launch {
             withContext(Dispatchers.IO) {
-                PlayersRepository.get().deleteAllPlayers()
+                playersRepository.deleteAllPlayers()
             }
         }
     }
@@ -78,7 +80,7 @@ class RosterViewModel : ViewModel() {
     fun deleteRegularPlayers() {
         viewModelScope.launch {
             withContext(Dispatchers.IO) {
-                PlayersRepository.get().deleteRegularPlayers()
+                playersRepository.deleteRegularPlayers()
             }
         }
     }
@@ -86,7 +88,7 @@ class RosterViewModel : ViewModel() {
     fun deleteWinnerPlayers() {
         viewModelScope.launch {
             withContext(Dispatchers.IO) {
-                PlayersRepository.get().deleteWinnerPlayers()
+                playersRepository.deleteWinnerPlayers()
             }
         }
     }

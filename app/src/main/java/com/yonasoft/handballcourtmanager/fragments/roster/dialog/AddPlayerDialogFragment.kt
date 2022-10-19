@@ -11,8 +11,9 @@ import androidx.fragment.app.viewModels
 import com.yonasoft.handballcourtmanager.R
 import com.yonasoft.handballcourtmanager.databinding.FragmentAddPlayerDialogBinding
 import com.yonasoft.handballcourtmanager.fragments.roster.viewmodel.RosterViewModel
+import dagger.hilt.android.AndroidEntryPoint
 
-
+@AndroidEntryPoint
 class AddPlayerDialogFragment : DialogFragment() {
 
     private var binding: FragmentAddPlayerDialogBinding?=null

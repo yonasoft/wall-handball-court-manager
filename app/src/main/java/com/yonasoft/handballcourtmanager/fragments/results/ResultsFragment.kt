@@ -17,9 +17,10 @@ import com.yonasoft.handballcourtmanager.db.matchesdb.Match
 import com.yonasoft.handballcourtmanager.fragments.matches.viewmodel.MatchesViewModel
 import com.google.android.material.snackbar.Snackbar
 import com.yonasoft.handballcourtmanager.adapter.MatchesAdapter
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class ResultsFragment : Fragment() {
-
 
     private var binding: FragmentResultsBinding?=null
     private val viewModel: MatchesViewModel by viewModels()

@@ -18,8 +18,10 @@ import com.yonasoft.handballcourtmanager.adapter.PlayerSelectAdapter
 import com.yonasoft.handballcourtmanager.databinding.FragmentSelectFromRosterBinding
 import com.yonasoft.handballcourtmanager.db.playersdb.Player
 import com.yonasoft.handballcourtmanager.fragments.roster.viewmodel.RosterViewModel
+import dagger.hilt.android.AndroidEntryPoint
 
 //Fragment when selecting player to add the match
+@AndroidEntryPoint
 class SelectFromRosterFragment:Fragment() {
 
     private var binding:FragmentSelectFromRosterBinding?=null

@@ -18,9 +18,11 @@ import com.yonasoft.handballcourtmanager.adapter.MatchesAdapter
 import com.yonasoft.handballcourtmanager.databinding.FragmentCurrentMatchesBinding
 import com.yonasoft.handballcourtmanager.db.matchesdb.Match
 import com.yonasoft.handballcourtmanager.fragments.matches.viewmodel.MatchesViewModel
+import dagger.hilt.android.AndroidEntryPoint
 
 
 //Matches fragment which list all current matches
+@AndroidEntryPoint
 class MatchesFragment : Fragment(){
 
     private var binding: FragmentCurrentMatchesBinding? = null
