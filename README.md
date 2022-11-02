@@ -1,1 +1,3 @@
 ﻿# Handball-Court-Manager
+ 
+﻿# Purpose
