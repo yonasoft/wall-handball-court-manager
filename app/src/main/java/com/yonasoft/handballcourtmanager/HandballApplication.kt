@@ -5,8 +5,5 @@ import com.yonasoft.handballcourtmanager.repositories.MatchesRepository
 import com.yonasoft.handballcourtmanager.repositories.PlayersRepository
 import dagger.hilt.android.HiltAndroidApp
 
-
 @HiltAndroidApp
-class HandballApplication:Application() {
-
-}
+class HandballApplication:Application()

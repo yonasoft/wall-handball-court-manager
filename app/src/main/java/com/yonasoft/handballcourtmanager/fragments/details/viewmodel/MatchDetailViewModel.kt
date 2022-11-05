@@ -16,7 +16,7 @@ import javax.inject.Inject
 @HiltViewModel
 class MatchDetailViewModel @Inject constructor(private val matchesRepository: MatchesRepository, savedStateHandle: SavedStateHandle) : ViewModel() {
 
-    lateinit var match:LiveData<Match>
+    var match:LiveData<Match>
     init {
         match = matchesRepository.getMatch(savedStateHandle["matchId"]!!)
     }
