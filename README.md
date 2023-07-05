@@ -17,5 +17,5 @@ Link(Play Store): https://play.google.com/store/apps/details?id=com.yonasoft.han
 ![return1](https://github.com/KevC000/Wall-Handball-Court-Manager/assets/82843524/35fe5ac2-7c8b-41a0-a78b-285826c5a07c)
 ![return2](https://github.com/KevC000/Wall-Handball-Court-Manager/assets/82843524/38a7b872-2ab0-4bd6-adcf-73ca92ac0127)
 
-## match history
+## Match history
 ![completed](https://github.com/KevC000/Wall-Handball-Court-Manager/assets/82843524/4f5bee6e-e02b-4b52-af9f-83c36184855b)
