@@ -15,10 +15,12 @@ import com.yonasoft.handballcourtmanager.fragments.matches.viewmodel.MatchesView
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class CreateMatchDialogFragment:DialogFragment(){
+class CreateMatchDialogFragment : DialogFragment() {
 
-    private var binding: FragmentCreateMatchDialogBinding?=null
     private val viewModel: MatchesViewModel by viewModels()
+
+    private var _binding: FragmentCreateMatchDialogBinding? = null
+    private val binding get() = _binding!!
 
     override fun onStart() {
         super.onStart()
@@ -30,40 +32,41 @@ class CreateMatchDialogFragment:DialogFragment(){
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
+        _binding = DataBindingUtil.inflate(inflater, R.layout.fragment_create_match_dialog, container, false)
+        return binding.root.apply {
+            setupBinding()
+            setupSpinner()
+            setupOkButton()
+        }
+    }
 
-        binding = DataBindingUtil.inflate(layoutInflater,
-            R.layout.fragment_create_match_dialog,container,false)
-        val view=binding!!.root
+    private fun setupBinding() {
+        binding.viewModel = viewModel
+    }
 
-        binding!!.viewModel = viewModel
+    private fun setupSpinner() {
+        val spinnerItems = List(33) { i -> i }
+        val spinnerAdapter: ArrayAdapter<Int> = ArrayAdapter(this@CreateMatchDialogFragment.requireContext(), android.R.layout.simple_spinner_dropdown_item, spinnerItems)
 
-        //Creates spinner items aka the numbers that will show in the spinner
-        val spinnerItems = List(33){ i ->i }
-        val arrayAdapter:ArrayAdapter<Int> = ArrayAdapter(this.requireContext(),android.R.layout.simple_spinner_dropdown_item,spinnerItems)
+        binding.spinnerSingles.adapter = spinnerAdapter
+        binding.spinnerDoubles.adapter = spinnerAdapter
+        binding.spinnerTriangles.adapter = spinnerAdapter
+    }
 
-        //Adapter that applies spinner for each individual spinner for each match type
-        binding!!.spinnerSingles.adapter = arrayAdapter
-        binding!!.spinnerDoubles.adapter = arrayAdapter
-        binding!!.spinnerTriangles.adapter = arrayAdapter
-
-        //Creates x number of matches based on the what is selected in the spinner for each.
-        // Each match type has it's own spinner so number of matches can be different for each type
-        //Dismisses dialog when done
-        binding!!.btnOk.setOnClickListener{
-            viewModel.numOfSinglesToAdd.value = binding!!.spinnerSingles.selectedItem as Int
-            viewModel.numOfDoublesToAdd.value = binding!!.spinnerDoubles.selectedItem as Int
-            viewModel.numOfTrianglesToAdd.value = binding!!.spinnerTriangles.selectedItem as Int
-            viewModel.addMatches()
+    private fun setupOkButton() {
+        binding.btnOk.setOnClickListener {
+            viewModel.apply {
+                numOfSinglesToAdd.value = binding.spinnerSingles.selectedItem as Int
+                numOfDoublesToAdd.value = binding.spinnerDoubles.selectedItem as Int
+                numOfTrianglesToAdd.value = binding.spinnerTriangles.selectedItem as Int
+                addMatches()
+            }
             dismiss()
         }
-
-        return view
     }
 
     override fun onDestroy() {
         super.onDestroy()
-        binding = null
+        _binding = null
     }
-
-
 }

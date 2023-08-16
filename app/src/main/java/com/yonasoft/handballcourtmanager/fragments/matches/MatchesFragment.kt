@@ -16,47 +16,26 @@ import com.google.android.material.snackbar.Snackbar
 import com.yonasoft.handballcourtmanager.R
 import com.yonasoft.handballcourtmanager.adapter.MatchesAdapter
 import com.yonasoft.handballcourtmanager.databinding.FragmentCurrentMatchesBinding
-import com.yonasoft.handballcourtmanager.db.matchesdb.Match
 import com.yonasoft.handballcourtmanager.fragments.matches.viewmodel.MatchesViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
-
-//Matches fragment which list all current matches
 @AndroidEntryPoint
-class MatchesFragment : Fragment(){
+class MatchesFragment : Fragment() {
 
     private var binding: FragmentCurrentMatchesBinding? = null
     private val viewModel: MatchesViewModel by viewModels()
-    private val adapter:MatchesAdapter by lazy {MatchesAdapter()}
+    private val adapter = MatchesAdapter()
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
-        binding = DataBindingUtil.inflate(
-            layoutInflater,
-            R.layout.fragment_current_matches, container, false
-        )
-        val view = binding!!.root
-
-        //Recycler view for all the matches
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
+        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_current_matches, container, false)
         setupRecyclerView()
-
-        return view
+        return binding!!.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
         setupToolBar()
-
-        //click listener for  for FAB
-        binding!!.fabAddMatches.setOnClickListener {
-            findNavController().navigate(
-                MatchesFragmentDirections.actionMatchesFragmentToCreateMatchDialogFragment()
-            )
-        }
-
+        setupAddMatchesFAB()
     }
 
     override fun onDestroy() {
@@ -66,85 +45,58 @@ class MatchesFragment : Fragment(){
 
     private fun setupToolBar() {
         val menuHost: MenuHost = requireActivity()
-        menuHost.addMenuProvider(
-            object : MenuProvider {
-                override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
-                    menuInflater.inflate(R.menu.matches_toolbar, menu)
-                }
+        menuHost.addMenuProvider(object : MenuProvider {
+            override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
+                menuInflater.inflate(R.menu.matches_toolbar, menu)
+            }
 
-                override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
-                    onDeleteMatches(menuItem.itemId)
-                    return true
-                }
-            }, viewLifecycleOwner, Lifecycle.State.RESUMED
-        )
+            override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
+                handleMenuItemSelection(menuItem.itemId)
+                return true
+            }
+        }, viewLifecycleOwner, Lifecycle.State.RESUMED)
     }
 
-    //setup recycler view oif matches
     private fun setupRecyclerView() {
-        val layoutManager = LinearLayoutManager(this.context)
-        layoutManager.orientation = RecyclerView.VERTICAL
-        binding!!.rcvActiveMatches.layoutManager = layoutManager
-        //Observer for match data
-        viewModel.matchesList.observe(viewLifecycleOwner) {
-            adapter.setData(it)
-            binding!!.rcvActiveMatches.adapter = adapter
-        }
-        //Below is the swipe to delete feature
-        ItemTouchHelper(object : ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.RIGHT) {
-            override fun onMove(
-                recyclerView: RecyclerView,
-                viewHolder: RecyclerView.ViewHolder,
-                target: RecyclerView.ViewHolder
-            ): Boolean {
-                return false
+        binding?.apply {
+            rcvActiveMatches.layoutManager = LinearLayoutManager(context, RecyclerView.VERTICAL, false)
+            viewModel.matchesList.observe(viewLifecycleOwner) { matches ->
+                adapter.setData(matches)
+                rcvActiveMatches.adapter = adapter
             }
+            setupSwipeToDeleteFeature(rcvActiveMatches)
+        }
+    }
+
+    private fun setupSwipeToDeleteFeature(recyclerView: RecyclerView) {
+        ItemTouchHelper(object : ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.RIGHT) {
+            override fun onMove(recyclerView: RecyclerView, viewHolder: RecyclerView.ViewHolder, target: RecyclerView.ViewHolder): Boolean = false
 
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
-
-                val removedMatch: Match = viewModel.matchesList.value!![viewHolder.adapterPosition]
-
+                val removedMatch = viewModel.matchesList.value!![viewHolder.adapterPosition]
                 viewModel.removeMatch(removedMatch)
-
-                //Option to undo delete
-                Snackbar.make(
-                    binding!!.root, "Match is being removed. press 'Undo' to stop!",
-                    Snackbar.LENGTH_LONG
-                ).setAction(
-                    "Undo"
-                ) {
-                    viewModel.addMatch(removedMatch)
-                }.show()
+                showUndoSnackbar("Match is being removed. press 'Undo' to stop!") { viewModel.addMatch(removedMatch) }
             }
-        }).attachToRecyclerView(binding!!.rcvActiveMatches)
+        }).attachToRecyclerView(recyclerView)
     }
 
-    //Deletes the match if it the menu is a specific id
-    private fun onDeleteMatches(idOfQueueDeletion: Int) {
-
-        val removedQueueText: String
-        val removedList = mutableListOf<Match>()
-
-        //Delete based on menu ID
-        when (idOfQueueDeletion) {
-            R.id.clear_matches -> {
-                removedList.addAll(viewModel.matchesList.value!!)
-                removedQueueText = "Matches are being cleared!"
-                viewModel.removeAllCurrentMatches()
-            }
-            else -> return
+    private fun setupAddMatchesFAB() {
+        binding?.fabAddMatches?.setOnClickListener {
+            findNavController().navigate(MatchesFragmentDirections.actionMatchesFragmentToCreateMatchDialogFragment())
         }
-
-        //Show snack bar and undo button
-        val snackBar =
-            Snackbar.make(binding!!.root, removedQueueText, Snackbar.LENGTH_LONG).setAction(
-                "Undo"
-            ) {
-                viewModel.addMatches(removedList)
-            }
-        snackBar.show()
     }
 
+    private fun handleMenuItemSelection(itemId: Int) {
+        if (itemId == R.id.clear_matches) {
+            val removedList = viewModel.matchesList.value?.toMutableList() ?: mutableListOf()
+            viewModel.removeAllCurrentMatches()
+            showUndoSnackbar("Matches are being cleared!") { viewModel.addMatches(removedList) }
+        }
+    }
 
-
+    private fun showUndoSnackbar(message: String, undoAction: () -> Unit) {
+        Snackbar.make(binding!!.root, message, Snackbar.LENGTH_LONG)
+            .setAction("Undo") { undoAction() }
+            .show()
+    }
 }

@@ -8,88 +8,53 @@ import com.yonasoft.handballcourtmanager.repositories.MatchesRepository
 import com.yonasoft.handballcourtmanager.db.matchesdb.Match
 import com.yonasoft.handballcourtmanager.db.matchesdb.MatchType
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
+import kotlin.Pair
 import java.util.*
 import javax.inject.Inject
 
+fun CoroutineScope.launchIO(block: suspend () -> Unit) {
+    launch(Dispatchers.IO) { block() }
+}
+
 @HiltViewModel
-class MatchesViewModel @Inject constructor(private val matchesRepository: MatchesRepository):ViewModel() {
-    //Values for number of matches to add in add match dialog
+class MatchesViewModel @Inject constructor(private val matchesRepository: MatchesRepository): ViewModel() {
+
     val numOfSinglesToAdd = MutableLiveData(0)
     val numOfDoublesToAdd = MutableLiveData(0)
     val numOfTrianglesToAdd = MutableLiveData(0)
-    //Current matches from database
+
     val matchesList: LiveData<List<Match>> = matchesRepository.getAllCurrentMatches()
     val resultsList: LiveData<List<Match>> = matchesRepository.getAllCompletedMatches()
-    //Adds matches based on parameters passed
+
     fun addMatches(
-        singles: Int = numOfSinglesToAdd.value!!,
-        doubles: Int = numOfDoublesToAdd.value!!,
-        triangles: Int = numOfTrianglesToAdd.value!!
+        singles: Int = numOfSinglesToAdd.value ?: 0,
+        doubles: Int = numOfDoublesToAdd.value ?: 0,
+        triangles: Int = numOfTrianglesToAdd.value ?: 0
     ) {
-        for (i in 1..singles) {
-            createMatch(MatchType.SINGLES)
-        }
-        for (i in 1..doubles) {
-            createMatch(MatchType.DOUBLES)
-        }
-        for (i in 1..triangles) {
-            createMatch(MatchType.TRIANGLE)
-        }
-    }
-    //Adds a match
-    fun addMatch(match: Match) {
-        viewModelScope.launch {
-            withContext(Dispatchers.IO) {
-                matchesRepository.addMatch(match)
-            }
-        }
-    }
-    //Adds matches as a list
-    fun addMatches(matches: List<Match>) {
-        viewModelScope.launch {
-            withContext(Dispatchers.IO) {
-                matchesRepository.addAllMatch(matches)
-            }
-        }
-    }
-    //Creates and adds a new match
-    private fun createMatch(
-        matchType: MatchType,
-        ) {
-        viewModelScope.launch {
-            withContext(Dispatchers.IO) {
-                matchesRepository.addMatch(
-                    Match(UUID.randomUUID(),matchType, courtNumber = "N/A")
-                )
-            }
+        listOf(
+            Pair(singles, MatchType.SINGLES),
+            Pair(doubles, MatchType.DOUBLES),
+            Pair(triangles, MatchType.TRIANGLE)
+        ).forEach { (count, type) ->
+            repeat(count) { createMatch(type) }
         }
     }
 
-    //Removes a match
-    fun removeMatch(match:Match){
-        viewModelScope.launch {
-            withContext(Dispatchers.IO) {
-                matchesRepository.removeMatch(match)
-            }
-        }
+    fun addMatch(match: Match) = viewModelScope.launchIO { matchesRepository.addMatch(match) }
+
+    fun addMatches(matches: List<Match>) = viewModelScope.launchIO { matchesRepository.addAllMatch(matches) }
+
+    private fun createMatch(matchType: MatchType) = viewModelScope.launchIO {
+        matchesRepository.addMatch(Match(UUID.randomUUID(), matchType, courtNumber = "N/A"))
     }
-    //Clears all active matches
-    fun removeAllCurrentMatches(){
-        viewModelScope.launch {
-            withContext(Dispatchers.IO) {
-                matchesRepository.removeAllCurrentMatches()
-            }
-        }
-    }
-    //Clears all completed matches
-    fun removeAllResults(){
-        viewModelScope.launch {
-            withContext(Dispatchers.IO) {
-                matchesRepository.removeAllCompletedMatches()
-            }
-        }
-    }
+
+    fun removeMatch(match: Match) = viewModelScope.launchIO { matchesRepository.removeMatch(match) }
+
+    fun removeAllCurrentMatches() = viewModelScope.launchIO { matchesRepository.removeAllCurrentMatches() }
+
+    fun removeAllResults() = viewModelScope.launchIO { matchesRepository.removeAllCompletedMatches() }
+
 }
