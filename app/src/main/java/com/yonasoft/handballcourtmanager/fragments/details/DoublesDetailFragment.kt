@@ -10,171 +10,138 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.setFragmentResultListener
 import androidx.fragment.app.viewModels
-import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.yonasoft.handballcourtmanager.R
 import com.yonasoft.handballcourtmanager.databinding.FragmentDoublesDetailBinding
+import com.yonasoft.handballcourtmanager.db.matchesdb.Match
 import com.yonasoft.handballcourtmanager.db.matchesdb.MatchType
 import com.yonasoft.handballcourtmanager.fragments.details.dialogs.EndMatchDialogFragment
 import com.yonasoft.handballcourtmanager.fragments.details.viewmodel.MatchDetailViewModel
-
 import dagger.hilt.android.AndroidEntryPoint
-import javax.inject.Inject
 
-//Doubles detail fragment when a doubles match is pressed in the matches fragment
 @AndroidEntryPoint
 class DoublesDetailFragment : Fragment() {
 
     private var binding: FragmentDoublesDetailBinding? = null
     private val args: DoublesDetailFragmentArgs by navArgs()
-    private val matchDetailViewModel:MatchDetailViewModel by viewModels()
+    private val matchDetailViewModel: MatchDetailViewModel by viewModels()
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
-        binding =
-            DataBindingUtil.inflate(inflater, R.layout.fragment_doubles_detail, container, false)
-        val view = binding!!.root
-        binding!!.viewModel = matchDetailViewModel
-        matchDetailViewModel
-        setupObservers()
-
-        return view
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
+        return DataBindingUtil.inflate<FragmentDoublesDetailBinding>(inflater, R.layout.fragment_doubles_detail, container, false).apply {
+            viewModel = matchDetailViewModel
+        }.also { binding = it }.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        //Setup click listeners change focus listeners etc.
+        setupObservers()
         setUpListeners()
     }
 
     private fun setUpListeners() {
-        binding!!.apply {
-            //Add or change players when click which open an add player dialog
-            tvT1P1.setOnClickListener {
-                changeOrAddPlayer("t1p1")
-            }
+        binding?.apply {
+            tvT1P1.setOnClickListener { changeOrAddPlayer(TEAM_1_PLAYER_1) }
+            tvT1P2.setOnClickListener { changeOrAddPlayer(TEAM_1_PLAYER_2) }
+            tvT2P1.setOnClickListener { changeOrAddPlayer(TEAM_2_PLAYER_1) }
+            tvT2P2.setOnClickListener { changeOrAddPlayer(TEAM_2_PLAYER_2) }
 
-            tvT1P2.setOnClickListener {
-                changeOrAddPlayer("t1p2")
-            }
+            btnT1Add.setOnClickListener { matchDetailViewModel.addPoints(TEAM_1) }
+            btnT2Add.setOnClickListener { matchDetailViewModel.addPoints(TEAM_2) }
+            btnT1Sub.setOnClickListener { matchDetailViewModel.deductPoints(TEAM_1) }
+            btnT2Sub.setOnClickListener { matchDetailViewModel.deductPoints(TEAM_2) }
 
-            tvT2P1.setOnClickListener {
-                changeOrAddPlayer("t2p1")
-            }
+            btnEndMatch.setOnClickListener { handleEndMatchClick() }
 
-            tvT2P2.setOnClickListener {
-                changeOrAddPlayer("t2p2")
-            }
+            setupCourtNumberInteraction()
+        }
+    }
 
-            //Add or deduct points based on team
-            btnT1Add.setOnClickListener {
-                matchDetailViewModel.addPoints("t1")
-            }
-            btnT2Add.setOnClickListener {
-                matchDetailViewModel.addPoints("t2")
-            }
-            btnT1Sub.setOnClickListener {
-                matchDetailViewModel.deductPoints("t1")
-            }
-            btnT2Sub.setOnClickListener {
-                matchDetailViewModel.deductPoints("t2")
-            }
-
-            //Ends match
-            btnEndMatch.setOnClickListener {
-                val match = matchDetailViewModel.match.value!!
-                //Makes sure all the textview for the players are filled in
-                if (match.teams[1]!![0]!= "TBA" && match.teams[2]!![0] != "TBA" && match.teams[1]!![1] != "TBA" && match.teams[2]!![1] != "TBA") {
-                    //Navigates to end match confirmation
-                    findNavController().navigate(
-                        DoublesDetailFragmentDirections.actionFragmentDoublesDetailToEndMatchDialogFragment()
-                    )
-                    //Set listener to determine the result of the dialog.
-                    setFragmentResultListener(EndMatchDialogFragment.REQUEST_KEY_END) { _, bundle ->
-                        val result = bundle.getBoolean(EndMatchDialogFragment.BUNDLE_KEY_END)
-                        //If the answer is yes to the dialog this runs
-                        if (result) {
-                            //Pop back stack to this fragment
-                            findNavController().popBackStack()
-                            //Navigate to dialog to return to winner's queue with an array of the players in this match, and the match type
-                            findNavController().navigate(
-                                DoublesDetailFragmentDirections.actionFragmentDoublesDetailToReturnToWinnersDialogFragment(
-                                    arrayOf(
-                                        match.teams[1]!![0],
-                                        match.teams[1]!![1],
-                                        match.teams[2]!![0],
-                                        match.teams[2]!![1],
-                                        match.teams[3]!![0]
-                                    ),
-                                    MatchType.DOUBLES.name
-                                )
-                            )
-                            //Completes match
-                            matchDetailViewModel.completeMatch()
-                        }
-
-                    }
-                } else {
-                    //Prompts user to add player if they haven't already
-                    Toast.makeText(context, "Press the \"TBA\" to add a player!", Toast.LENGTH_LONG)
-                        .show()
-                }
-            }
-            //Code for interaction for editing court number
-            editTextNum.apply {
-                //Clears the court number for future editing
-                setOnClickListener {
-                    binding!!.editTextNum.text!!.clear()
-                }
-                //When you press the check button aka enter? on the on-screen keyboard it will set the new edited text as the court number
-                setImeActionLabel(binding!!.editTextNum.text.toString(), KeyEvent.KEYCODE_ENTER)
-                //Changes court number when out of focus
-                setOnFocusChangeListener { _, _ ->
-                    matchDetailViewModel.updateCourtNum(binding!!.editTextNum.text.toString())
-                    isCursorVisible=false
-                }
+    private fun setupCourtNumberInteraction() {
+        binding?.editTextNum?.apply {
+            setOnClickListener { text?.clear() }
+            setImeActionLabel(text.toString(), KeyEvent.KEYCODE_ENTER)
+            setOnFocusChangeListener { _, _ ->
+                matchDetailViewModel.updateCourtNum(text.toString())
+                isCursorVisible = false
             }
         }
     }
 
-    //Observers for updated data to be reflected in the views
-    private fun setupObservers() {
-        binding!!.viewModel!!.match.observe(viewLifecycleOwner) {
-            binding!!.apply {
-                tvT1P1.text = it.teams[1]!![0]
-                tvT1P2.text = it.teams[1]!![1]
-                tvT2P1.text = it.teams[2]!![0]
-                tvT2P2.text = it.teams[2]!![1]
-                tvT1Score.text = it.scores[1].toString()
-                tvT2Score.text = it.scores[2].toString()
+    private fun handleEndMatchClick() {
+        val match = matchDetailViewModel.match.value ?: return
+
+        if (allPlayersFilled(match)) {
+            navigateToEndMatchConfirmation()
+            setEndMatchResultListener()
+        } else {
+            Toast.makeText(context, "Press the \"TBA\" to add a player!", Toast.LENGTH_LONG).show()
+        }
+    }
+
+    private fun allPlayersFilled(match: Match): Boolean {
+        return match.teams[1]?.all { it != "TBA" } == true && match.teams[2]?.all { it != "TBA" } == true
+    }
+
+    private fun navigateToEndMatchConfirmation() {
+        findNavController().navigate(DoublesDetailFragmentDirections.actionFragmentDoublesDetailToEndMatchDialogFragment())
+    }
+
+    private fun setEndMatchResultListener() {
+        setFragmentResultListener(EndMatchDialogFragment.REQUEST_KEY_END) { _, bundle ->
+            val result = bundle.getBoolean(EndMatchDialogFragment.BUNDLE_KEY_END)
+            if (result) {
+                navigateToWinnerQueue()
+                matchDetailViewModel.completeMatch()
             }
         }
     }
 
-
-    //Code for changing and adding player
-    //Parameter is what player and team will be changed in this match represented as a string
-    private fun changeOrAddPlayer(playerAndTeam: String) {
-        //Navigates to player selection screen
+    private fun navigateToWinnerQueue() {
+        val match = matchDetailViewModel.match.value!!
+        findNavController().popBackStack()
         findNavController().navigate(
-            DoublesDetailFragmentDirections.actionFragmentDoublesDetailToSelectFromRosterFragment(
+            DoublesDetailFragmentDirections.actionFragmentDoublesDetailToReturnToWinnersDialogFragment(
+                arrayOf(
+                    match.teams[1]!![0],
+                    match.teams[1]!![1],
+                    match.teams[2]!![0],
+                    match.teams[2]!![1],
+                    match.teams[3]!![0]
+                ),
+                MatchType.DOUBLES.name
             )
         )
-        //Gets the result of the player that will be added or changed to the match from the selection fragment that was opened
+    }
+
+    private fun setupObservers() {
+        binding?.viewModel?.match?.observe(viewLifecycleOwner) {
+            updateViews(it)
+        }
+    }
+
+    private fun updateViews(match: Match) {
+        binding?.apply {
+            tvT1P1.text = match.teams[1]?.get(0)
+            tvT1P2.text = match.teams[1]?.get(1)
+            tvT2P1.text = match.teams[2]?.get(0)
+            tvT2P2.text = match.teams[2]?.get(1)
+            tvT1Score.text = match.scores[1]?.toString()
+            tvT2Score.text = match.scores[2]?.toString()
+        }
+    }
+
+    private fun changeOrAddPlayer(playerAndTeam: String) {
+        findNavController().navigate(DoublesDetailFragmentDirections.actionFragmentDoublesDetailToSelectFromRosterFragment())
+
         setFragmentResultListener(SelectFromRosterFragment.REQUEST_KEY_PLAYER) { _, bundle ->
-            val result = bundle.getString(SelectFromRosterFragment.BUNDLE_KEY_PLAYER)
+            val result = bundle.getString(SelectFromRosterFragment.BUNDLE_KEY_PLAYER) ?: return@setFragmentResultListener
             when (playerAndTeam) {
-                //t for team and p for player
-                "t1p1" -> matchDetailViewModel.match.value!!.teams[1]!![0] = result!!
-                "t1p2" -> matchDetailViewModel.match.value!!.teams[1]!![1]= result!!
-                "t2p1" -> matchDetailViewModel.match.value!!.teams[2]!![0] = result!!
-                "t2p2" -> matchDetailViewModel.match.value!!.teams[2]!![1]= result!!
+                TEAM_1_PLAYER_1 -> matchDetailViewModel.match.value?.teams!![1]?.set(0, result)
+                TEAM_1_PLAYER_2 -> matchDetailViewModel.match.value?.teams!![1]?.set(1, result)
+                TEAM_2_PLAYER_1 -> matchDetailViewModel.match.value?.teams!![2]?.set(0, result)
+                TEAM_2_PLAYER_2 -> matchDetailViewModel.match.value?.teams!![2]?.set(1, result)
             }
-            //Updates the players in tha match through the view model into database
             matchDetailViewModel.updateMatch()
         }
     }
@@ -182,5 +149,15 @@ class DoublesDetailFragment : Fragment() {
     override fun onDestroy() {
         super.onDestroy()
         binding = null
+    }
+
+    companion object {
+        const val TEAM_1_PLAYER_1 = "t1p1"
+        const val TEAM_1_PLAYER_2 = "t1p2"
+        const val TEAM_2_PLAYER_1 = "t2p1"
+        const val TEAM_2_PLAYER_2 = "t2p2"
+
+        const val TEAM_1 = "t1"
+        const val TEAM_2 = "t2"
     }
 }

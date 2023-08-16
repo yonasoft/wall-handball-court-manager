@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.CheckBox
 import android.widget.LinearLayout
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.DialogFragment
@@ -18,78 +19,22 @@ import dagger.hilt.android.AndroidEntryPoint
 
 //Dialog that appears after the user presses yes to ending a match
 @AndroidEntryPoint
-class ReturnToRegularQueueFragmentDialogFragment:DialogFragment() {
+class ReturnToRegularQueueFragmentDialogFragment : DialogFragment() {
 
     private var binding:FragmentReturnToQueueDialogBinding?=null
     private val viewModel: RosterViewModel by viewModels()
     private val args: ReturnToRegularQueueFragmentDialogFragmentArgs by navArgs()
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
-        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_return_to_queue_dialog,container,false)
-        //Set layout size
-        dialog?.window?.setLayout(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT)
-        //Set views according to their data
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
+        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_return_to_queue_dialog, container, false)
+        setDialogSize()
         setViews()
-        return binding!!.root
+        return binding?.root ?: View(context)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        //On click listener for ok button
         setListeners()
-    }
-
-    private fun setListeners() {
-        binding!!.btnOk.setOnClickListener {
-            //Adds all the checked players to the regular queue
-            val sendToQueue: MutableList<String> = mutableListOf()
-
-            if (binding!!.checkboxT1p1.isChecked) {
-                sendToQueue.add(args.players[0])
-                args.players[0] = "TBA"
-            }
-            if (binding!!.checkboxT1p2.isChecked) {
-                sendToQueue.add(args.players[1])
-                args.players[1] = "TBA"
-            }
-            if (binding!!.checkboxT2p1.isChecked) {
-                sendToQueue.add(args.players[2])
-                args.players[2] = "TBA"
-            }
-            if (binding!!.checkboxT2p2.isChecked) {
-                sendToQueue.add(args.players[3])
-                args.players[3] = "TBA"
-            }
-            if (binding!!.checkboxT3.isChecked) {
-                sendToQueue.add(args.players[4])
-                args.players[4] = "TBA"
-            }
-            viewModel.addAllPlayers(sendToQueue, false)
-            dismiss()
-        }
-    }
-
-    private fun setViews() {
-        binding!!.apply {
-            //Question text view for the regular fragment
-            tvReturnToQueueMessage.text = getString(R.string.send_to_regular_msg)
-
-            //All the players available and eligible to return to regular queue will be displayed in their respective checkbox
-            if (args.players[0] != "TBA") checkboxT1p1.text =
-                args.players[0] else binding!!.checkboxT1p1.visibility = View.GONE
-            if (args.players[1] != "TBA") checkboxT1p2.text =
-                args.players[1] else binding!!.checkboxT1p2.visibility = View.GONE
-            if (args.players[2] != "TBA") checkboxT2p1.text =
-                args.players[2] else binding!!.checkboxT2p1.visibility = View.GONE
-            if (args.players[3] != "TBA") checkboxT2p2.text =
-                args.players[3] else binding!!.checkboxT2p2.visibility = View.GONE
-            if (args.players[4] != "TBA") checkboxT3.text =
-                args.players[4] else binding!!.checkboxT3.visibility = View.GONE
-        }
     }
 
     override fun onDismiss(dialog: DialogInterface) {
@@ -105,4 +50,53 @@ class ReturnToRegularQueueFragmentDialogFragment:DialogFragment() {
         binding = null
     }
 
+    private fun setDialogSize() {
+        dialog?.window?.setLayout(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT)
+    }
+
+    private fun setListeners() {
+        binding?.btnOk?.setOnClickListener {
+            val sendToQueue = gatherCheckedPlayersAndUpdate()
+            viewModel.addAllPlayers(sendToQueue, false)
+            dismiss()
+        }
+    }
+
+    private fun gatherCheckedPlayersAndUpdate(): MutableList<String> {
+        val sendToQueue = mutableListOf<String>()
+        binding?.let { bind ->
+            bind.checkboxT1p1.updatePlayer(sendToQueue, 0)
+            bind.checkboxT1p2.updatePlayer(sendToQueue, 1)
+            bind.checkboxT2p1.updatePlayer(sendToQueue, 2)
+            bind.checkboxT2p2.updatePlayer(sendToQueue, 3)
+            bind.checkboxT3.updatePlayer(sendToQueue, 4)
+        }
+        return sendToQueue
+    }
+
+    private fun setViews() {
+        binding?.apply {
+            tvReturnToQueueMessage.text = getString(R.string.send_to_regular_msg)
+            setCheckboxTextOrHide(checkboxT1p1, 0)
+            setCheckboxTextOrHide(checkboxT1p2, 1)
+            setCheckboxTextOrHide(checkboxT2p1, 2)
+            setCheckboxTextOrHide(checkboxT2p2, 3)
+            setCheckboxTextOrHide(checkboxT3, 4)
+        }
+    }
+
+    private fun setCheckboxTextOrHide(checkbox: CheckBox, index: Int) {
+        if (args.players[index] != "TBA") {
+            checkbox.text = args.players[index]
+        } else {
+            checkbox.visibility = View.GONE
+        }
+    }
+
+    private fun CheckBox.updatePlayer(sendToQueue: MutableList<String>, index: Int) {
+        if (isChecked) {
+            sendToQueue.add(args.players[index])
+            args.players[index] = "TBA"
+        }
+    }
 }

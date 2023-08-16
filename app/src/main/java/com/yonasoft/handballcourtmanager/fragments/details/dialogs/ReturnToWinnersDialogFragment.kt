@@ -23,7 +23,7 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class ReturnToWinnersDialogFragment : DialogFragment() {
 
-    private var binding: FragmentReturnToQueueDialogBinding?=null
+    private var binding: FragmentReturnToQueueDialogBinding? = null
     private val viewModel: RosterViewModel by viewModels()
     private val args: ReturnToWinnersDialogFragmentArgs by navArgs()
 
@@ -31,98 +31,61 @@ class ReturnToWinnersDialogFragment : DialogFragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View {
-        binding = DataBindingUtil.inflate(
-            inflater,
-            R.layout.fragment_return_to_queue_dialog,
-            container,
-            false
-        )
-        //Set layout size
-        dialog?.window?.setLayout(
-            LinearLayout.LayoutParams.MATCH_PARENT,
-            LinearLayout.LayoutParams.MATCH_PARENT
-        )
-        //Sets the views
-        setViews()
-
-        return binding!!.root
+    ): View? {
+        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_return_to_queue_dialog, container, false)
+        dialog?.window?.setLayout(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT)
+        initializeViews()
+        return binding?.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        setListeners()
+        setupListeners()
     }
 
-    private fun setListeners() {
-        binding!!.btnOk.setOnClickListener {
+    private fun initializeViews() {
+        binding?.apply {
+            tvReturnToQueueMessage.text = getString(R.string.send_to_winner_msg)
+
+            listOf(checkboxT1p1, checkboxT1p2, checkboxT2p1, checkboxT2p2, checkboxT3).forEachIndexed { index, checkbox ->
+                if (args.players[index] != "TBA") {
+                    checkbox.text = args.players[index]
+                } else {
+                    checkbox.visibility = View.GONE
+                }
+            }
+        }
+    }
+
+    private fun setupListeners() {
+        binding?.btnOk?.setOnClickListener {
             val sendToQueue: MutableList<String> = mutableListOf()
-            if (binding!!.checkboxT1p1.isChecked) {
-                sendToQueue.add(args.players[0])
-                args.players[0] = "TBA"
-            }
-            if (binding!!.checkboxT1p2.isChecked) {
-                sendToQueue.add(args.players[1])
-                args.players[1] = "TBA"
-            }
-            if (binding!!.checkboxT2p1.isChecked) {
-                sendToQueue.add(args.players[2])
-                args.players[2] = "TBA"
-            }
-            if (binding!!.checkboxT2p2.isChecked) {
-                sendToQueue.add(args.players[3])
-                args.players[3] = "TBA"
-            }
-            if (binding!!.checkboxT3.isChecked) {
-                sendToQueue.add(args.players[4])
-                args.players[4] = "TBA"
+
+            binding?.apply {
+                listOf(checkboxT1p1, checkboxT1p2, checkboxT2p1, checkboxT2p2, checkboxT3).forEachIndexed { index, checkbox ->
+                    if (checkbox.isChecked) {
+                        sendToQueue.add(args.players[index])
+                        args.players[index] = "TBA"
+                    }
+                }
             }
             viewModel.addAllPlayers(sendToQueue, true)
             dismiss()
         }
     }
 
-    private fun setViews() {
-        binding!!.apply {
-            //Message for the dialog
-            tvReturnToQueueMessage.text = getString(R.string.send_to_winner_msg)
-            //All the players available and eligible to return to regular queue will be displayed in their respective checkbox
-            if (args.players[0] != "TBA") checkboxT1p1.text =
-                args.players[0] else binding!!.checkboxT1p1.visibility = View.GONE
-            if (args.players[1] != "TBA") checkboxT1p2.text =
-                args.players[1] else binding!!.checkboxT1p2.visibility = View.GONE
-            if (args.players[2] != "TBA") checkboxT2p1.text =
-                args.players[2] else binding!!.checkboxT2p1.visibility = View.GONE
-            if (args.players[3] != "TBA") checkboxT2p2.text =
-                args.players[3] else binding!!.checkboxT2p2.visibility = View.GONE
-            if (args.players[4] != "TBA") checkboxT3.text =
-                args.players[4] else binding!!.checkboxT3.visibility = View.GONE
-        }
-    }
-
     override fun onDismiss(dialog: DialogInterface) {
         super.onDismiss(dialog)
-        val players = arrayOf(
-            args.players[0], args.players[1], args.players[2], args.players[3], args.players[4]
-        )
-        val navigateTo = when(
-            args.matchType
-        ){
-            MatchType.SINGLES.name-> SinglesDetailFragmentDirections.actionSinglesDetailFragmentToReturnToRegularQueueFragmentDialogFragment(
-                players
-            )
-            MatchType.DOUBLES.name-> DoublesDetailFragmentDirections.actionFragmentDoublesDetailToReturnToRegularQueueFragmentDialogFragment(
-                players
-            )
-            MatchType.TRIANGLE.name-> TriangleDetailFragmentDirections.actionFragmentTriangleDetailToReturnToRegularQueueFragmentDialogFragment(
-                players
-            )
+        val navigateTo = when(args.matchType) {
+            MatchType.SINGLES.name -> SinglesDetailFragmentDirections.actionSinglesDetailFragmentToReturnToRegularQueueFragmentDialogFragment(args.players)
+            MatchType.DOUBLES.name -> DoublesDetailFragmentDirections.actionFragmentDoublesDetailToReturnToRegularQueueFragmentDialogFragment(args.players)
+            MatchType.TRIANGLE.name -> TriangleDetailFragmentDirections.actionFragmentTriangleDetailToReturnToRegularQueueFragmentDialogFragment(args.players)
             else -> throw IllegalArgumentException("Incorrect Match Type")
         }
-        findNavController().popBackStack()
-        findNavController().navigate(
-            navigateTo
-        )
+        findNavController().apply {
+            popBackStack()
+            navigate(navigateTo)
+        }
     }
 
     override fun onDestroy() {

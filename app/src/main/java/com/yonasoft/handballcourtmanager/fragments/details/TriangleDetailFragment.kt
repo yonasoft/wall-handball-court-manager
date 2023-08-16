@@ -5,6 +5,7 @@ import android.view.KeyEvent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
@@ -53,33 +54,17 @@ class TriangleDetailFragment : Fragment() {
     private fun setUpListeners() {
 
         binding!!.apply {
-            tvT1.setOnClickListener {
-                changeOrAddPlayer("t1")
-            }
-            tvT2.setOnClickListener {
-                changeOrAddPlayer("t2")
-            }
-            tvT3.setOnClickListener {
-                changeOrAddPlayer("t3")
-            }
-            btnT1Add.setOnClickListener {
-                matchDetailViewModel.addPoints("t1")
-            }
-            btnT2Add.setOnClickListener {
-                matchDetailViewModel.addPoints("t2")
-            }
-            btnT3Add.setOnClickListener {
-                matchDetailViewModel.addPoints("t3")
-            }
-            btnT1Sub.setOnClickListener {
-                matchDetailViewModel.deductPoints("t1")
-            }
-            btnT2Sub.setOnClickListener {
-                matchDetailViewModel.deductPoints("t2")
-            }
-            btnT3Sub.setOnClickListener {
-                matchDetailViewModel.deductPoints("t3")
-            }
+            tvT1.setOnClickListener { changeOrAddPlayer("t1") }
+            tvT2.setOnClickListener { changeOrAddPlayer("t2") }
+            tvT3.setOnClickListener { changeOrAddPlayer("t3") }
+
+            // Setting click listeners for Add/Subtract buttons
+            setOnClickListenerForPoints(btnT1Add, "t1", true)
+            setOnClickListenerForPoints(btnT2Add, "t2", true)
+            setOnClickListenerForPoints(btnT3Add, "t3", true)
+            setOnClickListenerForPoints(btnT1Sub, "t1", false)
+            setOnClickListenerForPoints(btnT2Sub, "t2", false)
+            setOnClickListenerForPoints(btnT3Sub, "t3", false)
 
             btnEndMatch.setOnClickListener {
                 val match = matchDetailViewModel.match.value!!
@@ -135,6 +120,13 @@ class TriangleDetailFragment : Fragment() {
                 }
 
             }
+        }
+    }
+
+    private fun setOnClickListenerForPoints(button: Button, team: String, isAddition: Boolean) {
+        button.setOnClickListener {
+            if (isAddition) matchDetailViewModel.addPoints(team)
+            else matchDetailViewModel.deductPoints(team)
         }
     }
     //Observers for updated data to be reflected in the views
