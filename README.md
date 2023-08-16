@@ -1,5 +1,5 @@
 ﻿# Handball-Court-Manager
- An Android Application for managinge handball court queues and match recording recording elimininating the need to mentally record or manually record matches on paper.
+ An Android Application for managing handball court queues and match recording.
 
 Link(Play Store): https://play.google.com/store/apps/details?id=com.yonasoft.handballcourtmanager
 
