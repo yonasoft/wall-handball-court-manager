@@ -9,71 +9,46 @@ import androidx.fragment.app.Fragment
 import com.yonasoft.handballcourtmanager.R
 import com.yonasoft.handballcourtmanager.databinding.FragmentHelpBinding
 
-//Help fragment for help and faq related to this app
 class HelpFragment : Fragment() {
 
-    private var binding: FragmentHelpBinding ? =null
+    private var binding: FragmentHelpBinding? = null
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View {
+    ): View? {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_help, container, false)
-        val view = binding!!.root
-
-        binding!!.queueDesc.visibility = View.GONE
-        binding!!.matchDesc.visibility = View.GONE
-        binding!!.resultsDesc.visibility = View.GONE
-
-        return view
+        return binding?.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding!!.tvQueueTitle.setOnClickListener {
-            if (binding!!.queueDesc.visibility == View.GONE) {
-                binding!!.queueDesc.visibility = View.VISIBLE
-            } else {
-                binding!!.queueDesc.visibility = View.GONE
-            }
-        }
-        binding!!.queueDrop.setOnClickListener{
-            if (binding!!.queueDesc.visibility == View.GONE) {
-                binding!!.queueDesc.visibility = View.VISIBLE
-            } else {
-                binding!!.queueDesc.visibility = View.GONE
-            }
-        }
+        with(binding) {
+            this?.apply {
+                setOnClickToggleVisibility(tvQueueTitle, queueDesc)
+                setOnClickToggleVisibility(queueDrop, queueDesc)
 
-        binding!!.tvMatchTitle.setOnClickListener {
-            if (binding!!.matchDesc.visibility == View.GONE) {
-                binding!!.matchDesc.visibility = View.VISIBLE
-            } else {
-                binding!!.matchDesc.visibility = View.GONE
-            }
-        }
-        binding!!.matchDrop.setOnClickListener{
-            if (binding!!.matchDesc.visibility == View.GONE) {
-                binding!!.matchDesc.visibility = View.VISIBLE
-            } else {
-                binding!!.matchDesc.visibility = View.GONE
-            }
-        }
+                setOnClickToggleVisibility(tvMatchTitle, matchDesc)
+                setOnClickToggleVisibility(matchDrop, matchDesc)
 
-        binding!!.tvResultsTitle.setOnClickListener {
-            if (binding!!.resultsDesc.visibility == View.GONE) {
-                binding!!.resultsDesc.visibility = View.VISIBLE
-            } else {
-                binding!!.resultsDesc.visibility = View.GONE
+                setOnClickToggleVisibility(tvResultsTitle, resultsDesc)
+                setOnClickToggleVisibility(resultsDrop, resultsDesc)
+
+                queueDesc.visibility = View.GONE
+                matchDesc.visibility = View.GONE
+                resultsDesc.visibility = View.GONE
             }
         }
-        binding!!.resultsDrop.setOnClickListener{
-            if (binding!!.resultsDesc.visibility == View.GONE) {
-                binding!!.resultsDesc.visibility = View.VISIBLE
+    }
+
+    private fun setOnClickToggleVisibility(view: View, target: View) {
+        view.setOnClickListener {
+            target.visibility = if (target.visibility == View.GONE) {
+                View.VISIBLE
             } else {
-                binding!!.resultsDesc.visibility = View.GONE
+                View.GONE
             }
         }
     }
