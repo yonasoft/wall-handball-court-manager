@@ -24,6 +24,7 @@ Wall Handball players who want an easier time setting up and recording matches.
 
 
 ## Technologies 
+- **Kotlin**
 - UI designed with **XML**.
 - **Room DB** for persistant data storage.
 - **GSON** for serializing/deserializing data.
