@@ -21,7 +21,6 @@ class AddPlayerDialogFragment : DialogFragment() {
 
     override fun onStart() {
         super.onStart()
-        //Sets the size of the dialog
         dialog?.window?.setLayout(
             LinearLayout.LayoutParams.MATCH_PARENT,
             LinearLayout.LayoutParams.WRAP_CONTENT
@@ -36,18 +35,19 @@ class AddPlayerDialogFragment : DialogFragment() {
 
         binding = DataBindingUtil.inflate(
             layoutInflater,
-            R.layout.fragment_add_player_dialog, container, false
+            R.layout.fragment_add_player_dialog,
+            container,
+            false
         )
-        val view = binding!!.root
 
-        binding!!.viewModel = viewModel
-        binding!!.lifecycleOwner = this
-        //Adds the player entered into queue
-        binding!!.addPlayerButton.setOnClickListener {
-            viewModel.addPlayer()
-            dismiss()
-        }
-        return view
+        return binding?.apply {
+            viewModel = this@AddPlayerDialogFragment.viewModel
+            lifecycleOwner = this@AddPlayerDialogFragment
+            addPlayerButton.setOnClickListener {
+                this.viewModel?.addPlayer()
+                dismiss()
+            }
+        }?.root?: throw IllegalStateException("View binding is null")
     }
 
     override fun onDestroy() {

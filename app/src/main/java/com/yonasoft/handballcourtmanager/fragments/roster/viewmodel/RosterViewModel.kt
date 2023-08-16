@@ -12,83 +12,66 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
-//ViewModel for the Roster List Fragment
 @HiltViewModel
 class RosterViewModel @Inject constructor(private val playersRepository: PlayersRepository) : ViewModel() {
 
     val nameToAdd = MutableLiveData<String>()
-    //Matches in regular queue
     val regularQueue: LiveData<List<Player>> = playersRepository.getRegularRoster()
-    //Matches in winners queue
     val winnerQueue: LiveData<List<Player>> = playersRepository.getWinnersRoster()
 
-    //Add  new player with string
-    fun addPlayer(name: String = this.nameToAdd.value!!) {
-        viewModelScope.launch {
-            withContext(Dispatchers.IO) {
-                playersRepository.addPlayer(Player(id = 0, name = name))
+    fun addPlayer(name: String? = nameToAdd.value) {
+        name?.let {
+            executeDatabaseOperation {
+                playersRepository.addPlayer(Player(id = 0, name = it))
             }
         }
     }
-    //Add player as Player class object
+
     fun addPlayer(player: Player) {
-        viewModelScope.launch {
-            withContext(Dispatchers.IO) {
-                playersRepository.addPlayer(player)
-            }
+        executeDatabaseOperation {
+            playersRepository.addPlayer(player)
         }
     }
-    //Add multiple players from list
+
     fun addAllPlayers(players: List<Player>) {
-        viewModelScope.launch {
-            withContext(Dispatchers.IO) {
-                playersRepository.addAllPlayers(players)
-            }
-        }
-
-    }
-    //Add multiple players from list to specific queue(isWinner/areWinner)
-    fun addAllPlayers(players: List<String>, areWinners:Boolean) {
-        viewModelScope.launch {
-            withContext(Dispatchers.IO) {
-                val playersAsClass:MutableList<Player> = mutableListOf()
-                for (player in players){
-                    playersAsClass.add(Player(0,player,areWinners))
-                }
-                addAllPlayers(playersAsClass)
-            }
+        executeDatabaseOperation {
+            playersRepository.addAllPlayers(players)
         }
     }
 
-    //Delete player from database
+    fun addAllPlayers(playerNames: List<String>, areWinners: Boolean) {
+        val players = playerNames.map { Player(id = 0, name = it, isWinner = areWinners) }
+        addAllPlayers(players)
+    }
+
     fun deletePlayer(player: Player) {
-        viewModelScope.launch {
-            withContext(Dispatchers.IO) {
-                playersRepository.deletePlayer(player)
-            }
+        executeDatabaseOperation {
+            playersRepository.deletePlayer(player)
         }
     }
-    //Deletes all players from database
+
     fun deleteAllPlayers() {
-        viewModelScope.launch {
-            withContext(Dispatchers.IO) {
-                playersRepository.deleteAllPlayers()
-            }
+        executeDatabaseOperation {
+            playersRepository.deleteAllPlayers()
         }
     }
-    //Deletes all players in regular queue
+
     fun deleteRegularPlayers() {
-        viewModelScope.launch {
-            withContext(Dispatchers.IO) {
-                playersRepository.deleteRegularPlayers()
-            }
+        executeDatabaseOperation {
+            playersRepository.deleteRegularPlayers()
         }
     }
-    //Deletes all players from winners queue
+
     fun deleteWinnerPlayers() {
+        executeDatabaseOperation {
+            playersRepository.deleteWinnerPlayers()
+        }
+    }
+
+    private fun executeDatabaseOperation(operation: suspend () -> Unit) {
         viewModelScope.launch {
             withContext(Dispatchers.IO) {
-                playersRepository.deleteWinnerPlayers()
+                operation.invoke()
             }
         }
     }
