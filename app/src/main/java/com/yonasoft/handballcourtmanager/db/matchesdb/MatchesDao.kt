@@ -34,6 +34,4 @@ interface MatchesDao{
     @Query("DELETE FROM matches WHERE is_completed=1")
     suspend fun deleteCompletedMatches()
 
-
-
 }

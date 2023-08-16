@@ -10,8 +10,8 @@ data class Player(
     @PrimaryKey(autoGenerate = true)
     val id: Int,
     @ColumnInfo(name = "player_name")
-    var name:String,
-    //If is winner then it be in the winner's
+    var name: String,
+    // Indicates if the player is a winner
     @ColumnInfo(name = "is_winner")
-    var isWinner:Boolean = false,
+    var isWinner: Boolean = false
 )

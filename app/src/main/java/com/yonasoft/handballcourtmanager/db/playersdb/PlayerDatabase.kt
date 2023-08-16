@@ -6,6 +6,6 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 
 @Database(entities = [Player::class], version = 1, exportSchema = true)
-abstract class PlayerDatabase: RoomDatabase() {
-    abstract val playerDao: PlayerDao
+abstract class PlayerDatabase : RoomDatabase() {
+    abstract fun playerDao(): PlayerDao
 }

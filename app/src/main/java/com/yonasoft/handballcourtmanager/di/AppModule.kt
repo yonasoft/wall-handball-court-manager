@@ -16,33 +16,34 @@ import javax.inject.Singleton
 @InstallIn(SingletonComponent::class)
 @Module
 class AppModule {
+
     @Singleton
+    @Provides
+    fun provideMatchesDatabase(@ApplicationContext context: Context): MatchesDatabase {
+        return Room.databaseBuilder(
+            context,
+            MatchesDatabase::class.java,
+            "matches"
+        )
+            .fallbackToDestructiveMigration()
+            .build()
+    }
+
     @Provides
     fun provideMatchesDao(matchesDatabase: MatchesDatabase): MatchesDao = matchesDatabase.matchesDao
 
     @Singleton
     @Provides
-    fun provideAppDatabase(@ApplicationContext context: Context): MatchesDatabase {
-        return Room.databaseBuilder(context,
-            MatchesDatabase::class.java,
-            "matches"
-            )
-            .fallbackToDestructiveMigration()
-            .build()
-    }
-
-    @Singleton
-    @Provides
-    fun providePlayerDao(playerDatabase: PlayerDatabase): PlayerDao = playerDatabase.playerDao
-
-    @Singleton
-    @Provides
     fun providePlayerDatabase(@ApplicationContext context: Context): PlayerDatabase {
-        return Room.databaseBuilder(context,
+        return Room.databaseBuilder(
+            context,
             PlayerDatabase::class.java,
             "players"
         )
             .fallbackToDestructiveMigration()
             .build()
     }
+
+    @Provides
+    fun providePlayerDao(playerDatabase: PlayerDatabase): PlayerDao = playerDatabase.playerDao
 }
