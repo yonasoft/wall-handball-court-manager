@@ -55,7 +55,6 @@ class ResultsFragment : Fragment() {
     private fun onDeleteMatches(idOfQueueDeletion: Int) {
         val removedQueueText = when (idOfQueueDeletion) {
             R.id.clear_results -> {
-                val removedList = viewModel.resultsList.value?.toMutableList() ?: mutableListOf()
                 viewModel.removeAllResults()
                 "Matches are being cleared!"
             }
