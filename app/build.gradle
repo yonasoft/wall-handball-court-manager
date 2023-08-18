@@ -5,7 +5,6 @@ plugins {
     id 'androidx.navigation.safeargs'
     id 'kotlin-kapt'
     id 'com.google.dagger.hilt.android'
-
 }
 
 android {
@@ -14,9 +13,9 @@ android {
     defaultConfig {
         applicationId "com.yonasoft.handballcourtmanager"
         minSdk 26
-        targetSdk 32
-        versionCode 6
-        versionName "1.05"
+        targetSdk 33
+        versionCode 7
+        versionName "1.06"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 
         javaCompileOptions {

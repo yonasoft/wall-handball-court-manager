@@ -45,7 +45,7 @@ class MatchesViewModel @Inject constructor(private val matchesRepository: Matche
 
     fun addMatch(match: Match) = viewModelScope.launchIO { matchesRepository.addMatch(match) }
 
-    fun addMatches(matches: List<Match>) = viewModelScope.launchIO { matchesRepository.addAllMatch(matches) }
+    fun addMatches(matches: List<Match>) = viewModelScope.launchIO { matchesRepository.addAllMatches(matches) }
 
     private fun createMatch(matchType: MatchType) = viewModelScope.launchIO {
         matchesRepository.addMatch(Match(UUID.randomUUID(), matchType, courtNumber = "N/A"))

@@ -45,5 +45,5 @@ class AppModule {
     }
 
     @Provides
-    fun providePlayerDao(playerDatabase: PlayerDatabase): PlayerDao = playerDatabase.playerDao
+    fun providePlayerDao(playerDatabase: PlayerDatabase): PlayerDao = playerDatabase.playerDao()
 }
