@@ -1,18 +1,16 @@
-﻿# Handball-Court-Manager
+﻿# Handball Court Manager
 
  [![image](https://I.ibb.co/c6P6z4F/icon.png)](https://play.google.com/store/apps/details?id=com.yonasoft.handballcourtmanager)  
 Play Store: https://play.google.com/store/apps/details?id=com.yonasoft.handballcourtmanager
 
-
-
 ## Contents
 
- 1. [Introduction](#intro)
+ 1. [Introduction](#introduction)
  2. [Technologies](#technologies)
  3. [Screenshots](#screenshots)
 
 
-## Intro 
+## Introduction 
 **What is Handball Court Manager?**  
 Handball Court Manager is an Android application designed to digitally manage handball court queues and record matches.
 
@@ -22,10 +20,9 @@ Forgetting the score, who's next in the queue, or the order of the queue can be 
 ## Technologies 
 - **Kotlin**
 - UI designed with **XML**.
-- **Room DB** for persistant data storage.
+- **Room DB** for persistent data storage.
 - **GSON** for serializing/deserializing data.
 - **Dagger-Hilt** for dependency injection.
-- Applies **MVVM** architecture.
 
 
 ## Screenshots
