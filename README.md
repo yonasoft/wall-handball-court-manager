@@ -1,7 +1,7 @@
 ﻿# Handball-Court-Manager
 
  [![image](https://I.ibb.co/c6P6z4F/icon.png)](https://play.google.com/store/apps/details?id=com.yonasoft.handballcourtmanager)  
-Link: https://play.google.com/store/apps/details?id=com.yonasoft.handballcourtmanager
+Play Store: https://play.google.com/store/apps/details?id=com.yonasoft.handballcourtmanager
 
 
 
