@@ -12,10 +12,7 @@ Play Store: https://play.google.com/store/apps/details?id=com.yonasoft.handballc
 
 ## Introduction 
 **What is Handball Court Manager?**  
-Handball Court Manager is an Android application designed to digitally manage handball court queues and record matches.
-
-**Why Handball Court Manager?**  
-Forgetting the score, who's next in the queue, or the order of the queue can be frustrating. Handball Court Manager solves that. It eliminates the need to mentally keep track of scores and queues.
+Handball Court Manager is an Android application to digitize handball court queue management, score tracking, and match recording.
 
 ## Technologies 
 - **Kotlin**
