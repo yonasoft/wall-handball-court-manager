@@ -2,7 +2,7 @@
 
  [![image](https://I.ibb.co/c6P6z4F/icon.png)](https://play.google.com/store/apps/details?id=com.yonasoft.handballcourtmanager)  
 Play Store: https://play.google.com/store/apps/details?id=com.yonasoft.handballcourtmanager
-### Improved version coming soon(ETR: May 2025)
+### Improved version coming soon (ETR: May 2025)
 
 ## Contents
 
